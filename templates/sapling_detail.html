@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}{{ sapling.name }} - GreenGardens{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="{{ url_for('index') }}">Home</a> / {{ sapling.name }}
+</div>
+
+<section class="sapling-detail">
+    <div class="detail-image">
+        <span class="detail-emoji">🌳</span>
+    </div>
+    <div class="detail-content">
+        <h1>{{ sapling.name }}</h1>
+        <p class="scientific-name">{{ sapling.scientific_name }}</p>
+        
+        <div class="price-section">
+            <span class="price-label">Price:</span>
+            <span class="price-large">${{ "%.2f"|format(sapling.price) }}</span>
+        </div>
+
+        <p class="description">{{ sapling.description }}</p>
+
+        <div class="specifications">
+            <h3>Specifications</h3>
+            <ul>
+                <li><strong>Age:</strong> {{ sapling.age }}</li>
+                <li><strong>Height:</strong> {{ sapling.height }}</li>
+                <li><strong>Scientific Name:</strong> {{ sapling.scientific_name }}</li>
+            </ul>
+        </div>
+
+        <form method="POST" action="{{ url_for('add_to_cart', sapling_id=sapling.id) }}" class="add-to-cart-form">
+            <div class="quantity-selector">
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" value="1" min="1" max="99">
+            </div>
+            <button type="submit" class="btn btn-primary btn-large">Add to Cart</button>
+        </form>
+
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">← Back to Store</a>
+    </div>
+</section>
+{% endblock %}
