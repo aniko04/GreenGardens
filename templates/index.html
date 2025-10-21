@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Home - GreenGardens Sapling Storefront{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>Welcome to GreenGardens</h1>
+    <p class="hero-subtitle">Your trusted source for premium saplings</p>
+</section>
+
+<section class="saplings-section">
+    <h2>Our Saplings</h2>
+    <div class="saplings-grid">
+        {% for sapling in saplings %}
+        <div class="sapling-card">
+            <div class="sapling-image">
+                <span class="sapling-emoji">🌳</span>
+            </div>
+            <div class="sapling-content">
+                <h3>{{ sapling.name }}</h3>
+                <p class="scientific-name">{{ sapling.scientific_name }}</p>
+                <p class="sapling-description">{{ sapling.description }}</p>
+                <div class="sapling-info">
+                    <span>Age: {{ sapling.age }}</span>
+                    <span>Height: {{ sapling.height }}</span>
+                </div>
+                <div class="sapling-footer">
+                    <span class="price">${{ "%.2f"|format(sapling.price) }}</span>
+                    <div class="sapling-actions">
+                        <a href="{{ url_for('sapling_detail', sapling_id=sapling.id) }}" class="btn btn-secondary">View Details</a>
+                        <form method="POST" action="{{ url_for('add_to_cart', sapling_id=sapling.id) }}" style="display: inline;">
+                            <input type="hidden" name="quantity" value="1">
+                            <button type="submit" class="btn btn-primary">Add to Cart</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

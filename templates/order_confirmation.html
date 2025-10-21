@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Order Confirmed - GreenGardens{% endblock %}
+
+{% block content %}
+<section class="confirmation-section">
+    <div class="confirmation-content">
+        <div class="success-icon">✓</div>
+        <h1>Order Confirmed!</h1>
+        <p>Thank you for your purchase from GreenGardens!</p>
+        <p>Your saplings will be carefully packaged and shipped to you soon.</p>
+        <p class="confirmation-message">You will receive an email confirmation shortly with your order details.</p>
+        <div class="confirmation-actions">
+            <a href="{{ url_for('index') }}" class="btn btn-primary">Continue Shopping</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
