@@ -1,25 +1,22 @@
-﻿   {% extends "base.html" %} {% load static %}
-   {% block content %}
-        <section class="page-header">
-            <div class="page-header__bg"></div>
-            <div class="page-header__shape wow fadeInUp" data-wow-delay="200ms"></div>
-            <div class="page-header__overlay"></div>
-            <!-- /.page-header__bg -->
-            <div class="container">
-                <h2 class="page-header__title">Login</h2>
-                <ul class="grdeen-breadcrumb list-unstyled">
-                    <li><a href="index.html">Home</a></li>
-                    <li><span>Login</span></li>
-                </ul><!-- /.thm-breadcrumb list-unstyled -->
-            </div><!-- /.container -->
-        </section><!-- /.page-header -->
-        <!-- Login Start -->
-        <section class="login-page">
+﻿{% extends "base.html" %} {% load static %}
+{% block content %}
+<section class="page-header">
+    <div class="page-header__bg"></div>
+    <div class="page-header__shape wow fadeInUp" data-wow-delay="200ms"></div>
+    <div class="page-header__overlay"></div>
+    <!-- /.page-header__bg -->
     <div class="container">
-        <div class="login-page__info">
-            <p>We have a demo account setup. <span>Username:</span> <a href="login.html">demo</a> and <span>
-                    Password:</span> <a href="login.html">demo</a></p>
-        </div><!-- login-info -->
+        <h2 class="page-header__title">Login</h2>
+        <ul class="grdeen-breadcrumb list-unstyled">
+            <li><a href="index.html">Home</a></li>
+            <li><span>Login</span></li>
+        </ul><!-- /.thm-breadcrumb list-unstyled -->
+    </div><!-- /.container -->
+</section><!-- /.page-header -->
+<!-- Login Start -->
+<section class="login-page">
+    <div class="container">
+        <!-- login-info -->
         <div class="row">
             <!-- Login qismi -->
             <div class="col-lg-6 wow fadeInUp animated" data-wow-delay="300ms">
@@ -62,6 +59,9 @@
                         <div class="login-page__form-input-box">
                             <input type="password" name="password" placeholder="Password" required>
                         </div>
+                        <div class="login-page__form-input-box">
+                            <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                        </div>
                         <div class="login-page__checked-box">
                             <input type="checkbox" name="accept-policy" id="accept-policy" required>
                             <label for="accept-policy"><span></span>I accept company privacy policy.</label>
@@ -78,5 +78,5 @@
     </div>
 </section>
 
-        <!-- Login End -->
-    {% endblock %}
+<!-- Login End -->
+{% endblock %}

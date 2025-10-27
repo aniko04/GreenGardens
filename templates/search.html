@@ -1,0 +1,679 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="page-header">
+    <div class="page-header__bg"
+        style="background-image: url('{% static 'assets/images/backgrounds/page-header-bg1-1.jpg' %}')"></div>
+    <div class="page-header__overlay"></div>
+    <div class="container">
+        <h2 class="page-header__title">Search Results</h2>
+        <ul class="grdeen-breadcrumb list-unstyled">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><span>Search</span></li>
+        </ul>
+    </div>
+</section>
+
+<section class="search-results section-space">
+    <div class="container">
+        {% if query %}
+        <div class="search-info mb-5">
+            <h3>Search Results for "{{ query }}"</h3>
+            <p class="text-muted">Found {{ total_results }} result{{ total_results|pluralize }} ({{ products_count }}
+                product{{ products_count|pluralize }}, {{ services_count }} service{{ services_count|pluralize }})</p>
+        </div>
+        {% endif %}
+
+        {% if not query %}
+        <div class="text-center">
+            <div class="search-icon mb-4">
+                <i class="icon-search" style="font-size: 64px; color: #ccc;"></i>
+            </div>
+            <h3>Enter a search term</h3>
+            <p class="text-muted">Please enter a keyword to search for products and services.</p>
+        </div>
+        {% elif total_results == 0 %}
+        <div class="text-center">
+            <div class="search-icon mb-4">
+                <i class="fas fa-search" style="font-size: 64px; color: #ccc;"></i>
+            </div>
+            <h3>No results found</h3>
+            <p class="text-muted">Sorry, we couldn't find any products or services matching "{{ query }}". Try different
+                keywords.</p>
+            <a href="{% url 'products' %}" class="grdeen-btn mt-3">
+                <span>Browse All Products</span>
+            </a>
+        </div>
+        {% else %}
+
+        <!-- Services Results -->
+        {% if services_count > 0 %}
+        <div class="services-results mb-5">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="mb-4">Services ({{ services_count }} found)</h4>
+                </div>
+            </div>
+            <div class="row gutter-y-30">
+                {% for service in services %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-one__item">
+                        <div class="service-one__item__bgeffect"
+                            style="background-image: url('{% static 'assets/images/shapes/service-shape3-1.png' %}');">
+                        </div>
+                        <div class="service-one__item__titlewrap">
+                            <div class="service-one__item__titlecol">
+                                <h4 class="service-one__item__title">
+                                    <a href="{% url 'service_details' service.id %}">{{ service.pagename }}</a>
+                                </h4>
+                                <p class="service-one__item__text">{{ service.description|truncatewords:15 }}</p>
+                                <a class="service-one__item__link"
+                                    href="{% url 'service_details' service.id %}">Discover More</a>
+                            </div>
+                        </div>
+                        <div class="service-one__item__image">
+                            <img src="{{ service.image.url }}" alt="{{ service.pagename }}">
+                            <div class="service-one__item__iconwrap">
+                                <div class="service-one__item__icon">
+                                    {{ service.icon|safe }}
+                                </div><!-- /.service-icon -->
+                            </div>
+                            <div class="service-one__item__btmwrap">
+                                <a class="service-one__item__iconlink" href="{% url 'service_details' service.id %}">
+                                    <i class="icon-right-up"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div><!-- /.service-card-one -->
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Services Pagination -->
+            {% if services.has_other_pages %}
+            <div class="pagination-wrapper text-center mt-4">
+                <ul class="pg-pagination list-unstyled">
+                    {% if services.has_previous %}
+                    <li class="pg-pagination__item">
+                        <a href="?q={{ query }}&services_page={{ services.previous_page_number }}{% if request.GET.products_page %}&products_page={{ request.GET.products_page }}{% endif %}"
+                            class="pg-pagination__link">
+                            <i class="icon-left-arrow"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% for num in services.paginator.page_range %}
+                    {% if services.number == num %}
+                    <li class="pg-pagination__item">
+                        <a href="#" class="pg-pagination__link pg-pagination__link--current">{{ num }}</a>
+                    </li>
+                    {% elif num > services.number|add:'-3' and num < services.number|add:'3' %} <li
+                        class="pg-pagination__item">
+                        <a href="?q={{ query }}&services_page={{ num }}{% if request.GET.products_page %}&products_page={{ request.GET.products_page }}{% endif %}"
+                            class="pg-pagination__link">{{ num }}</a>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+
+                        {% if services.has_next %}
+                        <li class="pg-pagination__item">
+                            <a href="?q={{ query }}&services_page={{ services.next_page_number }}{% if request.GET.products_page %}&products_page={{ request.GET.products_page }}{% endif %}"
+                                class="pg-pagination__link">
+                                <i class="icon-right-arrow"></i>
+                            </a>
+                        </li>
+                        {% endif %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <!-- Products Results -->
+        {% if products_count > 0 %}
+        <div class="products-results">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="mb-4">Products ({{ products_count }} found)</h4>
+                </div>
+            </div>
+            <div class="row gutter-y-30">
+                {% for product in products %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="product__item wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='000ms'>
+                        <div class="product__item__img">
+                            {% if product.main_image %}
+                            <a href="{% url 'product_details' product.id %}"><img src="{{ product.main_image.url }}"
+                                    alt="{{ product.name }}" style="width:290px; height:243px"></a>
+                            {% else %}
+                            <a href="{% url 'product_details' product.id %}"><img
+                                    src="{% static 'assets/images/image404.png' %}" alt="{{ product.name }}"
+                                    style="width:290px; height:243px"></a>
+                            {% endif %}
+                            <div class="product__item__label">
+                                <span class="product__item__label__sale">{{ product.status }}</span>
+                            </div>
+                            <div class="product__item__label2 product__action-buttons"
+                                style="position: absolute;right: 15px; top: 15px; z-index: 1;">
+                                <div class="action-buttons-wrapper">
+                                    {% if user.is_authenticated %}
+                                    <a href="#" class="product-action-btn wishlist-btn like_product"
+                                        data-id="{{ product.id }}" title="Add to Wishlist">
+                                        <i class="icon-heart"></i>
+                                        <span class="btn-tooltip">Add to Wishlist</span>
+                                    </a>
+                                    <a href="#" class="product-action-btn cart-btn cart_api" data-id="{{ product.id }}"
+                                        title="Add to Cart">
+                                        <i class="icon-shopping-cart"></i>
+                                        <span class="btn-tooltip">Add to Cart</span>
+                                    </a>
+                                    {% else %}
+                                    <a href="{% url 'login' %}" class="product-action-btn wishlist-btn"
+                                        title="Login to Add to Wishlist">
+                                        <i class="icon-heart"></i>
+                                        <span class="btn-tooltip">Login to Add to Wishlist</span>
+                                    </a>
+                                    <a href="{% url 'login' %}" class="product-action-btn cart-btn"
+                                        title="Login to Add to Cart">
+                                        <i class="icon-shopping-cart"></i>
+                                        <span class="btn-tooltip">Login to Add to Cart</span>
+                                    </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product__item__content-wrap">
+                            <div class="product__item__btn">
+                                <a href="{% url 'product_details' product.id %}" class="grdeen-btn"><span>View
+                                        Details</span></a>
+                            </div>
+                            <div class="product__item__content">
+                                <h4 class="product__item__title"><a href="{% url 'product_details' product.id %}">{{
+                                        product.name }}</a></h4>
+                                <div class="product__item__price">
+                                    <span class="product__item__price__regular">${{ product.price }}</span>
+                                    {% if product.old_price %}
+                                    <span class="product__item__price__offer">${{ product.old_price }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="product__item__ratings">
+                                    <span class="fa fa-star"></span><span class="fa fa-star"></span><span
+                                        class="fa fa-star"></span><span class="fa fa-star"></span><span
+                                        class="far fa-star"></span>
+                                </div>
+                                <div class="product__item__views"
+                                    style="margin-top: 8px; color: #666; font-size: 13px;">
+                                    <i class="fa fa-eye" style="margin-right: 5px;"></i>{{ product.views }} views
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Products Pagination -->
+            {% if products.has_other_pages %}
+            <div class="pagination-wrapper text-center mt-4">
+                <ul class="pg-pagination list-unstyled">
+                    {% if products.has_previous %}
+                    <li class="pg-pagination__item">
+                        <a href="?q={{ query }}&products_page={{ products.previous_page_number }}{% if request.GET.services_page %}&services_page={{ request.GET.services_page }}{% endif %}"
+                            class="pg-pagination__link">
+                            <i class="icon-left-arrow"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% for num in products.paginator.page_range %}
+                    {% if products.number == num %}
+                    <li class="pg-pagination__item">
+                        <a href="#" class="pg-pagination__link pg-pagination__link--current">{{ num }}</a>
+                    </li>
+                    {% elif num > products.number|add:'-3' and num < products.number|add:'3' %} <li
+                        class="pg-pagination__item">
+                        <a href="?q={{ query }}&products_page={{ num }}{% if request.GET.services_page %}&services_page={{ request.GET.services_page }}{% endif %}"
+                            class="pg-pagination__link">{{ num }}</a>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+
+                        {% if products.has_next %}
+                        <li class="pg-pagination__item">
+                            <a href="?q={{ query }}&products_page={{ products.next_page_number }}{% if request.GET.services_page %}&services_page={{ request.GET.services_page }}{% endif %}"
+                                class="pg-pagination__link">
+                                <i class="icon-right-arrow"></i>
+                            </a>
+                        </li>
+                        {% endif %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% endif %}
+    </div>
+</section>
+
+<!-- Advanced Search Section -->
+{% if query and total_results > 0 %}
+<section class="search-suggestions section-space-bottom">
+    <div class="container">
+        <div class="text-center">
+            <h4>Didn't find what you're looking for?</h4>
+            <p class="text-muted mb-4">Try browsing our categories or contact us for assistance.</p>
+            <div class="row justify-content-center">
+                <div class="col-md-3">
+                    <a href="{% url 'products' %}" class="grdeen-btn w-100">
+                        <span>All Products</span>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="{% url 'services' %}" class="grdeen-btn grdeen-btn--base w-100">
+                        <span>All Services</span>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="{% url 'contact' %}" class="grdeen-btn grdeen-btn--base-two w-100">
+                        <span>Contact Us</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<style>
+    /* Product Action Buttons Styles */
+    .product__action-buttons {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+
+    .action-buttons-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .product-action-btn {
+        width: 60px !important;
+        height: 60px !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        border: 2px solid #e8f5e8 !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: #1a9120 !important;
+        text-decoration: none !important;
+        font-size: 25px !important;
+        transition: all 0.3s ease !important;
+        position: relative !important;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1) !important;
+        backdrop-filter: blur(5px) !important;
+    }
+
+    .product-action-btn:hover {
+        background: #1a9120 !important;
+        color: white !important;
+        transform: translateY(-2px) scale(1.05) !important;
+        box-shadow: 0 6px 20px rgba(26, 145, 32, 0.4) !important;
+        border-color: #1a9120 !important;
+    }
+
+    .product-action-btn:active {
+        transform: translateY(0px) scale(0.98) !important;
+    }
+
+    /* Wishlist specific styling */
+    .wishlist-btn:hover {
+        background: #ff4757 !important;
+        border-color: #ff4757 !important;
+        box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4) !important;
+    }
+
+    /* Cart specific styling */
+    .cart-btn:hover {
+        background: #2ed573 !important;
+        border-color: #2ed573 !important;
+        box-shadow: 0 6px 20px rgba(46, 213, 115, 0.4) !important;
+    }
+
+    /* Tooltip styles */
+    .btn-tooltip {
+        position: absolute;
+        right: 55px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        pointer-events: none;
+        z-index: 1000;
+    }
+
+    .btn-tooltip::after {
+        content: '';
+        position: absolute;
+        left: -5px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: 5px solid transparent;
+        border-right-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .product-action-btn:hover .btn-tooltip {
+        opacity: 1;
+        visibility: visible;
+        right: 60px;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+        .product-action-btn {
+            width: 38px !important;
+            height: 38px !important;
+            font-size: 14px !important;
+        }
+
+        .btn-tooltip {
+            display: none !important;
+        }
+
+        .product__action-buttons {
+            right: 10px !important;
+            top: 10px !important;
+        }
+    }
+
+    /* Animation for liked/added state */
+    .product-action-btn.liked {
+        background: #ff4757 !important;
+        color: white !important;
+        border-color: #ff4757 !important;
+    }
+
+    .product-action-btn.added-to-cart {
+        background: #2ed573 !important;
+        color: white !important;
+        border-color: #2ed573 !important;
+    }
+
+    /* Pulse animation for interactions */
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.1);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    .product-action-btn.pulse {
+        animation: pulse 0.3s ease-in-out;
+    }
+
+    .search-results .service-card-one {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .search-results .service-card-one:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Service Card Styles */
+    .service-one__item {
+        position: relative;
+        background: #ffffff;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        transition: all 0.4s ease;
+        margin-bottom: 30px;
+    }
+
+    .service-one__item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+    }
+
+    .service-one__item__bgeffect {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0.03;
+        z-index: 1;
+    }
+
+    .service-one__item__titlewrap {
+        position: relative;
+        z-index: 2;
+        padding: 30px 25px 20px;
+    }
+
+    .service-one__item__titlecol {
+        text-align: left;
+    }
+
+    .service-one__item__title {
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        line-height: 1.3;
+    }
+
+    .service-one__item__title a {
+        color: #1a1a1a;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .service-one__item__title a:hover {
+        color: #2ECC71;
+    }
+
+    .service-one__item__text {
+        color: #666;
+        font-size: 15px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .service-one__item__link {
+        color: #2ECC71;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        position: relative;
+        display: inline-block;
+        transition: all 0.3s ease;
+    }
+
+    .service-one__item__link:hover {
+        color: #27AE60;
+        transform: translateX(5px);
+    }
+
+    .service-one__item__link::after {
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: #2ECC71;
+        transition: width 0.3s ease;
+    }
+
+    .service-one__item__link:hover::after {
+        width: 100%;
+    }
+
+    .service-one__item__image {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .service-one__item__image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+
+    .service-one__item:hover .service-one__item__image img {
+        transform: scale(1.05);
+    }
+
+    .service-one__item__iconwrap {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+    }
+
+    .service-one__item:hover .service-one__item__iconwrap {
+        background: #2ECC71;
+        transform: scale(1.1);
+    }
+
+    .service-one__item__icon {
+        font-size: 24px;
+        color: #2ECC71;
+        transition: color 0.3s ease;
+    }
+
+    .service-one__item:hover .service-one__item__icon {
+        color: white;
+    }
+
+    .service-one__item__btmwrap {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .service-one__item__iconlink {
+        width: 50px;
+        height: 50px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #2ECC71;
+        text-decoration: none;
+        font-size: 18px;
+        transition: all 0.3s ease;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .service-one__item__iconlink:hover {
+        background: #2ECC71;
+        color: white;
+        transform: scale(1.1);
+    }
+
+    /* Service grid adjustments */
+    .services-results .row.gutter-y-30 {
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+
+    .services-results .row.gutter-y-30>[class*="col-"] {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .service-one__item__titlewrap {
+            padding: 20px 20px 15px;
+        }
+
+        .service-one__item__title {
+            font-size: 18px;
+        }
+
+        .service-one__item__text {
+            font-size: 14px;
+        }
+
+        .service-one__item__image {
+            height: 180px;
+        }
+
+        .service-one__item__iconwrap {
+            width: 50px;
+            height: 50px;
+            top: 15px;
+            left: 15px;
+        }
+
+        .service-one__item__icon {
+            font-size: 20px;
+        }
+
+        .service-one__item__iconlink {
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+            bottom: 15px;
+            right: 15px;
+        }
+    }
+
+    .search-info {
+        border-bottom: 2px solid #f8f9fa;
+        padding-bottom: 1rem;
+    }
+
+    .search-icon {
+        opacity: 0.5;
+    }
+
+    .services-results {
+        border-bottom: 1px solid #e9ecef;
+        padding-bottom: 2rem;
+    }
+
+    @media (max-width: 768px) {
+        .search-suggestions .row .col-md-3 {
+            margin-bottom: 1rem;
+        }
+    }
+</style>
+{% endblock %}

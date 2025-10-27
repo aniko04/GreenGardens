@@ -1,8 +1,4 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block title %}Verify Reset Code - GreenGardens{% endblock %}
-
+{% extends "base.html" %} {% load static %}
 {% block content %}
 <section class="page-header">
     <div class="page-header__bg"></div>
@@ -10,28 +6,28 @@
     <div class="page-header__overlay"></div>
     <!-- /.page-header__bg -->
     <div class="container">
-        <h2 class="page-header__title">Verify Reset Code</h2>
+        <h2 class="page-header__title">Email Verification</h2>
         <ul class="grdeen-breadcrumb list-unstyled">
             <li><a href="{% url 'home' %}">Home</a></li>
-            <li><span>Verify Code</span></li>
+            <li><span>Email Verification</span></li>
         </ul><!-- /.thm-breadcrumb list-unstyled -->
     </div><!-- /.container -->
 </section><!-- /.page-header -->
 
-<!-- Verify Code Start -->
+<!-- Email Verification Start -->
 <section class="login-page">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-6 col-md-8 wow fadeInUp animated" data-wow-delay="300ms">
                 <div class="login-page__wrap">
                     <div class="text-center mb-4">
-                        <div class="verify-code-icon">
-                            <i class="fas fa-shield-alt"
-                                style="font-size: 3rem; color: #4CAF50; margin-bottom: 1rem;"></i>
+                        <div class="email-verify-icon">
+                            <i class="fas fa-envelope-open-text"
+                                style="font-size: 3rem; color: #17a2b8; margin-bottom: 1rem;"></i>
                         </div>
-                        <h3 class="login-page__wrap__title">Enter Verification Code</h3>
+                        <h3 class="login-page__wrap__title">Verify Your Email</h3>
                         <p class="verify-subtitle">We've sent a 6-digit verification code to your email address. Please
-                            enter it below to continue.</p>
+                            enter it below to complete your registration.</p>
                     </div>
 
                     {% if messages %}
@@ -46,7 +42,7 @@
                     {% endfor %}
                     {% endif %}
 
-                    <form class="login-page__form" method="post" action="{% url 'password_reset_verify' %}">
+                    <form class="login-page__form" method="post" action="{% url 'email_verification' %}">
                         {% csrf_token %}
                         <div class="login-page__form-input-box">
                             <input type="email" name="email" placeholder="Enter your email address *" required
@@ -54,10 +50,11 @@
                         </div>
 
                         <div class="verification-code-section">
-                            <label class="verification-label">Verification Code</label>
+                            <label class="verification-label">Email Verification Code</label>
                             <div class="verification-code-container">
-                                <input type="text" name="verification_code" id="verification_code" placeholder="000000"
-                                    maxlength="6" pattern="[0-9]{6}" class="verification-code-input" required>
+                                <input type="text" name="verification_code" id="email_verification_code"
+                                    placeholder="000000" maxlength="6" pattern="[0-9]{6}"
+                                    class="verification-code-input" required>
                             </div>
                             <small class="code-expiry-text">
                                 <i class="fas fa-clock me-1"></i>Code expires in 15 minutes
@@ -65,9 +62,9 @@
                         </div>
 
                         <div class="login-page__form-btn-box">
-                            <button type="submit" class="grdeen-btn verify-btn">
-                                <i class="fas fa-check me-2"></i>
-                                <span>Verify Code</span>
+                            <button type="submit" class="grdeen-btn email-verify-btn">
+                                <i class="fas fa-envelope-check me-2"></i>
+                                <span>Verify Email</span>
                             </button>
                         </div>
                     </form>
@@ -75,25 +72,25 @@
                     <div class="verify-footer-links">
                         <div class="resend-code-section">
                             <p>Didn't receive the code?</p>
-                            <a href="{% url 'password_reset' %}" class="resend-link">
-                                <i class="fas fa-redo me-1"></i>Request a new code
+                            <a href="{% url 'register' %}" class="resend-link">
+                                <i class="fas fa-user-plus me-1"></i>Register again
                             </a>
                         </div>
                         <div class="back-to-login">
                             <a href="{% url 'login' %}" class="back-link">
-                                <i class="fas fa-arrow-left me-1"></i>Back to Login
+                                <i class="fas fa-sign-in-alt me-1"></i>Already verified? Login here
                             </a>
                         </div>
                     </div>
-                </div>
+                </div><!-- verification-form -->
             </div>
         </div>
     </div>
 </section>
-<!-- Verify Code End -->
+<!-- Email Verification End -->
 
 <style>
-    /* Custom styles for verification page */
+    /* Custom styles for email verification page */
     .verify-subtitle {
         color: #666;
         font-size: 14px;
@@ -136,9 +133,9 @@
 
     .verification-code-input:focus {
         outline: none;
-        border-color: #4CAF50;
+        border-color: #17a2b8;
         background-color: #fff;
-        box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.1);
         transform: translateY(-1px);
     }
 
@@ -156,22 +153,22 @@
         justify-content: center;
     }
 
-    .verify-btn {
+    .email-verify-btn {
         width: 100%;
         padding: 15px 30px;
         font-size: 16px;
         font-weight: 600;
         border-radius: 10px;
         transition: all 0.3s ease;
-        background: linear-gradient(135deg, #4CAF50, #45a049);
+        background: linear-gradient(135deg, #17a2b8, #138496);
         border: none;
-        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        box-shadow: 0 4px 15px rgba(23, 162, 184, 0.3);
     }
 
-    .verify-btn:hover {
+    .email-verify-btn:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
-        background: linear-gradient(135deg, #45a049, #4CAF50);
+        box-shadow: 0 6px 20px rgba(23, 162, 184, 0.4);
+        background: linear-gradient(135deg, #138496, #17a2b8);
     }
 
     .verify-footer-links {
@@ -182,7 +179,7 @@
     .resend-code-section {
         margin-bottom: 20px;
         padding: 20px;
-        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        background: linear-gradient(135deg, #e7f6ff, #d4f1f7);
         border-radius: 10px;
         border-left: 4px solid #17a2b8;
     }
@@ -265,8 +262,34 @@
         left: 0;
         right: 0;
         height: 4px;
-        background: linear-gradient(90deg, #4CAF50, #45a049, #4CAF50);
+        background: linear-gradient(90deg, #17a2b8, #138496, #17a2b8);
         border-radius: 20px 20px 0 0;
+    }
+
+    /* Email specific icon styling */
+    .email-verify-icon i {
+        animation: emailPulse 2s infinite;
+    }
+
+    @keyframes emailPulse {
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.05);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    /* Success state for verification input */
+    .verification-code-input.success {
+        border-color: #28a745;
+        background-color: #f8fff8;
+        color: #28a745;
     }
 
     /* Responsive design */
@@ -286,11 +309,26 @@
             font-size: 13px;
         }
     }
+
+    /* Loading spinner animation */
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .fa-spin {
+        animation: spin 1s linear infinite;
+    }
 </style>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const verificationInput = document.querySelector('#verification_code');
+        const verificationInput = document.querySelector('#email_verification_code');
 
         if (verificationInput) {
             // Auto-format verification code input
@@ -305,9 +343,17 @@
 
                 // Add visual feedback
                 if (this.value.length === 6) {
+                    this.classList.add('success');
                     this.style.borderColor = '#28a745';
                     this.style.backgroundColor = '#f8fff8';
+
+                    // Add a subtle success animation
+                    this.style.transform = 'scale(1.02)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 200);
                 } else {
+                    this.classList.remove('success');
                     this.style.borderColor = '#e1e5e9';
                     this.style.backgroundColor = '#f8f9fa';
                 }
@@ -326,16 +372,55 @@
             });
 
             // Focus the input on page load
-            verificationInput.focus();
+            setTimeout(() => {
+                verificationInput.focus();
+            }, 500);
 
             // Add loading state to button on form submit
             const form = verificationInput.closest('form');
-            const submitBtn = form.querySelector('.verify-btn');
+            const submitBtn = form.querySelector('.email-verify-btn');
 
             form.addEventListener('submit', function (e) {
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i><span>Verifying...</span>';
-                submitBtn.disabled = true;
+                if (verificationInput.value.length === 6) {
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i><span>Verifying Email...</span>';
+                    submitBtn.disabled = true;
+                    submitBtn.style.opacity = '0.8';
+                } else {
+                    e.preventDefault();
+                    verificationInput.focus();
+                    verificationInput.style.borderColor = '#dc3545';
+                    verificationInput.placeholder = 'Please enter 6 digits';
+
+                    setTimeout(() => {
+                        verificationInput.style.borderColor = '#e1e5e9';
+                        verificationInput.placeholder = '000000';
+                    }, 2000);
+                }
             });
+
+            // Add typing sound effect (optional)
+            verificationInput.addEventListener('keydown', function (e) {
+                // Add a subtle visual feedback on keypress
+                if (e.key >= '0' && e.key <= '9') {
+                    this.style.backgroundColor = '#e8f4fd';
+                    setTimeout(() => {
+                        if (this.value.length < 6) {
+                            this.style.backgroundColor = '#f8f9fa';
+                        }
+                    }, 100);
+                }
+            });
+        }
+
+        // Add floating animation to the email icon
+        const emailIcon = document.querySelector('.email-verify-icon i');
+        if (emailIcon) {
+            setInterval(() => {
+                emailIcon.style.transform = 'translateY(-3px)';
+                setTimeout(() => {
+                    emailIcon.style.transform = 'translateY(0px)';
+                }, 1000);
+            }, 3000);
         }
     });
 </script>

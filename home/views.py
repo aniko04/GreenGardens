@@ -13,6 +13,9 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.conf import settings
+from django.views.decorators.csrf import csrf_protect
+from django.utils.decorators import method_decorator
+from django.db.models import Q
 from home.models import *
 
 # Create your views here.
@@ -338,6 +341,50 @@ def faq(request):
     context = {'faqs': faqs}
     return render(request, 'faq.html', context)
 
+def search(request):
+    query = request.GET.get('q', '').strip()
+    products = []
+    services = []
+    
+    if query:
+        # Product qidirish - name, mini_description va description maydonlarida
+        products = Product.objects.filter(
+            Q(name__icontains=query) | 
+            Q(mini_description__icontains=query) | 
+            Q(description__icontains=query),
+            is_active=True
+        ).distinct()
+        
+        # Service qidirish - title, subtitle, description va content maydonlarida
+        services = OurService.objects.filter(
+            Q(pagename__icontains=query) | 
+            Q(subtitle__icontains=query) | 
+            Q(description__icontains=query) | 
+            Q(content__icontains=query),
+            is_active=True
+        ).distinct()
+    
+    # Pagination
+    products_paginator = Paginator(products, 6)
+    services_paginator = Paginator(services, 6)
+    
+    products_page = request.GET.get('products_page')
+    services_page = request.GET.get('services_page')
+    
+    products_obj = products_paginator.get_page(products_page)
+    services_obj = services_paginator.get_page(services_page)
+    
+    context = {
+        'query': query,
+        'products': products_obj,
+        'services': services_obj,
+        'products_count': products.count(),
+        'services_count': services.count(),
+        'total_results': products.count() + services.count(),
+    }
+    
+    return render(request, 'search.html', context)
+
 
 # --- LOGIN VIEW ---
 def login_view(request):
@@ -372,22 +419,134 @@ def register_view(request):
         email = request.POST.get('email')
         phone = request.POST.get('phone')
         password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
 
-        # Username sifatida emailni ishlatamiz (siz istasangiz alohida username maydon ham qo‘shish mumkin)
-        username = email.split('@')[0]
-
-        if User.objects.filter(username=username).exists():
-            messages.error(request, "This user already exists!")
+        # Parollar bir xil ekanligini tekshirish
+        if password != confirm_password:
+            messages.error(request, "Passwords do not match!")
             return redirect('register')
 
-        # Yangi foydalanuvchi yaratish
-        user = User.objects.create_user(username=username, email=email, password=password)
-        UserProfile.objects.create(user=user, phone=phone)
+        # Username sifatida emailni ishlatamiz
+        username = email.split('@')[0]
 
-        messages.success(request, "Registration successful! You can now log in.")
-        return redirect('login')
+        # Email allaqachon ro'yxatdan o'tganligini tekshirish
+        if User.objects.filter(email=email).exists():
+            messages.error(request, "This email is already registered!")
+            return redirect('register')
+
+        if User.objects.filter(username=username).exists():
+            # Agar username mavjud bo'lsa, raqam qo'shamiz
+            import random
+            username = f"{username}{random.randint(100, 999)}"
+
+        # 6 xonali tasdiqlash kodini yaratish
+        import random
+        verification_code = str(random.randint(100000, 999999))
+        
+        # Foydalanuvchi ma'lumotlarini saqlaymiz
+        user_data = {
+            'username': username,
+            'email': email,
+            'password': password,
+            'phone': phone
+        }
+        
+        # Eski tokenlarni o'chirish
+        EmailVerificationToken.objects.filter(email=email).delete()
+        
+        # Yangi token yaratish
+        from django.utils import timezone
+        from datetime import timedelta
+        
+        verification_token = EmailVerificationToken.objects.create(
+            email=email,
+            verification_code=verification_code,
+            user_data=user_data,
+            expires_at=timezone.now() + timedelta(minutes=15)  # 15 daqiqa amal qiladi
+        )
+        
+        # Email yuborish
+        subject = 'Email Verification Code - GreenGardens'
+        message = f"""
+        Hi there!
+
+        Welcome to GreenGardens! Please verify your email address to complete your registration.
+
+        Your verification code is: {verification_code}
+
+        This code will expire in 15 minutes.
+
+        If you didn't request this, please ignore this email.
+
+        Best regards,
+        GreenGardens Team
+        """
+        
+        try:
+            send_mail(
+                subject,
+                message,
+                settings.DEFAULT_FROM_EMAIL,
+                [email],
+                fail_silently=False,
+            )
+            messages.success(request, f"Verification code has been sent to {email}. Please check your email and enter the code to complete registration.")
+            return redirect('email_verification')
+        except Exception as e:
+            messages.error(request, f"Error sending email: {str(e)}")
+            # Development rejimida kodni ko'rsatish
+            messages.info(request, f"Development mode - Your verification code is: {verification_code}")
+            return redirect('email_verification')
 
     return render(request, 'login.html')
+
+
+# --- EMAIL VERIFICATION VIEW ---
+@csrf_protect
+def email_verification_view(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        verification_code = request.POST.get('verification_code')
+        
+        if email and verification_code:
+            try:
+                # Token topish
+                from django.utils import timezone
+                token = EmailVerificationToken.objects.get(
+                    email=email,
+                    verification_code=verification_code,
+                    is_used=False
+                )
+                
+                # Token muddati tugaganligini tekshirish
+                if token.is_expired():
+                    messages.error(request, "Verification code has expired. Please register again.")
+                    return redirect('register')
+                
+                # Foydalanuvchi ma'lumotlarini olish
+                user_data = token.user_data
+                
+                # Foydalanuvchini yaratish
+                user = User.objects.create_user(
+                    username=user_data['username'],
+                    email=user_data['email'],
+                    password=user_data['password']
+                )
+                UserProfile.objects.create(user=user, phone=user_data['phone'])
+                
+                # Tokenni ishlatilgan deb belgilash
+                token.is_used = True
+                token.save()
+                
+                messages.success(request, "Email verification successful! Your account has been created. You can now log in.")
+                return redirect('login')
+                
+            except EmailVerificationToken.DoesNotExist:
+                messages.error(request, "Invalid verification code or email address.")
+        else:
+            messages.error(request, "Please provide both email and verification code.")
+    
+    return render(request, 'email-verification.html')
 
 
 # --- LOGOUT VIEW ---

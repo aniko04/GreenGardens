@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Three || Grdeen || HTML Template For Gardening And Landscaping</title>
     <!-- favicons Icons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/images/favicons/apple-touch-icon.png' %}"> 
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/images/favicons/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/images/favicons/favicon-32x32.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/images/favicons/favicon-16x16.png' %}">
     <link rel="manifest" href="{% static 'assets/images/favicons/site.webmanifest' %}">
-    <meta name="description" content="Grdeen is a modern HTML Template for Garden care, Spring cleaning, Lawn care, Garden Design, Planting, Garden maintenance and Lawn care & mowing
+    <meta name="description"
+        content="Grdeen is a modern HTML Template for Garden care, Spring cleaning, Lawn care, Garden Design, Planting, Garden maintenance and Lawn care & mowing
     .The template perfectly fits Garden care, Spring cleaning, Lawn care and Wellness Treatments websites and businesses.">
 
     <!-- fonts -->
@@ -37,11 +38,26 @@
 
     <!-- template styles -->
     <link rel="stylesheet" href="{% static 'assets/css/grdeen.css' %}">
-    
+
     <!-- Notification System Styles -->
     <link rel="stylesheet" href="{% static 'assets/css/notifications.css' %}">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- User Menu Styles -->
+    <link rel="stylesheet" href="{% static 'assets/css/user-menu.css' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+        <style>
+            .goog-logo-link,
+            .goog-te-gadget span {
+                display: none !important;
+            }
+            .goog-te-gadget {
+                font-size: 0;
+            }
+        </style>
 </head>
 
 <body class="custom-cursor">
@@ -72,6 +88,23 @@
                         </li>
                     </ul><!-- /.list-unstyled topbar-one__info -->
                     <div class="topbar-one__right">
+                        {% if user.is_authenticated %}
+                        <div class="user-menu-dropdown dropdown">
+                            <a href="#" class="grdeen-btn main-header__btn dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="fas fa-user me-2"></i>
+                                <span>{{ user.email|default:user.username }}</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="{% url 'logout' %}"><i
+                                            class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                            </ul>
+                        </div>
+                        {% else %}
+                        <a href="{% url 'login' %}" class="grdeen-btn main-header__btn">
+                            <span>Login</span>
+                        </a><!-- /.thm-btn main-header__btn -->
+                        {% endif %}
                         <div class="topbar-one__right__openitme d-flex align-items-center">
                             <div class="topbar-one__right__iconwrap">
                                 <i class="fas fa-phone-square-alt"></i>
@@ -83,6 +116,7 @@
                             <li><a href="{% url 'team' %}">Career</a></li>
                             <li><a href="{% url 'about' %}">Office</a></li>
                         </ul>
+                        <div id="google_translate_element"></div>
                         <div class="topbar-one__social">
                             {% for social in social_links %}
                             <a href="{{ social.url }}" target="_blank">{{ social.icon|safe }}
@@ -108,7 +142,7 @@
                         <ul class="main-menu__list">
 
 
-                            
+
 
 
                             <li class="dropdown">
@@ -125,14 +159,15 @@
                                 <ul>
                                     <li><a href="{% url 'team' %}">Our team</a></li>
                                     <li><a href="{% url 'faq' %}">FAQs</a></li>
-                                    <li><a href="{% url 'login' %}">Login</a></li>
+
                                 </ul>
                             </li>
                             <li class="dropdown">
                                 <a href="#">Shop</a>
                                 <ul class="sub-menu">
                                     <li class="dropdown">
-                                        <a href="{% url 'products' %}">Products</a></li>
+                                        <a href="{% url 'products' %}">Products</a>
+                                    </li>
                                     <li><a href="{% url 'cart' %}">Cart</a></li>
                                     <li><a href="{% url 'my_likes' %}">My Likes</a></li>
                                     <li><a href="{% url 'checkout' %}">Checkout</a></li>
@@ -179,9 +214,7 @@
                             <span></span>
                             <span></span>
                         </div><!-- /.mobile-nav__toggler -->
-                        <a href="{% url 'contact' %}" class="grdeen-btn main-header__btn">
-                            <span>Get A Quote</span>
-                        </a><!-- /.thm-btn main-header__btn -->
+
                         <a href="#" class="search-toggler main-header__search">
                             <div class="main-header__search__icon">
                                 <i class="icon-search" aria-hidden="true"></i>
@@ -204,53 +237,57 @@
                         </a><!-- /.likes-toggler -->
 
                         <div class="main-header__helpline">
-                            <div class="main-header__helpline__bg" style="background-image: url('{% static 'assets/images/shapes/nav-phone-icon3-1.png' %}')"></div>
+                            <div class="main-header__helpline__bg"
+                                style="background-image: url('{% static 'assets/images/shapes/nav-phone-icon3-1.png' %}')">
+                            </div>
                             <div class="main-header__helpline__icon">
                                 <i class="icon-phone-receiver-silhouette"></i>
                             </div>
                             <div class="main-header__helpline__phonewrap">
                                 <p class="main-header__helpline__text">Helpline</p>
-                                <a class="main-header__helpline__tel" href="tel:{{ info.phone_number }}">{{ info.phone_number }}</a>
+                                <a class="main-header__helpline__tel"
+                                    href="tel:{{ info.phone_number }}">{{info.phone_number }}</a>
                             </div>
                         </div>
                     </div><!-- /.main-header__right -->
                 </div><!-- /.main-header__inner -->
             </div><!-- /.container-fluid -->
         </header><!-- /.main-header -->
-        
+
         <!-- Notification Container -->
         <div class="notification-container" id="notification-container">
             {% if messages %}
-                {% for message in messages %}
-                    <div class="notification notification-{{ message.tags }}" data-auto-dismiss="5000">
-                        <div class="notification-icon">
-                            {% if message.tags == 'success' %}
-                                <i class="fas fa-check-circle"></i>
-                            {% elif message.tags == 'error' %}
-                                <i class="fas fa-times-circle"></i>
-                            {% elif message.tags == 'warning' %}
-                                <i class="fas fa-exclamation-triangle"></i>
-                            {% elif message.tags == 'info' %}
-                                <i class="fas fa-info-circle"></i>
-                            {% else %}
-                                <i class="fas fa-bell"></i>
-                            {% endif %}
-                        </div>
-                        <div class="notification-content">
-                            {{ message }}
-                        </div>
-                        <button class="notification-close" onclick="dismissNotification(this)">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                {% endfor %}
+            {% for message in messages %}
+            <div class="notification notification-{{ message.tags }}" data-auto-dismiss="5000">
+                <div class="notification-icon">
+                    {% if message.tags == 'success' %}
+                    <i class="fas fa-check-circle"></i>
+                    {% elif message.tags == 'error' %}
+                    <i class="fas fa-times-circle"></i>
+                    {% elif message.tags == 'warning' %}
+                    <i class="fas fa-exclamation-triangle"></i>
+                    {% elif message.tags == 'info' %}
+                    <i class="fas fa-info-circle"></i>
+                    {% else %}
+                    <i class="fas fa-bell"></i>
+                    {% endif %}
+                </div>
+                <div class="notification-content">
+                    {{ message }}
+                </div>
+                <button class="notification-close" onclick="dismissNotification(this)">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            {% endfor %}
             {% endif %}
         </div>
-        
+
         {% block content %}
         {% endblock %}
         <footer class="main-footer main-footer--two">
-            <div class="main-footer__bg" style="background-image: url({% static 'assets/images/backgrounds/footer-bg1-1.jpg' %})"></div>
+            <div class="main-footer__bg"
+                style="background-image: url({% static 'assets/images/backgrounds/footer-bg1-1.jpg' %})"></div>
             <div class="main-footer__overlay"></div>
             <!-- /.main-footer__bg -->
             <div class="main-footer__top">
@@ -259,12 +296,15 @@
                         <div class="footer-widget__col footer-widget__col__col1">
                             <div class="footer-widget footer-widget--about">
                                 <a href="index.html" class="footer-widget__logo">
-                                    <img src="{% static 'assets/images/logo-light.png' %}" width="155" alt="Agrofa HTML Template">
+                                    <img src="{% static 'assets/images/logo-light.png' %}" width="155"
+                                        alt="Agrofa HTML Template">
                                 </a>
-                                <p class="footer-widget__experience-text">Over 20 years of experience we’ll ensure you get the best guidance.</p>
+                                <p class="footer-widget__experience-text">Over 20 years of experience we’ll ensure you
+                                    get the best guidance.</p>
                                 <div class="footer-widget__newsletterwrap">
                                     <h6 class="footer-widget__title footer-widget__title--newsletter">Newsletter</h6>
-                                    <form action="#" data-url="MAILCHIMP_FORM_URL" class="footer-widget__newsletter mc-form">
+                                    <form action="#" data-url="MAILCHIMP_FORM_URL"
+                                        class="footer-widget__newsletter mc-form">
                                         <div class="footer-widget__mail-address">
                                             <input type="email" name="email" placeholder="Email Address">
                                         </div>
@@ -281,7 +321,7 @@
                                 <ul class="list-unstyled footer-widget__links">
                                     <li><a href="checkout.html">Cookie Policy</a></li>
                                     <li><a href="products-right.html">Shop</a></li>
-                                    <li><a href="login.html">Login</a></li>
+                                    <li><a href="{% url 'login' %}">Login</a></li>
                                     <li><a href="{% url 'about' %}">About us</a></li>
                                     <li><a href="{% url 'contact' %}">Contact Us</a></li>
                                 </ul><!-- /.list-unstyled footer-widget__links -->
@@ -325,7 +365,8 @@
                                             <span class="footer-widget__post-date"><i class="far fa-calendar"></i>
                                                 <span> 02 Sep 2023</span>
                                             </span>
-                                            <h6 class="footer-widget__post-heading"><a href="blog.html">Vegetable crops that do not need pollinators</a></h6>
+                                            <h6 class="footer-widget__post-heading"><a href="blog.html">Vegetable crops
+                                                    that do not need pollinators</a></h6>
                                         </div>
                                     </div>
 
@@ -337,7 +378,8 @@
                                             <span class="footer-widget__post-date"><i class="far fa-calendar"></i>
                                                 <span> 05 Sep 2023</span>
                                             </span>
-                                            <h6 class="footer-widget__post-heading"><a href="blog.html">Grow your own pumpkins even in small spaces</a></h6>
+                                            <h6 class="footer-widget__post-heading"><a href="blog.html">Grow your own
+                                                    pumpkins even in small spaces</a></h6>
                                         </div>
                                     </div>
                                 </div>
@@ -356,7 +398,8 @@
                             <p class="main-footer__social-row-text">Social</p>
                             <ul class="main-footer__social-list">
                                 {% for social in social_links %}
-                                <li><a href="#" target="_blank">{{ social.icon|safe }}<span class="sr-only">{{ social.platform }}</span></a></li>
+                                <li><a href="#" target="_blank">{{ social.icon|safe }}<span class="sr-only">{{
+                                            social.platform }}</span></a></li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -374,7 +417,8 @@
             <span class="mobile-nav__close mobile-nav__toggler"><i class="fa fa-times"></i></span>
 
             <div class="logo-box">
-                <a href="{% url 'home' %}" aria-label="logo image"><img src="{% static 'assets/images/logo-light.png' %}" width="155" alt=""></a>
+                <a href="{% url 'home' %}" aria-label="logo image"><img
+                        src="{% static 'assets/images/logo-light.png' %}" width="155" alt=""></a>
             </div>
             <!-- /.logo-box -->
             <div class="mobile-nav__container"></div>
@@ -416,8 +460,9 @@
         <div class="search-popup__overlay search-toggler"></div>
         <!-- /.search-popup__overlay -->
         <div class="search-popup__content">
-            <form role="search" method="get" class="search-popup__form" action="#">
-                <input type="text" id="search" placeholder="Search Here...">
+            <form role="search" method="get" class="search-popup__form" action="{% url 'search' %}">
+                <input type="text" id="search" name="q" placeholder="Search products, services..."
+                    value="{{ request.GET.q }}">
                 <button type="submit" aria-label="search submit" class="grdeen-btn">
                     <span><i class="icon-search"></i></span>
                 </button>
@@ -454,442 +499,442 @@
     <script src="{% static 'assets/vendors/jquery-lettering/jquery.lettering.min.js' %}"></script>
     <!-- template js -->
     <script src="{% static 'assets/js/grdeen.js' %}"></script>
-    
+
     <!-- Notification System JavaScript -->
     <script src="{% static 'assets/js/notifications.js' %}"></script>
 
     <!--Start of Tawk.to Script-->
     <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/68fb1c7bd84f3b1958009630/1j8aeegsf';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/68fb1c7bd84f3b1958009630/1j8aeegsf';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
     </script>
-<!--End of Tawk.to Script-->
-<script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            const likeButtons = document.querySelectorAll('.like_product');
-                            likeButtons.forEach(a => {
-                                    const productId = a.getAttribute('data-id');
-                                    fetch(`/api/user/${productId}/likes/`, {
-                                        method: 'GET',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                        }
-                                    })
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        if (data.liked) {
-                                            a.innerHTML = '<i class="fas fa-heart"></i>';
-                                        } else {
-                                            a.innerHTML = '<i class="icon-heart"></i>';
-                                        }
-                                    })
-                                    .catch(error => console.info('Error:', error));
-                                });
-                            likeButtons.forEach(button => {
-                                    button.addEventListener('click', function(event) {
-                                        event.preventDefault();
-                                        const productId = this.getAttribute('data-id');
-                                        fetch(`/api/user/${productId}/like/add`, {
-                                            method: 'POST',
-                                            headers: {
-                                                'Content-Type': 'application/json',
-                                                'X-CSRFToken': '{{ csrf_token }}'
-                                            },
-                                            body: JSON.stringify({}) // Body can be empty for this request
-                                        })
-                                        .then(response => response.json())
-                                        .then(data => {
-                                            if (data.status == 'liked') {
-                                                this.innerHTML = '<i class="fas fa-heart"></i>';
-                                               
-                                            } else {
-                                                this.innerHTML = '<i class="far fa-heart"></i>';
-                                                
-                                            }
-                                            updateLikesCount();
-                                        })
-                                        .catch(error => console.error('Error:', error));
-                                    });
-                                });
-                            });
-                        
-</script>
-<script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            const cartButtons = document.querySelectorAll('.cart_api');
-                            cartButtons.forEach(a => {
-                                    const productId = a.getAttribute('data-id');
-                                    fetch(`/api/user/${productId}/cart/`, {
-                                        method: 'GET',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                        }
-                                    })
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        console.log(data);
-                                        if (data.added) {
-                                            a.classList.add('cart-active');
-                                            a.innerHTML = '<i class="fas fa-shopping-cart"></i>';
-                                            
-                                        } else {
-                                            // a.classList.remove('cart-active');
-                                            
-                                            a.innerHTML = '<i class="fas fa-cart-plus"></i>';
-                                        }
-                                    })
-                                    .catch(error => console.info('Error:', error));
-                                });
-                            cartButtons.forEach(button => {
-                                    button.addEventListener('click', function(event) {
-                                        event.preventDefault();
-                                        const productId = this.getAttribute('data-id');
-                                        fetch(`/api/user/${productId}/cart/add`, {
-                                            method: 'POST',
-                                            headers: {
-                                                'Content-Type': 'application/json',
-                                                'X-CSRFToken': '{{ csrf_token }}'
-                                            },
-                                            body: JSON.stringify({}) // Body can be empty for this request
-                                        })
-                                        .then(response => response.json())
-                                        .then(data => {
-                                            if (data.status == 'added') {
-                                                this.classList.add('cart-active');
-                                                this.innerHTML = '<i class="fas fa-shopping-cart"></i>';
-                                                
-                                                updateCartCount();
-                                            } else   {
-                                                this.classList.remove('cart-active');
-                                                this.innerHTML = '<i class="fas fa-cart-plus"></i>';
-                                            }
-                                        })
-                                        .catch(error => console.error('Error:', error));
-                                        
-                                    });
-                                });
-                            });
-</script>
-<script>
-                        
-                  function updateCartCount() {
-                     const cart_count = document.querySelector('#cart_count');
-                     const main_header_cart_count = document.querySelector('.main-header__cart__count');
-                     
-                     fetch('/api/cart/count/', {
-                         method: 'GET',
-                         headers: {
-                             'Content-Type': 'application/json',
-                         }
-                     })
-                     .then(response => response.json())
-                     .then(data => {
-                         // Barcha cart count elementlarini yangilash
-                         if (cart_count) {
-                             cart_count.textContent = data.cart_count;
-                         }
-                         if (main_header_cart_count) {
-                             main_header_cart_count.textContent = data.cart_count;
-                         }
-                         
-                         // Header dagi cart count ni ham yangilash
-                         const headerCartCount = document.querySelector('.main-header__cart__count');
-                         if (headerCartCount) {
-                             headerCartCount.textContent = data.cart_count;
-                         }
-                     })
-                     .catch(error => console.error('Error fetching cart count:', error));
-                  }
+    <!--End of Tawk.to Script-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const likeButtons = document.querySelectorAll('.like_product');
+            likeButtons.forEach(a => {
+                const productId = a.getAttribute('data-id');
+                fetch(`/api/user/${productId}/likes/`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.liked) {
+                            a.innerHTML = '<i class="fas fa-heart"></i>';
+                        } else {
+                            a.innerHTML = '<i class="icon-heart"></i>';
+                        }
+                    })
+                    .catch(error => console.info('Error:', error));
+            });
+            likeButtons.forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const productId = this.getAttribute('data-id');
+                    fetch(`/api/user/${productId}/like/add`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({}) // Body can be empty for this request
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status == 'liked') {
+                                this.innerHTML = '<i class="fas fa-heart"></i>';
 
-                  document.addEventListener('DOMContentLoaded', function() {
-                     updateCartCount();
-                  });
-</script>
+                            } else {
+                                this.innerHTML = '<i class="far fa-heart"></i>';
 
+                            }
+                            updateLikesCount();
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
+            });
+        });
 
-<script>
-                  function updateLikesCount() {
-                     const likes_count = document.querySelector('#likes_count');
-                     fetch('/api/likes/count/', {
-                         method: 'GET',
-                         headers: {
-                             'Content-Type': 'application/json',
-                         }
-                     })
-                     .then(response => response.json())
-                     .then(data => {
-                         if (likes_count) {
-                             likes_count.textContent = data.likes_count;
-                         }
-                     })
-                     .catch(error => console.error('Error fetching likes count:', error));
-                  }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const cartButtons = document.querySelectorAll('.cart_api');
+            cartButtons.forEach(a => {
+                const productId = a.getAttribute('data-id');
+                fetch(`/api/user/${productId}/cart/`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.added) {
+                            a.classList.add('cart-active');
+                            a.innerHTML = '<i class="fas fa-shopping-cart"></i>';
 
-                  document.addEventListener('DOMContentLoaded', function() {
-                     updateLikesCount();
-                  });
-</script>
+                        } else {
+                            // a.classList.remove('cart-active');
 
-<!-- CART MANAGEMENT API FUNCTIONS -->
-<script>
-// Cart management functions - miqdorni o'zgartirish, o'chirish va tozalash
+                            a.innerHTML = '<i class="fas fa-cart-plus"></i>';
+                        }
+                    })
+                    .catch(error => console.info('Error:', error));
+            });
+            cartButtons.forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const productId = this.getAttribute('data-id');
+                    fetch(`/api/user/${productId}/cart/add`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({}) // Body can be empty for this request
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status == 'added') {
+                                this.classList.add('cart-active');
+                                this.innerHTML = '<i class="fas fa-shopping-cart"></i>';
 
+                                updateCartCount();
+                            } else {
+                                this.classList.remove('cart-active');
+                                this.innerHTML = '<i class="fas fa-cart-plus"></i>';
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
 
-// Cart miqdorini yangilash
-function updateCartQuantity(cartId, quantity) {
-    fetch(`/api/cart/update/${cartId}/`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': '{{ csrf_token }}'
-        },
-        body: JSON.stringify({
-            quantity: quantity
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'updated') {
-            showNotification(data.message, 'success');
-            
-            // Miqdor va narxni yangilash
-            updateCartItemDisplay(cartId, data.item_quantity, data.item_total);
+                });
+            });
+        });
+    </script>
+    <script>
+
+        function updateCartCount() {
+            const cart_count = document.querySelector('#cart_count');
+            const main_header_cart_count = document.querySelector('.main-header__cart__count');
+
+            fetch('/api/cart/count/', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Barcha cart count elementlarini yangilash
+                    if (cart_count) {
+                        cart_count.textContent = data.cart_count;
+                    }
+                    if (main_header_cart_count) {
+                        main_header_cart_count.textContent = data.cart_count;
+                    }
+
+                    // Header dagi cart count ni ham yangilash
+                    const headerCartCount = document.querySelector('.main-header__cart__count');
+                    if (headerCartCount) {
+                        headerCartCount.textContent = data.cart_count;
+                    }
+                })
+                .catch(error => console.error('Error fetching cart count:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
             updateCartCount();
-            updateCartTotals(data.cart_total_items, data.cart_total_price);
-            
-        } else if (data.status === 'removed') {
-            showNotification(data.message, 'info');
-            
-            // Item ni o'chirish
-            const cartItem = document.querySelector(`[data-cart-id="${cartId}"]`);
-            if (cartItem) {
-                cartItem.remove();
+        });
+    </script>
+
+
+    <script>
+        function updateLikesCount() {
+            const likes_count = document.querySelector('#likes_count');
+            fetch('/api/likes/count/', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (likes_count) {
+                        likes_count.textContent = data.likes_count;
+                    }
+                })
+                .catch(error => console.error('Error fetching likes count:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            updateLikesCount();
+        });
+    </script>
+
+    <!-- CART MANAGEMENT API FUNCTIONS -->
+    <script>
+        // Cart management functions - miqdorni o'zgartirish, o'chirish va tozalash
+
+
+        // Cart miqdorini yangilash
+        function updateCartQuantity(cartId, quantity) {
+            fetch(`/api/cart/update/${cartId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    quantity: quantity
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'updated') {
+                        showNotification(data.message, 'success');
+
+                        // Miqdor va narxni yangilash
+                        updateCartItemDisplay(cartId, data.item_quantity, data.item_total);
+                        updateCartCount();
+                        updateCartTotals(data.cart_total_items, data.cart_total_price);
+
+                    } else if (data.status === 'removed') {
+                        showNotification(data.message, 'info');
+
+                        // Item ni o'chirish
+                        const cartItem = document.querySelector(`[data-cart-id="${cartId}"]`);
+                        if (cartItem) {
+                            cartItem.remove();
+                        }
+
+                        updateCartCount();
+                        updateCartTotals(data.cart_total_items, data.cart_total_price);
+
+                    } else if (data.status === 'unauthenticated') {
+                        showNotification('Iltimos login qiling', 'warning');
+                    } else {
+                        showNotification('Xatolik yuz berdi', 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showNotification('Xatolik yuz berdi', 'error');
+                });
+        }
+
+        // Cart miqdorini oshirish
+        function increaseQuantity(cartId) {
+            fetch(`/api/cart/increase/${cartId}/`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'increased') {
+                        showNotification(data.message, 'success');
+
+                        // Miqdor va narxni yangilash
+                        updateCartItemDisplay(cartId, data.item_quantity, data.item_total);
+                        updateCartCount();
+                        updateCartTotals(data.cart_total_items, data.cart_total_price);
+
+                    } else if (data.status === 'unauthenticated') {
+                        showNotification('Iltimos login qiling', 'warning');
+                    } else {
+                        showNotification('Xatolik yuz berdi', 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showNotification('Xatolik yuz berdi', 'error');
+                });
+        }
+
+        // Cart miqdorini kamaytirish
+        function decreaseQuantity(cartId) {
+            // Joriy miqdorni tekshirish
+            const qtyInput = document.getElementById(`qty-${cartId}`);
+            if (qtyInput) {
+                const currentQuantity = parseInt(qtyInput.value);
+                if (currentQuantity <= 1) {
+                    showNotification('Miqdor kamida 1 bo\'lishi kerak', 'warning');
+                    return;
+                }
             }
-            
-            updateCartCount();
-            updateCartTotals(data.cart_total_items, data.cart_total_price);
-            
-        } else if (data.status === 'unauthenticated') {
-            showNotification('Iltimos login qiling', 'warning');
-        } else {
-            showNotification('Xatolik yuz berdi', 'error');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showNotification('Xatolik yuz berdi', 'error');
-    });
-}
 
-// Cart miqdorini oshirish
-function increaseQuantity(cartId) {
-    fetch(`/api/cart/increase/${cartId}/`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'increased') {
-            showNotification(data.message, 'success');
-            
-            // Miqdor va narxni yangilash
-            updateCartItemDisplay(cartId, data.item_quantity, data.item_total);
-            updateCartCount();
-            updateCartTotals(data.cart_total_items, data.cart_total_price);
-            
-        } else if (data.status === 'unauthenticated') {
-            showNotification('Iltimos login qiling', 'warning');
-        } else {
-            showNotification('Xatolik yuz berdi', 'error');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showNotification('Xatolik yuz berdi', 'error');
-    });
-}
+            fetch(`/api/cart/decrease/${cartId}/`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'decreased') {
+                        showNotification(data.message, 'success');
 
-// Cart miqdorini kamaytirish
-function decreaseQuantity(cartId) {
-    // Joriy miqdorni tekshirish
-    const qtyInput = document.getElementById(`qty-${cartId}`);
-    if (qtyInput) {
-        const currentQuantity = parseInt(qtyInput.value);
-        if (currentQuantity <= 1) {
-            showNotification('Miqdor kamida 1 bo\'lishi kerak', 'warning');
-            return;
+                        // Miqdor va narxni yangilash
+                        updateCartItemDisplay(cartId, data.item_quantity, data.item_total);
+                        updateCartCount();
+                        updateCartTotals(data.cart_total_items, data.cart_total_price);
+
+                    } else if (data.status === 'removed') {
+                        showNotification(data.message, 'info');
+
+                        // Item ni o'chirish
+                        const cartItem = document.querySelector(`[data-cart-id="${cartId}"]`);
+                        if (cartItem) {
+                            cartItem.remove();
+                        }
+
+                        updateCartCount();
+                        updateCartTotals(data.cart_total_items, data.cart_total_price);
+
+                    } else if (data.status === 'unauthenticated') {
+                        showNotification('Iltimos login qiling', 'warning');
+                    } else {
+                        showNotification('Xatolik yuz berdi', 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showNotification('Xatolik yuz berdi', 'error');
+                });
         }
-    }
-    
-    fetch(`/api/cart/decrease/${cartId}/`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'decreased') {
-            showNotification(data.message, 'success');
-            
-            // Miqdor va narxni yangilash
-            updateCartItemDisplay(cartId, data.item_quantity, data.item_total);
-            updateCartCount();
-            updateCartTotals(data.cart_total_items, data.cart_total_price);
-            
-        } else if (data.status === 'removed') {
-            showNotification(data.message, 'info');
-            
-            // Item ni o'chirish
-            const cartItem = document.querySelector(`[data-cart-id="${cartId}"]`);
-            if (cartItem) {
-                cartItem.remove();
+
+        // Barcha cart ni tozalash
+        function clearCart() {
+            if (!confirm('Barcha mahsulotlarni o\'chirishga ishonchingiz komilmi? Bu amalni bekor qilib bo\'lmaydi!')) {
+                return;
             }
-            
-            updateCartCount();
-            updateCartTotals(data.cart_total_items, data.cart_total_price);
-            
-        } else if (data.status === 'unauthenticated') {
-            showNotification('Iltimos login qiling', 'warning');
-        } else {
-            showNotification('Xatolik yuz berdi', 'error');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showNotification('Xatolik yuz berdi', 'error');
-    });
-}
 
-// Barcha cart ni tozalash
-function clearCart() {
-    if (!confirm('Barcha mahsulotlarni o\'chirishga ishonchingiz komilmi? Bu amalni bekor qilib bo\'lmaydi!')) {
-        return;
-    }
-    
-    fetch('/api/cart/clear/', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
+            fetch('/api/cart/clear/', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'cleared') {
+                        showNotification(data.message, 'success');
+
+                        // Barcha cart itemlarni o'chirish
+                        const cartItems = document.querySelectorAll('[data-cart-id]');
+                        cartItems.forEach(item => item.remove());
+
+                        // Cart count va totallarni yangilash
+                        updateCartCount();
+                        updateCartTotals(0, 0);
+
+                        // Agar cart sahifasida bo'lsak, bo'sh holat ko'rsatish
+                        if (window.location.pathname.includes('/cart')) {
+                            showEmptyCartState();
+                        }
+
+                    } else if (data.status === 'empty') {
+                        showNotification(data.message, 'info');
+                    } else if (data.status === 'unauthenticated') {
+                        showNotification('Iltimos login qiling', 'warning');
+                    } else {
+                        showNotification('Xatolik yuz berdi', 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showNotification('Xatolik yuz berdi', 'error');
+                });
         }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'cleared') {
-            showNotification(data.message, 'success');
-            
-            // Barcha cart itemlarni o'chirish
-            const cartItems = document.querySelectorAll('[data-cart-id]');
-            cartItems.forEach(item => item.remove());
-            
-            // Cart count va totallarni yangilash
-            updateCartCount();
-            updateCartTotals(0, 0);
-            
-            // Agar cart sahifasida bo'lsak, bo'sh holat ko'rsatish
-            if (window.location.pathname.includes('/cart')) {
-                showEmptyCartState();
+
+        // Helper functions
+        function updateQuantityButtons(cartId, quantity) {
+            const decreaseBtn = document.querySelector(`button[onclick="decreaseQuantity(${cartId})"]`);
+
+            if (decreaseBtn) {
+                if (quantity <= 1) {
+                    decreaseBtn.disabled = true;
+                    decreaseBtn.style.opacity = '0.5';
+                    decreaseBtn.style.cursor = 'not-allowed';
+                    decreaseBtn.setAttribute('title', 'Miqdor kamida 1 bo\'lishi kerak');
+                } else {
+                    decreaseBtn.disabled = false;
+                    decreaseBtn.style.opacity = '1';
+                    decreaseBtn.style.cursor = 'pointer';
+                    decreaseBtn.removeAttribute('title');
+                }
             }
-            
-        } else if (data.status === 'empty') {
-            showNotification(data.message, 'info');
-        } else if (data.status === 'unauthenticated') {
-            showNotification('Iltimos login qiling', 'warning');
-        } else {
-            showNotification('Xatolik yuz berdi', 'error');
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showNotification('Xatolik yuz berdi', 'error');
-    });
-}
 
-// Helper functions
-function updateQuantityButtons(cartId, quantity) {
-    const decreaseBtn = document.querySelector(`button[onclick="decreaseQuantity(${cartId})"]`);
-    
-    if (decreaseBtn) {
-        if (quantity <= 1) {
-            decreaseBtn.disabled = true;
-            decreaseBtn.style.opacity = '0.5';
-            decreaseBtn.style.cursor = 'not-allowed';
-            decreaseBtn.setAttribute('title', 'Miqdor kamida 1 bo\'lishi kerak');
-        } else {
-            decreaseBtn.disabled = false;
-            decreaseBtn.style.opacity = '1';
-            decreaseBtn.style.cursor = 'pointer';
-            decreaseBtn.removeAttribute('title');
-        }
-    }
-}
+        function updateCartItemDisplay(cartId, quantity, total) {
+            // Miqdorni ko'rsatuvchi elementni yangilash
+            const quantityElement = document.querySelector(`#quantity-${cartId}`);
+            if (quantityElement) {
+                quantityElement.textContent = quantity;
+            }
 
-function updateCartItemDisplay(cartId, quantity, total) {
-    // Miqdorni ko'rsatuvchi elementni yangilash
-    const quantityElement = document.querySelector(`#quantity-${cartId}`);
-    if (quantityElement) {
-        quantityElement.textContent = quantity;
-    }
-    
-    // Input maydoni bo'lsa
-    const quantityInput = document.querySelector(`#qty-${cartId}`);
-    if (quantityInput) {
-        quantityInput.value = quantity;
-    }
-    
-    // Jami narxni yangilash
-    const totalElement = document.querySelector(`#total-${cartId}`);
-    if (totalElement) {
-        totalElement.textContent = `$${total.toFixed(2)}`;
-    }
-    
-    // Quantity button holatini yangilash (agar updateQuantityButtons funksiyasi mavjud bo'lsa)
-    if (typeof updateQuantityButtons === 'function') {
-        updateQuantityButtons(cartId, quantity);
-    }
-}
+            // Input maydoni bo'lsa
+            const quantityInput = document.querySelector(`#qty-${cartId}`);
+            if (quantityInput) {
+                quantityInput.value = quantity;
+            }
 
-function updateCartTotals(totalItems, totalPrice) {
-    // Subtotal ni yangilash
-    const subtotalElements = document.querySelectorAll('.cart-subtotal, #cartSubtotal, #subtotal');
-    subtotalElements.forEach(element => {
-        if (element) {
-            element.textContent = `$${totalPrice.toFixed(2)}`;
-        }
-    });
-    
-    // Total ni yangilash (shipping bilan birga)
-    const shipping = 20;
-    const finalTotal = totalPrice + shipping;
-    const totalElements = document.querySelectorAll('#cartTotal, .cart-total, #total');
-    totalElements.forEach(element => {
-        if (element) {
-            element.innerHTML = `<strong>$${finalTotal.toFixed(2)}</strong>`;
-        }
-    });
-    
-    // Cart count ni yangilash
-    const cartCountElements = document.querySelectorAll('.main-header__cart__count, .cart-count, #cart_count');
-    cartCountElements.forEach(element => {
-        if (element) {
-            element.textContent = totalItems;
-        }
-    });
-}
+            // Jami narxni yangilash
+            const totalElement = document.querySelector(`#total-${cartId}`);
+            if (totalElement) {
+                totalElement.textContent = `$${total.toFixed(2)}`;
+            }
 
-function showEmptyCartState() {
-    const cartContainer = document.querySelector('#cartItemsContainer, .cart-items-container');
-    if (cartContainer) {
-        cartContainer.innerHTML = `
+            // Quantity button holatini yangilash (agar updateQuantityButtons funksiyasi mavjud bo'lsa)
+            if (typeof updateQuantityButtons === 'function') {
+                updateQuantityButtons(cartId, quantity);
+            }
+        }
+
+        function updateCartTotals(totalItems, totalPrice) {
+            // Subtotal ni yangilash
+            const subtotalElements = document.querySelectorAll('.cart-subtotal, #cartSubtotal, #subtotal');
+            subtotalElements.forEach(element => {
+                if (element) {
+                    element.textContent = `$${totalPrice.toFixed(2)}`;
+                }
+            });
+
+            // Total ni yangilash (shipping bilan birga)
+            const shipping = 20;
+            const finalTotal = totalPrice + shipping;
+            const totalElements = document.querySelectorAll('#cartTotal, .cart-total, #total');
+            totalElements.forEach(element => {
+                if (element) {
+                    element.innerHTML = `<strong>$${finalTotal.toFixed(2)}</strong>`;
+                }
+            });
+
+            // Cart count ni yangilash
+            const cartCountElements = document.querySelectorAll('.main-header__cart__count, .cart-count, #cart_count');
+            cartCountElements.forEach(element => {
+                if (element) {
+                    element.textContent = totalItems;
+                }
+            });
+        }
+
+        function showEmptyCartState() {
+            const cartContainer = document.querySelector('#cartItemsContainer, .cart-items-container');
+            if (cartContainer) {
+                cartContainer.innerHTML = `
             <div class="empty-cart-message" style="text-align: center; padding: 50px;">
                 <div class="empty-cart-icon" style="font-size: 64px; color: #ccc; margin-bottom: 20px;">
                     <i class="fas fa-shopping-cart"></i>
@@ -901,21 +946,21 @@ function showEmptyCartState() {
                 </a>
             </div>
         `;
-    }
-}
+            }
+        }
 
-// Notification function (agar mavjud bo'lmasa)
-function showNotification(message, type = 'info') {
-    // Mavjud notification tizimidan foydalanish
-    if (typeof createNotification === 'function') {
-        createNotification(message, type);
-    } else {
-        // Oddiy alert
-        console.log(`${type.toUpperCase()}: ${message}`);
-        
-        // Yoki oddiy toast yaratish
-        const toast = document.createElement('div');
-        toast.style.cssText = `
+        // Notification function (agar mavjud bo'lmasa)
+        function showNotification(message, type = 'info') {
+            // Mavjud notification tizimidan foydalanish
+            if (typeof createNotification === 'function') {
+                createNotification(message, type);
+            } else {
+                // Oddiy alert
+                console.log(`${type.toUpperCase()}: ${message}`);
+
+                // Yoki oddiy toast yaratish
+                const toast = document.createElement('div');
+                toast.style.cssText = `
             position: fixed;
             top: 20px;
             right: 20px;
@@ -928,27 +973,43 @@ function showNotification(message, type = 'info') {
             min-width: 300px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
         `;
-        toast.textContent = message;
-        document.body.appendChild(toast);
-        
-        setTimeout(() => {
-            if (document.body.contains(toast)) {
-                document.body.removeChild(toast);
-            }
-        }, 3000);
-    }
-}
+                toast.textContent = message;
+                document.body.appendChild(toast);
 
-// Sahifa yuklanganda barcha quantity button holatini tekshirish
-document.addEventListener('DOMContentLoaded', function() {
-    // Barcha quantity input'larni topish va tegishli button holatini o'rnatish
-    const qtyInputs = document.querySelectorAll('[id^="qty-"]');
-    qtyInputs.forEach(input => {
-        const cartId = input.id.replace('qty-', '');
-        const quantity = parseInt(input.value);
-        updateQuantityButtons(cartId, quantity);
-    });
-});
+                setTimeout(() => {
+                    if (document.body.contains(toast)) {
+                        document.body.removeChild(toast);
+                    }
+                }, 3000);
+            }
+        }
+
+        // Sahifa yuklanganda barcha quantity button holatini tekshirish
+        document.addEventListener('DOMContentLoaded', function () {
+            // Barcha quantity input'larni topish va tegishli button holatini o'rnatish
+            const qtyInputs = document.querySelectorAll('[id^="qty-"]');
+            qtyInputs.forEach(input => {
+                const cartId = input.id.replace('qty-', '');
+                const quantity = parseInt(input.value);
+                updateQuantityButtons(cartId, quantity);
+            });
+        });
+    </script>
+    <script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement(
+    {
+      pageLanguage: 'en', // sahifangizning asosiy tili (masalan 'en', 'ru', 'uz')
+      includedLanguages: 'uz,en,ru', // foydalanuvchiga ko‘rsatiladigan tillar
+      layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+    },
+    'google_translate_element'
+  );
+}
+</script>
+
+<script type="text/javascript" 
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
 </script>
 </body>
 

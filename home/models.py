@@ -259,6 +259,10 @@ class Product(models.Model):
     def __str__(self):
         return self.name
     
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('product_details', kwargs={'id': self.id})
+    
 class ProductImage(models.Model):
     image = models.ImageField(upload_to='products/', null=True, blank=True)
 
@@ -307,6 +311,22 @@ class PasswordResetToken(models.Model):
 
     def __str__(self):
         return f"Reset token for {self.user.username}"
+    
+    def is_expired(self):
+        from django.utils import timezone
+        return timezone.now() > self.expires_at
+
+
+class EmailVerificationToken(models.Model):
+    email = models.EmailField()
+    verification_code = models.CharField(max_length=6)
+    user_data = models.JSONField()  # Foydalanuvchi ma'lumotlarini saqlaymiz
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_used = models.BooleanField(default=False)
+    expires_at = models.DateTimeField()
+
+    def __str__(self):
+        return f"Email verification for {self.email}"
     
     def is_expired(self):
         from django.utils import timezone

@@ -19,8 +19,10 @@ urlpatterns = [
     path('cart', cart, name='cart'),
     path('my-likes', my_likes, name='my_likes'),
     path('faq', faq, name='faq'),
+    path('search', search, name='search'),
     path('login', login_view, name='login'),
     path('register', register_view, name='register'),
+    path('email-verification/', email_verification_view, name='email_verification'),
     path('logout', logout_view, name='logout'),
     path('checkout', checkout, name='checkout'),
     
