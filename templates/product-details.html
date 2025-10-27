@@ -1,0 +1,481 @@
+﻿   {% extends "base.html" %} {% load static %}
+   {% block content %}
+        <section class="page-header">
+            <div class="page-header__bg"></div>
+            <div class="page-header__shape wow fadeInUp" data-wow-delay="200ms"></div>
+            <div class="page-header__overlay"></div>
+            <!-- /.page-header__bg -->
+            <div class="container">
+                <h2 class="page-header__title">Shop details</h2>
+                <ul class="grdeen-breadcrumb list-unstyled">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><span>Shop details</span></li>
+                </ul><!-- /.thm-breadcrumb list-unstyled -->
+            </div><!-- /.container -->
+        </section><!-- /.page-header -->
+
+        <section class="product-details">
+            <div class="container">
+                <!-- /.product-details -->
+                <div class="row">
+                    <div class="col-lg-6 col-xl-6 wow fadeInLeft" data-wow-delay="200ms">
+                        <div class="product-details__slider">
+                            {% if products.images.all %}
+                            <div class="product-details__carousel grdeen-owl__carousel owl-theme owl-carousel" data-owl-options='{
+						"items": 1,
+						"margin": 0,
+						"smartSpeed": 700,
+						"loop":true,
+						"autoplay": true,
+						"nav":true,
+		
+						"dots":false,
+						"navText": ["<span class=\"icon-left-arrow\"></span>","<span class=\"icon-right-arrow3\"></span>"]
+						}'>
+                        {% for image in products.images.all %}
+                                <div class="item" >
+                                    <div class="product-details__slider__image">
+                                        {% if image.image %}
+                                        <img src="{{ image.image.url }}" alt="grdeen">
+                                        {% else %}
+                                        <img src="{% static 'assets/images/image404.png' %}" alt="grdeen">
+                                        {% endif %}
+                                    </div>
+                                </div><!-- /.item -->
+                        {% endfor %}
+                                
+                            </div>
+                            <div class="product-details__carousel-thumb grdeen-owl__carousel owl-theme owl-carousel" data-owl-options='{
+						"items": 2,
+						"margin": 6,
+						"smartSpeed": 700,
+						"loop":true,
+						"autoplay": true,
+						
+						"center": false,
+						"dots":false
+						}'>
+                        {% for image in products.images.all %}
+                                <a href="" class="item" >
+                                    <span class="product-details__carousel-thumb__item">
+                                        {% if image.image %}
+                                        <img src="{{ image.image.url }}" alt="grdeen">
+                                        {% else %}
+                                        <img src="{% static 'assets/images/image404.png' %}" alt="grdeen">
+                                        {% endif %}
+                                    </span>
+                                </a>
+                        {% endfor %}
+                               
+                            </div>
+                            {% else %}
+                            <!-- Fallback when no images exist -->
+                            <div class="product-details__slider__image">
+                                {% if products.main_image %}
+                                <img src="{{ products.main_image.url }}" alt="{{ products.name }}">
+                                {% else %}
+                                <img src="{% static 'assets/images/image404.png' %}" alt="{{ products.name }}">
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div><!-- /.column -->
+                    <div class="col-lg-6 col-xl-6 wow fadeInRight" data-wow-delay="300ms">
+                        <div class="product-details__content">
+                            <h3 class="product-details__title">{{ products.name }}</h3><!-- /.product-title -->
+                            <div class="product-details__price">
+                                <span class="product-details__price__regular">${{ products.price }}</span>
+                                <span class="product-details__price__offer">${{ products.old_price }} </span>
+                                <span class="product-details__price__off">-20%</span>
+                                <span class="product-details__price__stock">{{ products.status }}</span>
+                            </div><!-- /.product-price -->
+                            <div class="product-details__review">
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="far fa-star"></span>
+                            </div>
+                            <div class="product-details__views" style="margin-top: 10px; margin-bottom: 15px; color: #666; font-size: 14px;">
+                                <i class="fa fa-eye" style="margin-right: 8px; color: #1a9120;"></i>{{ products.views }} views
+                            </div>
+                                <a href="product-details.html">( 5 Customer Review )</a>
+                            </div><!-- /.review-ratings -->
+                            <div class="product-details__excerpt">
+                                {{ products.mini_description }}
+                            </div><!-- /.excerp-text -->
+                            <div class="product-details__qty">
+                                {% if item %}
+                                <div class="product-details__quantity" id="quantity-section-{{ products.id }}">
+                                    <h3 class="product-details__quantity__title">Quantity</h3>
+                                      <div class="quantity-box">
+                                         <button type="button" class="sub" onclick="decreaseQuantity({{ item.id }})">
+                                                        <i class="icon-down-arrow"></i>
+                                                    </button>
+                                                    <input type="text" id="qty-{{ item.id }}" value="{{ item.quantity }}" readonly min="1">
+                                                    <span id="quantity-{{ item.id }}" style="display: none;">{{ item.quantity }}</span>
+                                                    <button type="button" class="add" onclick="increaseQuantity({{ item.id }})">
+                                                        <i class="icon-up-arrow"></i>
+                                                    </button>
+                                      </div>
+                                </div><!-- /.quantity -->
+                                {% endif %}
+                                <div class="product-details__buttons">
+                                    {% if item %}
+                                        <a href="{% url 'cart' %}" class="grdeen-btn"><span>Go to Cart</span></a>
+                                    {% else %}
+                                        <a href="#" class="grdeen-btn add-to-cart-btn" data-product-id="{{ products.id }}"><span>Add to Cart</span></a>
+                                    {% endif %}
+                                    <a href="cart.html" class="product-details__buttons__wishlist like_product" data-id="{{products.id}}"></a>
+                                    
+                                </div><!-- /.qty-btn -->
+                            </div>
+                            <ul class="product-details__info">
+                                <li><span class="product-details__info__icon"><i class="icon-check-solid"></i></span><strong>Estimated Delivery:</strong> 60-60 days Ships to Bangladesh</li>
+                                <li><span class="product-details__info__icon"><i class="icon-check-solid"></i></span><strong>Free Shipping:</strong> From China to Bangladesh via Super Economy Global</li>
+                            </ul>
+                            <div class="product-details__socials">
+                                <h4 class="product-details__socials__title">Share:</h4>
+                                <a href="https://facebook.com">
+                                    <i class="fab fa-facebook-f"></i>
+                                    <span class="sr-only">Facebook</span>
+                                </a>
+                                <a href="https://twitter.com">
+                                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                                    <span class="sr-only">Twitter</span>
+                                </a>
+                                <a href="https://linkedin.com">
+                                    <i class="fab fa-linkedin-in"></i>
+                                    <span class="sr-only">Linkedin</span>
+                                </a>
+                                <a href="https://www.instagram.com/">
+                                    <i class="fab fa-instagram"></i>
+                                    <span class="sr-only">Instagram</span>
+                                </a>
+                            </div><!-- /.social-share -->
+                        </div>
+                    </div>
+                </div>
+                <!-- /.product-details -->
+                <!-- /.product-description -->
+                <div class="tabs-box product-details__tabs wow fadeInUp" data-wow-delay="300ms">
+                    <ul class="list-unstyled tab-buttons product-details__tabs__list">
+                        <li data-tab="#description" class="tab-btn active-btn">Description</li>
+                        <li data-tab="#specifications" class="tab-btn">Specifications</li>
+                        <li data-tab="#reviews" class="tab-btn">Reviews (2)</li>
+                    </ul>
+                    <div class="tabs-content">
+                        <div class="tab active-tab fadeInUp animated" id="description">
+                            <div class="product-details__tabs__description">
+                                <p class="product-details__tabs__description__text">
+                                {{ products.description }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="tab fadeInUp animated" id="specifications">
+                            <div class="product-details__tabs__specfication">
+                                {{ products.specifications|safe }}
+                            </div>
+                        </div>
+                        <div class="tab fadeInUp animated" id="reviews">
+                            <div class="product-details__tabs__comment">
+                                <!-- /.product-comment -->
+                                <div class="product-details__comment">
+                                    <h3 class="product-details__comment__title">02 Reviews</h3><!-- /.product-details__comment__title -->
+                                    <ul class="list-unstyled product-details__comment__list">
+                                        <li class="product-details__comment__card">
+                                            <div class="product-details__comment__card__image">
+                                                <img src="assets/images/blog/blog-comment-1-1.jpg" alt="grdeen">
+                                            </div><!-- /.product-details__comment__card__image -->
+                                            <div class="product-details__comment__card__content">
+                                                <div class="product-details__comment__card__top">
+                                                    <h3 class="product-details__comment__card__title">Philip jacekson</h3><!-- /.product-details__comment__card__title -->
+                                                    <div class="product-details__comment__card__ratings">
+                                                        <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="far fa-star"></span>
+                                                    </div><!-- comment-ratings -->
+                                                </div><!-- /.product-details__comment__card__btn -->
+                                                <p class="product-details__comment__card__text">
+                                                    It has survived not only five centuries, but also the leap into electronic typesetting unchanged. It was popularised in
+                                                    the sheets containing lorem ipsum is simply free text. Class aptent taciti sociosqu ad litora torquent per conubia nostra,
+                                                    per inceptos himenaeos. Vestibulum sollicitudin varius mauris non dignissim.
+                                                </p><!-- /.product-details__comment__card__text -->
+                                                <div class="product-details__comment__card__date">12 Nov, 2023</div>
+                                            </div><!-- /.product-details__comment__card__content -->
+                                        </li><!-- /.product-details__comment__card -->
+                                        <li class="product-details__comment__card">
+                                            <div class="product-details__comment__card__image">
+                                                <img src="assets/images/blog/blog-comment-1-2.jpg" alt="grdeen">
+                                            </div><!-- /.product-details__comment__card__image -->
+                                            <div class="product-details__comment__card__content">
+                                                <div class="product-details__comment__card__top">
+                                                    <h3 class="product-details__comment__card__title">Kabin Kenson</h3><!-- /.product-details__comment__card__title -->
+                                                    <div class="product-details__comment__card__ratings">
+                                                        <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="far fa-star"></span>
+                                                    </div><!-- comment-ratings -->
+                                                </div><!-- /.product-details__comment__card__btn -->
+                                                <p class="product-details__comment__card__text">
+                                                    It has survived not only five centuries, but also the leap into electronic typesetting unchanged. It was popularised in
+                                                    the sheets containing lorem ipsum is simply free text. Class aptent taciti sociosqu ad litora torquent per conubia nostra,
+                                                    per inceptos himenaeos. Vestibulum sollicitudin varius mauris non dignissim.
+                                                </p><!-- /.product-details__comment__card__text -->
+                                                <div class="product-details__comment__card__date">12 Nov, 2023</div>
+                                            </div><!-- /.product-details__comment__card__content -->
+                                        </li><!-- /.product-details__comment__card -->
+                                    </ul><!-- /.list-unstyled product-details__comment__list -->
+                                </div><!-- /.product-details__comment -->
+                                <!-- /.product-comment -->
+                                <!-- /.product-comment-form -->
+                                <div class="product-details__form">
+                                    <h3 class="product-details__form-title">Add a Review</h3>
+                                    <div class="product-details__form-ratings">
+                                        <p class="product-details__form-ratings__label">Rate this product?</p>
+                                        <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>
+                                    </div><!-- review-ratings -->
+                                    <form class="comments-form__form contact-form-validated product-details__form__form form-one">
+                                        <div class="form-one__group">
+                                            <div class="form-one__control form-one__control--full">
+                                                <textarea name="message" placeholder="Write  a message"></textarea><!-- /# -->
+                                            </div><!-- /.form-one__control -->
+                                            <div class="form-one__control">
+                                                <input type="text" name="name" placeholder="Your name">
+                                            </div><!-- /.form-one__control -->
+                                            <div class="form-one__control">
+                                                <input type="email" name="email" placeholder="Email address">
+                                            </div><!-- /.form-one__control -->
+                                            <div class="form-one__control form-one__control--full">
+                                                <button type="submit" class="grdeen-btn"><span>Submit review</span></button>
+                                            </div><!-- /.form-one__control -->
+                                        </div><!-- /.form-one__group -->
+                                    </form>
+                                    <div class="result"></div>
+                                </div>
+                                <!-- /.product-comment-form -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.product-description -->
+            </div>
+        </section>
+        <!-- Products End -->
+        <!-- Related Products Start -->
+        <section class="related-product">
+            <div class="container">
+                <h3 class="related-product__title">Related Products</h3>
+                <div class="product-one__carousel grdeen-owl__carousel grdeen-owl__carousel--with-shadow grdeen-owl__carousel--basic-nav owl-carousel owl-theme" data-owl-options='{
+			"items": 1,
+			"margin": 30,
+			"loop": false,
+			"smartSpeed": 700,
+			"nav": false,
+			"navText": ["<span class=\"fa fa-angle-left\"></span>","<span class=\"fa fa-angle-right\"></span>"],
+			"dots": true,
+			"autoplay": false,
+			"responsive": {
+				"0": {
+					"items": 1
+				},
+				"768": {
+					"items": 2
+				},
+				"992": {
+					"items": 3
+				}
+			}
+		}'>
+        {% for product in allproducts %}
+                    <div class="item">
+                        <div class="product__item wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='000ms'>
+                            <div class="product__item__img">
+                                {% if product.main_image %}
+                                <img src="{{ product.main_image.url }}" alt="{{ product.name }}" style="width:290px; height:243px">
+                                {% else %}
+                                <img src="{% static 'assets/images/image404.png' %}" alt="{{ product.name }}" style="width:290px; height:243px">
+                                {% endif %}
+
+                                <div class="product__item__label">
+                                    <span class="product__item__label__sale">Sale</span>
+                                </div><!-- /.product-label -->
+
+                            </div><!-- /.product-image -->
+                            <div class="product__item__content-wrap">
+                                <div class="product__item__btn">
+                                    <a href="cart.html" class="grdeen-btn"><span>Buy Now</span></a>
+                                </div>
+                                <div class="product__item__content">
+                                    <h4 class="product__item__title"><a href="{% url 'product_details' product.id %}">{{ product.name }}</a></h4><!-- /.product-title -->
+                                    <div class="product__item__price">
+                                        <span class="product__item__price__regular">{{ product.price }}</span>
+                                        <span class="product__item__price__offer">{{ product.old_price }}</span>
+
+                                    </div><!-- /.product-price -->
+                                    <div class="product__item__ratings">
+                                        <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="far fa-star"></span>
+                                    </div><!-- /.product-ratings -->
+                                </div><!-- /.product-content -->
+                            </div>
+                        </div><!-- /.product-item -->
+                    </div><!-- /.item -->
+                   {% endfor %}
+                </div><!-- /.row -->
+            </div>
+        </section>
+        <!-- Related Products End -->
+
+<script>
+// Add to Cart functionality for product details page
+document.addEventListener('DOMContentLoaded', function() {
+    const addToCartBtn = document.querySelector('.add-to-cart-btn');
+    
+    if (addToCartBtn) {
+        addToCartBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const productId = this.dataset.productId;
+            
+            fetch(`/api/user/${productId}/cart/add`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'added') {
+                    showNotification('Mahsulot cartga qo\'shildi', 'success');
+                    
+                    // "Add to Cart" tugmasini "Go to Cart" ga o'zgartirish
+                    const addToCartSection = document.querySelector('.product-details__buttons');
+                    if (addToCartSection) {
+                        addToCartSection.innerHTML = `
+                            <a href="/cart/" class="grdeen-btn"><span>Go to Cart</span></a>
+                            <a href="cart.html" class="product-details__buttons__wishlist like_product" data-id="${productId}"></a>
+                        `;
+                    }
+                    
+                    // Quantity section qo'shish
+                    const quantitySection = document.getElementById(`quantity-section-${productId}`);
+                    if (!quantitySection && data.cart_item_id) {
+                        const qtyDiv = document.querySelector('.product-details__qty');
+                        if (qtyDiv) {
+                            const quantityHTML = `
+                                <div class="product-details__quantity" id="quantity-section-${productId}">
+                                    <h3 class="product-details__quantity__title">Quantity</h3>
+                                    <div class="quantity-box">
+                                        <button type="button" class="sub" onclick="decreaseQuantity(${data.cart_item_id})" disabled style="opacity: 0.5; cursor: not-allowed;">
+                                            <i class="icon-down-arrow"></i>
+                                        </button>
+                                        <input type="text" id="qty-${data.cart_item_id}" value="1" readonly min="1">
+                                        <span id="quantity-${data.cart_item_id}" style="display: none;">1</span>
+                                        <button type="button" class="add" onclick="increaseQuantity(${data.cart_item_id})">
+                                            <i class="icon-up-arrow"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            `;
+                            qtyDiv.insertAdjacentHTML('afterbegin', quantityHTML);
+                            
+                            // Quantity button holatini yangilash
+                            setTimeout(() => {
+                                updateQuantityButtons(data.cart_item_id, 1);
+                            }, 100);
+                        }
+                    }
+                    
+                } else if (data.status === 'unauthenticated') {
+                    showNotification('Iltimos login qiling', 'warning');
+                } else {
+                    showNotification('Xatolik yuz berdi', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Xatolik yuz berdi', 'error');
+            });
+        });
+    }
+});
+
+// Get CSRF token function
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Quantity button holatini yangilash funksiyasi
+function updateQuantityButtons(cartId, quantity) {
+    const decreaseBtn = document.querySelector(`button[onclick="decreaseQuantity(${cartId})"]`);
+    
+    if (decreaseBtn) {
+        if (quantity <= 1) {
+            decreaseBtn.disabled = true;
+            decreaseBtn.style.opacity = '0.5';
+            decreaseBtn.style.cursor = 'not-allowed';
+        } else {
+            decreaseBtn.disabled = false;
+            decreaseBtn.style.opacity = '1';
+            decreaseBtn.style.cursor = 'pointer';
+        }
+    }
+}
+
+// Product details sahifasi uchun decreaseQuantity funksiyasini override qilish
+const originalDecreaseQuantity = window.decreaseQuantity;
+const originalIncreaseQuantity = window.increaseQuantity;
+
+window.decreaseQuantity = function(cartId) {
+    // Joriy miqdorni tekshirish
+    const qtyInput = document.getElementById(`qty-${cartId}`);
+    if (qtyInput) {
+        const currentQuantity = parseInt(qtyInput.value);
+        if (currentQuantity <= 1) {
+            showNotification('Miqdor kamida 1 bo\'lishi kerak', 'warning');
+            return;
+        }
+    }
+    
+    // Asl funksiyani chaqirish
+    if (originalDecreaseQuantity) {
+        originalDecreaseQuantity(cartId);
+    }
+};
+
+window.increaseQuantity = function(cartId) {
+    // Asl funksiyani chaqirish
+    if (originalIncreaseQuantity) {
+        originalIncreaseQuantity(cartId);
+    }
+    
+    // Quantity button holatini yangilash
+    setTimeout(() => {
+        const qtyInput = document.getElementById(`qty-${cartId}`);
+        if (qtyInput) {
+            const quantity = parseInt(qtyInput.value);
+            updateQuantityButtons(cartId, quantity);
+        }
+    }, 100);
+};
+
+// Sahifa yuklanganda quantity button holatini tekshirish
+document.addEventListener('DOMContentLoaded', function() {
+    // Barcha quantity input'larni topish va tegishli button holatini o'rnatish
+    const qtyInputs = document.querySelectorAll('[id^="qty-"]');
+    qtyInputs.forEach(input => {
+        const cartId = input.id.replace('qty-', '');
+        const quantity = parseInt(input.value);
+        updateQuantityButtons(cartId, quantity);
+    });
+});
+</script>
+{% endblock %}  

@@ -1,0 +1,216 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot');
+  src:  url('fonts/icomoon.eot') format('embedded-opentype'),
+    url('fonts/icomoon.ttf') format('truetype'),
+    url('fonts/icomoon.woff') format('woff'),
+    url('fonts/icomoon.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-help:before {
+  content: "\e93d";
+}
+.icon-telephone-call:before {
+  content: "\e93e";
+}
+.icon-sun-solid:before {
+  content: "\e93b";
+}
+.icon-check-solid:before {
+  content: "\e93c";
+}
+.icon-farmer:before {
+  content: "\e93a";
+}
+.icon-pin:before {
+  content: "\e900";
+}
+.icon-sprout:before {
+  content: "\e901";
+}
+.icon-lawn-mower:before {
+  content: "\e902";
+}
+.icon-tree:before {
+  content: "\e903";
+}
+.icon-grass:before {
+  content: "\e904";
+}
+.icon-gardener:before {
+  content: "\e905";
+}
+.icon-location:before {
+  content: "\e906";
+}
+.icon-pencil:before {
+  content: "\e907";
+}
+.icon-pot:before {
+  content: "\e908";
+}
+.icon-group:before {
+  content: "\e909";
+}
+.icon-quote:before {
+  content: "\e90a";
+}
+.icon-rating:before {
+  content: "\e90b";
+}
+.icon-guarantee:before {
+  content: "\e90c";
+}
+.icon-high-quality:before {
+  content: "\e90d";
+}
+.icon-gardening:before {
+  content: "\e90e";
+}
+.icon-nature:before {
+  content: "\e90f";
+}
+.icon-right-up:before {
+  content: "\e910";
+}
+.icon-farmer1:before {
+  content: "\e911";
+}
+.icon-planting:before {
+  content: "\e912";
+}
+.icon-seeding:before {
+  content: "\e913";
+}
+.icon-cutting:before {
+  content: "\e914";
+}
+.icon-gardener-1:before {
+  content: "\e915";
+}
+.icon-standing-persons-salutation-talking-one-to-each-other:before {
+  content: "\e916";
+}
+.icon-bunk:before {
+  content: "\e917";
+}
+.icon-email:before {
+  content: "\e918";
+}
+.icon-phone-receiver-silhouette:before {
+  content: "\e919";
+}
+.icon-shop-bag:before {
+  content: "\e91a";
+}
+.icon-search:before {
+  content: "\e91b";
+}
+.icon-guaranteed:before {
+  content: "\e91c";
+}
+.icon-gardening-1:before {
+  content: "\e91d";
+}
+.icon-trophy:before {
+  content: "\e91e";
+}
+.icon-plant:before {
+  content: "\e91f";
+}
+.icon-plant-a-tree:before {
+  content: "\e920";
+}
+.icon-check-1:before {
+  content: "\e921";
+}
+.icon-check-circle:before {
+  content: "\e922";
+}
+.icon-comment:before {
+  content: "\e923";
+}
+.icon-down-arrow:before {
+  content: "\e924";
+}
+.icon-up-arrow:before {
+  content: "\e925";
+}
+.icon-right-arrow3:before {
+  content: "\e926";
+}
+.icon-left-arrow:before {
+  content: "\e927";
+}
+.icon-heart:before {
+  content: "\e928";
+}
+.icon-minus:before {
+  content: "\e929";
+}
+.icon-plus:before {
+  content: "\e92a";
+}
+.icon-right-arrow:before {
+  content: "\e92b";
+}
+.icon-up-arrow1:before {
+  content: "\e92c";
+}
+.icon-down-arrow1:before {
+  content: "\e92d";
+}
+.icon-left-arrow1:before {
+  content: "\e92e";
+}
+.icon-right-arrow1:before {
+  content: "\e92f";
+}
+.icon-up-arrow11:before {
+  content: "\e930";
+}
+.icon-down-arrow11:before {
+  content: "\e931";
+}
+.icon-left-arrow11:before {
+  content: "\e932";
+}
+.icon-right-arrow2:before {
+  content: "\e933";
+}
+.icon-down-arrow2:before {
+  content: "\e934";
+}
+.icon-up-arrow2:before {
+  content: "\e935";
+}
+.icon-left-arrow2:before {
+  content: "\e936";
+}
+.icon-search1:before {
+  content: "\e937";
+}
+.icon-star:before {
+  content: "\e938";
+}
+.icon-star-1:before {
+  content: "\e939";
+}

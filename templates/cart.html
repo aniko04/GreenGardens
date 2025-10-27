@@ -1,0 +1,556 @@
+﻿{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<section class="page-header">
+    <div class="page-header__bg"></div>
+    <div class="page-header__shape wow fadeInUp" data-wow-delay="200ms"></div>
+    <div class="page-header__overlay"></div>
+    <div class="container">
+        <h2 class="page-header__title">Savat</h2>
+        <ul class="grdeen-breadcrumb list-unstyled">
+            <li><a href="{% url 'home' %}">Bosh sahifa</a></li>
+            <li><span>Savat</span></li>
+        </ul>
+    </div>
+</section>
+
+<!-- Cart Start -->
+<section class="cart-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="cart-items-wrapper" id="cartItemsContainer">
+                    {% if cart_items %}
+                        <div class="table-responsive">
+                            <table class="table cart-page__table">
+                                <thead>
+                                    <tr>
+                                        <th>Mahsulot</th>
+                                        <th>Miqdor</th>
+                                        <th>Narx</th>
+                                        <th>Jami</th>
+                                        <th>Amal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in cart_items %}
+                                    <tr data-cart-id="{{ item.id }}" class="cart-item-row">
+                                        <td>
+                                            <div class="cart-page__table__meta">
+                                                <div class="cart-page__table__meta__img">
+                                                    {% if item.product.main_image %}
+                                                        <img src="{{ item.product.main_image.url }}" alt="{{ item.product.name }}">
+                                                    {% else %}
+                                                        <img src="{% static 'assets/images/image404.png' %}" alt="{{ item.product.name }}">
+                                                    {% endif %}
+                                                </div>
+                                                <h3 class="cart-page__table__meta__title">
+                                                    <a href="{% url 'product_details' item.product.id %}">{{ item.product.name }}</a>
+                                                </h3>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="product-details__quantity">
+                                                <div class="quantity-box">
+                                                    <button type="button" class="sub" onclick="decreaseQuantity({{ item.id }})">
+                                                        <i class="icon-down-arrow"></i>
+                                                    </button>
+                                                    <input type="text" id="qty-{{ item.id }}" value="{{ item.quantity }}" readonly>
+                                                    <span id="quantity-{{ item.id }}" style="display: none;">{{ item.quantity }}</span>
+                                                    <button type="button" class="add" onclick="increaseQuantity({{ item.id }})">
+                                                        <i class="icon-up-arrow"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="item-price">${{ item.product.price }}</td>
+                                        <td id="total-{{ item.id }}" class="item-total">${{ item.get_total_price }}</td>
+                                        <td>
+                                            <div style="text-align: center;">
+                                                <button class="cart-page__table__meta__remove" onclick="removeFromCart({{ item.id }})" title="O'chirish">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Cart Actions -->
+                        <div class="cart-actions" style="margin-top: 20px;">
+                            <button onclick="clearCart()" class="grdeen-btn" style="background-color: #dc3545; margin-right: 10px;">
+                                <span><i class="fas fa-trash-alt"></i> Barcha mahsulotlarni o'chirish</span>
+                            </button>
+                            
+                            <!-- Coupon Form -->
+                            <div class="coupon-section" style="margin-top: 20px;">
+                                <h3 class="cart-page__coupone-form-title">Promokod:</h3>
+                                <form id="couponForm" class="cart-page__coupone-form">
+                                    {% csrf_token %}
+                                    <input type="text" id="couponCode" placeholder="Promokodni kiriting" class="cart-cupon__input">
+                                    <button type="submit" class="grdeen-btn">
+                                        <span>Qo'llash</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                    {% else %}
+                        <!-- Bo'sh cart holati -->
+                        <div class="empty-cart-state" style="text-align: center; padding: 60px 20px;">
+                            <div class="empty-cart-icon" style="font-size: 80px; color: #ddd; margin-bottom: 30px;">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <h3 style="margin-bottom: 15px;">Savatingiz bo'sh</h3>
+                            <p style="color: #666; margin-bottom: 30px;">
+                                Hali hech qanday mahsulot qo'shilmagan. Mahsulotlar sahifasiga o'ting va o'zingizga yoqqan narsalarni tanlang!
+                            </p>
+                            <a href="{% url 'products' %}" class="grdeen-btn">
+                                <span><i class="fas fa-shopping-cart"></i> Hozir Xarid Qiling</span>
+                            </a>
+                        </div>
+                    {% endif %}
+
+                    <!-- Continue Shopping Link -->
+                    {% if cart_items %}
+                    <div style="margin-top: 30px;">
+                        <a class="cart-page__link grdeen-btn" href="{% url 'products' %}">
+                            <span><i class="fas fa-arrow-left"></i> Xaridni davom ettirish</span>
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Cart Summary -->
+            {% if cart_items %}
+            <div class="col-lg-4">
+                <div class="cart-page__cart-total" id="cartSummary">
+                    <h3>Buyurtma xulosasi</h3>
+                    <ul class="cart-page__cart-total__list list-unstyled">
+                        <li>
+                            <span>Mahsulotlar narxi:</span>
+                            <span class="cart-page__cart-total__amount" id="cartSubtotal">${{ subtotal|default:0 }}</span>
+                        </li>
+                        <li id="discountRow" style="display: none;">
+                            <span>Chegirma:</span>
+                            <span class="cart-page__cart-total__amount" id="cartDiscount">-$0.00</span>
+                        </li>
+                        <li>
+                            <span>Yetkazib berish:</span>
+                            <span class="cart-page__cart-total__shipping">
+                                <span class="cart-page__cart-total__shipping__rate">$20.00</span>
+                            </span>
+                        </li>
+                        <li>
+                            <span><strong>Jami:</strong></span>
+                            <span class="cart-page__cart-total__amount" id="cartTotal">
+                                <strong>${{ total|default:20 }}</strong>
+                            </span>
+                        </li>
+                    </ul>
+                    <div class="cart-page__buttons">
+                        <button onclick="proceedToCheckout()" class="grdeen-btn" style="width: 100%;">
+                            <span>To'lovga o'tish</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Loading Overlay -->
+<div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
+    <div style="background: white; padding: 20px; border-radius: 10px; text-align: center;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Yuklanmoqda...</span>
+        </div>
+        <p style="margin-top: 10px;">Iltimos kuting...</p>
+    </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div id="confirmationModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; justify-content: center; align-items: center;">
+    <div class="modal-content" style="background: white; padding: 30px; border-radius: 15px; text-align: center; max-width: 400px; margin: 0 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+        <div class="modal-icon" style="font-size: 48px; color: #dc3545; margin-bottom: 20px;">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <h3 style="margin-bottom: 15px; color: #333;">Tasdiqlash</h3>
+        <p id="confirmationMessage" style="color: #666; margin-bottom: 30px; line-height: 1.5;">
+            Mahsulotni savat dan o'chirishga ishonchingiz komilmi?
+        </p>
+        <div class="modal-buttons" style="display: flex; gap: 10px; justify-content: center;">
+            <button id="confirmCancel" class="btn-secondary" style="padding: 10px 20px; border: 1px solid #ddd; background: #f8f9fa; color: #666; border-radius: 5px; cursor: pointer; transition: all 0.3s;">
+                Bekor qilish
+            </button>
+            <button id="confirmDelete" class="btn-danger" style="padding: 10px 20px; border: none; background: #dc3545; color: white; border-radius: 5px; cursor: pointer; transition: all 0.3s;">
+                <i class="fas fa-trash"></i> O'chirish
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Cart Page Styles -->
+<style>
+.cart-page__table td:last-child {
+    text-align: center;
+    vertical-align: middle;
+    width: 80px;
+}
+
+.cart-page__table__meta__remove {
+    min-width: 40px !important;
+    width: 40px !important;
+    height: 40px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.cart-item-row:hover .cart-page__table__meta__remove {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Modal Styles */
+.modal {
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    animation: slideIn 0.3s ease;
+    transform: translateY(0);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { 
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.btn-secondary:hover {
+    background: #e9ecef !important;
+    border-color: #adb5bd !important;
+}
+
+.btn-danger:hover {
+    background: #c82333 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+}
+
+.modal-content {
+    position: relative;
+}
+
+/* Close button on ESC key */
+.modal.show {
+    display: flex !important;
+}
+</style>
+
+<!-- Cart Page JavaScript -->
+<script>
+// Cart sahifasi uchun maxsus JavaScript kodlari
+
+// Loading functions
+function showLoading() {
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    if (loadingOverlay) {
+        loadingOverlay.style.display = 'flex';
+    }
+}
+
+function hideLoading() {
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    if (loadingOverlay) {
+        loadingOverlay.style.display = 'none';
+    }
+}
+
+// Cart sahifasida miqdor yangilash
+function updateCartItemOnPage(cartId, quantity, itemTotal) {
+    // Input field ni yangilash
+    const qtyInput = document.getElementById(`qty-${cartId}`);
+    if (qtyInput) {
+        qtyInput.value = quantity;
+    }
+
+    // Hidden quantity span ni yangilash  
+    const quantitySpan = document.getElementById(`quantity-${cartId}`);
+    if (quantitySpan) {
+        quantitySpan.textContent = quantity;
+    }
+
+    // Item total ni yangilash
+    const totalElement = document.getElementById(`total-${cartId}`);
+    if (totalElement) {
+        totalElement.textContent = `$${itemTotal.toFixed(2)}`;
+    }
+}
+
+// Base.html dagi updateCartTotals funksiyasidan foydalanamiz
+
+// Cart item ni sahifadan o'chirish
+function removeCartItemFromPage(cartId) {
+    console.log('removeCartItemFromPage called with cartId:', cartId);
+    const cartRow = document.querySelector(`[data-cart-id="${cartId}"]`);
+    console.log('Found cartRow:', cartRow);
+    if (cartRow) {
+        cartRow.style.transition = 'opacity 0.3s ease';
+        cartRow.style.opacity = '0';
+        
+        setTimeout(() => {
+            cartRow.remove();
+            
+            // Agar boshqa itemlar qolmagan bo'lsa
+            const remainingItems = document.querySelectorAll('[data-cart-id]');
+            if (remainingItems.length === 0) {
+                location.reload(); // Sahifani qayta yuklash
+            }
+        }, 300);
+    }
+}
+
+// Modal functions
+function showConfirmationModal(message, onConfirm) {
+    const modal = document.getElementById('confirmationModal');
+    const messageElement = document.getElementById('confirmationMessage');
+    const confirmBtn = document.getElementById('confirmDelete');
+    const cancelBtn = document.getElementById('confirmCancel');
+    
+    messageElement.textContent = message;
+    modal.style.display = 'flex';
+    
+    // Remove previous event listeners
+    const newConfirmBtn = confirmBtn.cloneNode(true);
+    const newCancelBtn = cancelBtn.cloneNode(true);
+    confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+    cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+    
+    // Add new event listeners
+    newConfirmBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+        onConfirm();
+    });
+    
+    newCancelBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+    
+    // Close modal when clicking outside
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+}
+
+function hideConfirmationModal() {
+    const modal = document.getElementById('confirmationModal');
+    modal.style.display = 'none';
+}
+
+// Cart sahifasi uchun o'chirish funksiyasini qayta aniqlash - MODAL VERSION
+function removeFromCart(cartId) {
+    console.log('MODAL VERSION: removeFromCart called with cartId:', cartId);
+    
+    showConfirmationModal('Mahsulotni savat dan o\'chirishga ishonchingiz komilmi?', function() {
+        showLoading();
+        
+        fetch(`/api/cart/remove/${cartId}/`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            hideLoading();
+            
+            if (data.status === 'removed') {
+                showNotification(data.message, 'success');
+                removeCartItemFromPage(cartId);
+                updateCartTotals(data.cart_total_items, data.cart_total_price);
+            } else {
+                showNotification(data.message || 'Xatolik yuz berdi', 'error');
+            }
+        })
+        .catch(error => {
+            hideLoading();
+            console.error('Error:', error);
+            showNotification('Xatolik yuz berdi', 'error');
+        });
+    });
+}
+
+// Global window scope ga funksiyani qo'shish
+window.removeFromCart = removeFromCart;
+
+// Miqdorni oshirish
+function increaseQuantity(cartId) {
+    showLoading();
+    
+    fetch(`/api/cart/increase/${cartId}/`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        hideLoading();
+        
+        if (data.status === 'increased') {
+            showNotification(data.message, 'success');
+            updateCartItemOnPage(cartId, data.item_quantity, data.item_total);
+            updateCartTotals(data.cart_total_items, data.cart_total_price);
+        } else {
+            showNotification(data.message || 'Xatolik yuz berdi', 'error');
+        }
+    })
+    .catch(error => {
+        hideLoading();
+        console.error('Error:', error);
+        showNotification('Xatolik yuz berdi', 'error');
+    });
+}
+
+// Global window scope ga funksiyani qo'shish
+window.increaseQuantity = increaseQuantity;
+
+// Miqdorni kamaytirish
+function decreaseQuantity(cartId) {
+    showLoading();
+    
+    fetch(`/api/cart/decrease/${cartId}/`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        hideLoading();
+        
+        if (data.status === 'decreased') {
+            showNotification(data.message, 'success');
+            updateCartItemOnPage(cartId, data.item_quantity, data.item_total);
+            updateCartTotals(data.cart_total_items, data.cart_total_price);
+        } else if (data.status === 'removed') {
+            showNotification(data.message, 'info');
+            removeCartItemFromPage(cartId);
+            updateCartTotals(data.cart_total_items, data.cart_total_price);
+        } else {
+            showNotification(data.message || 'Xatolik yuz berdi', 'error');
+        }
+    })
+    .catch(error => {
+        hideLoading();
+        console.error('Error:', error);
+        showNotification('Xatolik yuz berdi', 'error');
+    });
+}
+
+// Global window scope ga funksiyani qo'shish
+window.decreaseQuantity = decreaseQuantity;
+
+// Checkout funksiyasi
+function proceedToCheckout() {
+    showNotification('Checkout sahifasiga yo\'naltirilmoqda...', 'info');
+    setTimeout(() => {
+        window.location.href = '/checkout/';
+    }, 1000);
+}
+
+// Clear cart function
+function clearCart() {
+    showConfirmationModal('Barcha mahsulotlarni savat dan o\'chirishga ishonchingiz komilmi?', function() {
+        showLoading();
+        
+        fetch('/api/cart/clear/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            hideLoading();
+            
+            if (data.status === 'cleared') {
+                showNotification(data.message, 'success');
+                location.reload(); // Sahifani qayta yuklash
+            } else {
+                showNotification(data.message || 'Xatolik yuz berdi', 'error');
+            }
+        })
+        .catch(error => {
+            hideLoading();
+            console.error('Error:', error);
+            showNotification('Xatolik yuz berdi', 'error');
+        });
+    });
+}
+
+// Debug cart items on page load
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Page loaded. Cart items found:');
+    const cartItems = document.querySelectorAll('[data-cart-id]');
+    cartItems.forEach(item => {
+        console.log('Cart item ID:', item.getAttribute('data-cart-id'), 'Element:', item);
+    });
+    
+    // ESC key to close modal
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const modal = document.getElementById('confirmationModal');
+            if (modal && modal.style.display === 'flex') {
+                modal.style.display = 'none';
+            }
+        }
+    });
+    
+    // Coupon form
+    const couponForm = document.getElementById('couponForm');
+    if (couponForm) {
+        couponForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const couponCode = document.getElementById('couponCode').value.trim();
+            
+            if (!couponCode) {
+                showNotification('Promokod kiriting!', 'warning');
+                return;
+            }
+            
+            showNotification('Promokod funksiyasi hali ishlab chiqilmoqda...', 'info');
+        });
+    }
+    
+    // Ensure our modal functions override the base.html functions
+    console.log('Cart page: Overriding base.html cart functions with modal versions');
+    
+    // Force override the global functions
+    window.removeFromCart = removeFromCart;
+    window.increaseQuantity = increaseQuantity;
+    window.decreaseQuantity = decreaseQuantity;
+    console.log('Cart functions overridden successfully');
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,69 @@
+﻿   {% extends "base.html" %} {% load static %}
+   {% block content %}
+        <section class="page-header">
+            <div class="page-header__bg"></div>
+            <div class="page-header__shape wow fadeInUp" data-wow-delay="200ms"></div>
+            <div class="page-header__overlay"></div>
+            <!-- /.page-header__bg -->
+            <div class="container">
+                <h2 class="page-header__title">Our team</h2>
+                <ul class="grdeen-breadcrumb list-unstyled">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><span>Team</span></li>
+                </ul><!-- /.thm-breadcrumb list-unstyled -->
+            </div><!-- /.container -->
+        </section><!-- /.page-header -->
+
+        <section class="team-one team-one--page">
+            <div class="container">
+                <div class="row gutter-y-30">
+                    {% for expert in ourexperts %}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="team-one__item">
+                            <div class="team-card__bg-black"></div>
+                            <div class="team-card__bg-base"></div>
+                            <div class="team-card wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='000ms'>
+                                <div class="team-card__content">
+                                    <div class="team-card__titlewrap">
+                                        <h4 class="team-card__title">
+                                            <a href="{% url 'team_details' expert.id %}">{{ expert.name }}</a>
+                                        </h4><!-- /.team-card__title -->
+                                        <span class="team-card__designation">{{ expert.position }}</span><!-- /.team-card__designation -->
+                                    </div>
+
+                                    <div class="team-card__hover">
+                                        <div class="team-card__social">
+                                            <div class="team-card__social__iconwrap"><i class="icon-plus"></i></div>
+                                            <div class="team-card__social__list">
+                                                <a href="{{ expert.facebook_url }}">
+                                                    <i class="fab fa-facebook-f"></i>
+                                                    <span class="sr-only">Facebook</span>
+                                                </a>
+                                                <a href="{{ expert.twitter_url }}">
+                                                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                                                    <span class="sr-only">Twitter</span>
+                                                </a>
+                                                <a href="{{ expert.telegram_url }}">
+                                                    <i class="fab fa-telegram-plane"></i>
+                                                    <span class="sr-only">Telegram</span>
+                                                </a>
+                                                <a href="{{ expert.instagram_url }}">
+                                                    <i class="fab fa-instagram"></i>
+                                                    <span class="sr-only">Instagram</span>
+                                                </a>
+                                            </div><!-- /.team-card__social__list -->
+                                        </div><!-- /.team-card__social -->
+                                    </div><!-- /.team-card__hover -->
+                                </div><!-- /.team-card__content -->
+
+                                <div class="team-card__image">
+                                    <img src="{{ expert.image.url }}" alt="{{ expert.name }}">
+                                </div><!-- /.team-card__image -->
+                            </div>
+                        </div><!-- /.team-card -->
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section><!-- /.team-one -->
+   {% endblock %}

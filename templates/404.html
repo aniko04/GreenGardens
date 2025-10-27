@@ -1,0 +1,34 @@
+﻿   {% extends "base.html" %} {% load static %}
+   {% block content %}
+        <section class="page-header">
+            <div class="page-header__bg"></div>
+            <div class="page-header__shape wow fadeInUp" data-wow-delay="200ms"></div>
+            <div class="page-header__overlay"></div>
+            <!-- /.page-header__bg -->
+            <div class="container">
+                <h2 class="page-header__title">404</h2>
+                <ul class="grdeen-breadcrumb list-unstyled">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><span>404</span></li>
+                </ul><!-- /.thm-breadcrumb list-unstyled -->
+            </div><!-- /.container -->
+        </section><!-- /.page-header -->
+
+        <section class="error-404">
+            <div class="container">
+                <div class="error-404__shape"></div>
+                <div class="error-404__content">
+                    <h2 class="error-404__title wow fadeInUp" data-wow-duration="1500ms">
+                        4<span>0</span>4
+                        <img src="{% static 'assets/images/shapes/error-404-shape.png' %}" alt="404">
+                    </h2><!-- /.error-404__title -->
+                    <h3 class="error-404__sub-title">Opps! you’r on the wrong place.</h3><!-- /.error-404__title -->
+                    <p class="error-404__text">
+                        The page requested could not be found. This could be a spelling error in the URL or a removed page.
+                    </p><!-- /.error-404__text -->
+                    
+                    <a href="{% url 'home' %}" class="grdeen-btn error-404__btn"><span>back to home</span></a><!-- /.error-404__btns -->
+                </div>
+            </div><!-- /.container -->
+        </section><!-- /.error-404 -->
+{% endblock %}

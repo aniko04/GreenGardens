@@ -1,0 +1,812 @@
+   {% extends "base.html" %} {% load static %}
+   {% block content %}
+
+   <!-- main-slider-start -->
+        <section class="main-slider-three">
+            <div class="main-slider-three__carousel grdeen-owl__carousel owl-carousel" data-owl-options='{
+		"loop": true,
+		"animateOut": "fadeOut",
+		"animateIn": "fadeIn",
+		"items": 1,
+		"autoplay": false,
+		"autoplayTimeout": 7000,
+		"smartSpeed": 1000,
+		"nav": true,
+        "navText": ["<span class=\"icon-left-arrow11\"></span>","<span class=\"icon-right-arrow1\"></span>"],
+		"dots": false,
+		"margin": 0
+		}'>
+            {% for slide in sliders %}
+                <div class="item">
+                    <div class="main-slider-three__item">
+                        <div class="main-slider-three__bg" style="background-image: url('{% static 'assets/images/shapes/hero-shape3-2.png' %}')"></div>
+                        <div class="main-slider-three__bg2" style="background-image: url('{% static 'assets/images/shapes/hero-shape3-3.png' %}')"></div>
+                        <div class="main-slider-three__shapeimg">
+                            <div class="main-slider-three__shapeimg__inner">
+                                <img src="{{ slide.image.url }}" alt="grdeen">
+                            </div>
+                            <div class="main-slider-three__shapeimg__shape2">
+                                <img src="{% static 'assets/images/shapes/hero-shape3-1.png' %}" alt="grdeen">
+                            </div>
+                            <div class="main-slider-three__shapeimg__shape3">
+                                <img src="{% static 'assets/images/shapes/hero-shape3-6.png' %}" alt="grdeen">
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-6"></div>
+                                <div class="col-lg-6">
+                                    <div class="main-slider-three__content">
+                                        <h5 class="main-slider-three__sub-title"><img src="{% static 'assets/images/shapes/slider-shape1-2.png' %}" alt="grdeen"> {{ slide.title }}</h5>
+                                        <!-- slider-sub-title -->
+                                        <h2 class="main-slider-three__title">{{ slide.subtitle }}</h2><!-- slider-title -->
+                                        <h6 class="main-slider-three__subtext">{{ slide.description }}</h6>
+                                        <div class="main-slider-three__btn">
+                                            <a href="{% url 'services' %}" class="grdeen-btn grdeen-btn--base"><span>{{ slide.button_1_name }}</span></a><!-- slider-btn -->
+                                            <a href="{% url 'contact' %}" class="grdeen-btn grdeen-btn--base"><span>{{ slide.button_2_name }}</span></a><!-- slider-btn -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="main-slider-three__shape4">
+                            <img src="{% static 'assets/images/shapes/hero-shape3-4.png' %}" alt="grdeen">
+                        </div>
+                        <div class="main-slider-three__shape5">
+                            <img src="{% static 'assets/images/shapes/hero-shape3-5.png' %}" alt="grdeen">
+                        </div>
+                    </div>
+                </div><!-- item -->
+            {% endfor %}
+            </div>
+        </section>
+        <!-- main-slider-end -->
+
+        <section class="about-one about-one--two about-one--three">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 wow fadeInLeft" data-wow-delay="100ms">
+                        <div class="about-one__content">
+                            <div class="about-one__content__sctwap">
+                                <div class="sec-title">
+
+                                    <div class="sec-title__img">
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" direction="rtl" width="12.000000pt" height="10.000000pt" viewbox="0 0 12.000000 10.000000" preserveaspectratio="xMidYMid meet">
+                                            <g transform="translate(0.000000,10.000000) scale(0.100000,-0.100000)" stroke="none">
+                                                <path d="M58 84 c12 -8 22 -24 22 -34 0 -10 -10 -26 -22 -34 l-22 -16 27 0
+			c17 0 32 9 43 25 15 23 15 27 0 50 -11 16 -26 25 -43 25 l-27 0 22 -16z"></path>
+                                            </g>
+                                        </svg>
+                                    </div>
+
+
+                                    <span class="sec-title__tagline">{{ intro.title }}</span><!-- /.sec-title__tagline -->
+
+                                    <h2 class="sec-title__title">{{ intro.subtitle }}</h2><!-- /.sec-title__title -->
+                                </div><!-- /.sec-title -->
+                            </div>
+                            <p class="about-one__content__text">
+                                {{intro.description}}
+                            </p>
+                            <div class="about-one__content__qualitwrap">
+                                <div class="about-one__content__qualitwrap__col">
+                                    <div class="about-one__content__qualitwrap__icon">
+                                        {{ intro.icon1|safe }}
+                                    </div>
+                                    <h4 class="about-one__content__qualitwrap__title">{{ intro.icon_text1|safe }}</h4>
+                                </div>
+                                <div class="about-one__content__qualitwrap__col mb-0">
+                                    <div class="about-one__content__qualitwrap__icon">
+                                        {{ intro.icon2|safe }}
+                                    </div>
+                                    <h4 class="about-one__content__qualitwrap__title">{{ intro.icon_text2|safe }}</h4>
+                                </div>
+                                <div class="about-one__content__qualitwrap__pricesbox text-center">
+                                    <div class="about-one__content__qualitwrap__tpright">
+                                        <i class="icon-pot"></i>
+                                    </div>
+                                    <div class="about-one__content__qualitwrap__btmleft">
+                                        <i class="icon-pot"></i>
+                                    </div>
+                                    <strong class="about-one__content__qualitwrap__price">{{ intro.experience_years }}+</strong>
+                                    <span class="about-one__content__qualitwrap__text">Years Of Experience</span>
+                                </div>
+                            </div>
+                            <ul class="list-unstyled about-one__content__list">
+                                <li><i class="icon-check-solid"></i>{{ intro.list1|safe }}</li>
+                                <li><i class="icon-check-solid"></i>{{ intro.list2|safe }}</li>
+                                <li><i class="icon-check-solid"></i>{{ intro.list3|safe }}</li>
+                            </ul>
+                            <a href="{{ intro.button_url }}" class="grdeen-btn our-benefits-one__btn">
+                                <span>{{ intro.button_name }}</span>
+                            </a>
+                        </div>
+                    </div><!-- /.col-lg-6 -->
+                    <div class="col-lg-6">
+                        <div class="grdeen-stretch-element-inside-column">
+                            <div class="about-one__image wow fadeInRight" data-wow-delay="100ms">
+                                <img class="about-one__bigimage" src="{% static 'assets/images/resources/about-image3-1.jpg' %}" alt="grdeen">
+                                <img class="about-one__bigimagebg" src="{% static 'assets/images/shapes/about-shape3-1.png' %}" alt="grdeen">
+                                <div class="about-one__smimage">
+                                    <img src="{% static 'assets/images/resources/about-image3-2.jpg' %}" alt="grdeen">
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.col-lg-6 -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </section><!-- /.about-one -->
+
+        <!-- Feature Start -->
+        <section class="feature-one feature-one--three">
+            <div class="container-fluid">
+                <div class="row gutter-y-30">
+                    {% for feature in features %}
+                    <div class="col-xl-3 col-md-6 wow fadeInUp" data-wow-delay="00ms">
+                        <div class="feature-one__item">
+
+                            <div class="feature-one__item__bg" style="background-image: url({% static 'assets/images/shapes/feature-bg-2-1.png' %});"></div>
+                            <div class="feature-one__item__bgshape" style="background-image: url({% static 'assets/images/shapes/feature-shape3-1.png' %});"></div>
+
+                            <div class="feature-one__item__innerwrap">
+                                <div class="feature-one__item__iconwrap">
+                                    <div class="feature-one__item__icon">
+                                        {{ feature.icon|safe}}
+                                    </div>
+                                </div>
+                                <div class="feature-one__item__content">
+                                    <h4 class="feature-one__item__title">{{ feature.title }}</h4>
+                                    <a class="service-one__item__iconlink" href="{{ feature.url }}">
+                                        <i class="icon-right-up"></i>
+                                    </a>
+                                </div>
+                                <p class="feature-one__item__text">{{ feature.description }}</p>
+                            </div>
+                        </div><!-- feature-item -->
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        <!-- Feature End -->
+
+        <section class="service-one service-one--three">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 wow fadeInUp" data-wow-delay="100ms">
+                        <div class="service-one__sctwrap text-center">
+                            <div class="sec-title">
+
+                                <div class="sec-title__img">
+                                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" direction="rtl" width="12.000000pt" height="10.000000pt" viewbox="0 0 12.000000 10.000000" preserveaspectratio="xMidYMid meet">
+                                        <g transform="translate(0.000000,10.000000) scale(0.100000,-0.100000)" stroke="none">
+                                            <path d="M58 84 c12 -8 22 -24 22 -34 0 -10 -10 -26 -22 -34 l-22 -16 27 0
+			c17 0 32 9 43 25 15 23 15 27 0 50 -11 16 -26 25 -43 25 l-27 0 22 -16z"></path>
+                                        </g>
+                                    </svg>
+                                </div>
+
+
+                                <span class="sec-title__tagline"></span>{{ ourservices.first.title }}</span><!-- /.sec-title__tagline -->
+
+                                <h2 class="sec-title__title">{{ ourservices.first.subtitle }}</h2><!-- /.sec-title__title -->
+                            </div><!-- /.sec-title -->
+                        </div>
+                    </div>
+                </div>
+                <div class="service-one--three__carousel grdeen-owl__carousel grdeen-owl__carousel--basic-nav owl-carousel owl-theme" data-owl-options='{
+			"items": 1,
+			"margin": 30,
+			"loop": false,
+			"smartSpeed": 700,
+			"nav": false,
+			"navText": "",
+			"dots": false,
+			"autoplay": false,
+			"responsive": {
+				"0": {
+					"dots": true,
+					"items": 1
+				},
+				"768": {
+					"dots": true,
+					"items": 2
+				},
+				"992": {
+					"items": 3
+				}
+			}
+			}'>
+            {% for service in ourservices %}
+                    <div class="item">
+                        <div class="service-one__item">
+                            <div class="service-one__item__bgeffect" style="background-image: url('{% static 'assets/images/shapes/service-shape3-1.png' %}');"></div>
+                            <div class="service-one__item__titlewrap">
+                                <div class="service-one__item__titlecol">
+                                    <h4 class="service-one__item__title"><a href="{% url 'service_details' service.id %}">{{ service.pagename }}</a></h4>
+                                    <p class="service-one__item__text">{{ service.description }}</p>
+                                    <a class="service-one__item__link" href="{% url 'service_details' service.id %}">Discover More</a>
+                                </div>
+                            </div>
+                            <div class="service-one__item__image">
+                                <img src="{{ service.image.url }}" alt="grdeen">
+                                <div class="service-one__item__iconwrap">
+                                    <div class="service-one__item__icon">
+                                        {{ service.icon|safe }}
+                                    </div><!-- /.service-icon -->
+                                </div>
+                                <div class="service-one__item__btmwrap">
+                                    <a class="service-one__item__iconlink" href="{% url 'service_details' service.id %}">
+                                        <i class="icon-right-up"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div><!-- /.service-card-one -->
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        <!-- Service End -->
+
+        <section class="work-process-one work-process-one--three">
+            <div class="work-process-one__bg" style="background-image: url({% static 'assets/images/shapes/work-shape3-5.png' %});"></div>
+            <div class="work-process-one__shape1"><img src="{% static 'assets/images/shapes/work-shape3-1.png' %}" alt="grdeen"></div>
+            <div class="work-process-one__shape2"><img src="{% static 'assets/images/shapes/work-shape3-2.png' %}" alt="grdeen"></div>
+            <div class="work-process-one__shape3"><img src="{% static 'assets/images/shapes/work-shape3-3.png' %}" alt="grdeen"></div>
+            <div class="work-process-one__shape4"><img src="{% static 'assets/images/shapes/work-shape3-4.png' %}" alt="grdeen"></div>
+            <div class="work-process-one__shape5"><img src="{% static 'assets/images/shapes/work-shape3-1.png' %}" alt="grdeen"></div>
+            <div class="container">
+                <div class="row gutter-y-20">
+                    <div class="col-lg-6 wow fadeInLeft" data-wow-delay="100ms">
+                        <div class="work-process-one__sctwrap">
+                            <div class="sec-title">
+
+                                <div class="sec-title__img">
+                                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" direction="rtl" width="12.000000pt" height="10.000000pt" viewbox="0 0 12.000000 10.000000" preserveaspectratio="xMidYMid meet">
+                                        <g transform="translate(0.000000,10.000000) scale(0.100000,-0.100000)" stroke="none">
+                                            <path d="M58 84 c12 -8 22 -24 22 -34 0 -10 -10 -26 -22 -34 l-22 -16 27 0
+			c17 0 32 9 43 25 15 23 15 27 0 50 -11 16 -26 25 -43 25 l-27 0 22 -16z"></path>
+                                        </g>
+                                    </svg>
+                                </div>
+
+
+                                <span class="sec-title__tagline">{{ ourworkprocess.last.title }}</span><!-- /.sec-title__tagline -->
+
+                                <h2 class="sec-title__title">{{ ourworkprocess.last.subtitle }}</h2><!-- /.sec-title__title -->
+                            </div><!-- /.sec-title -->
+                        </div>
+                    </div>
+                    <div class="col-lg-6 wow fadeInRight" data-wow-delay="100ms">
+                        <div class="work-process-one__infowrap">
+                            <p class="work-process-one__infowrap__text"> {{ ourworkprocess.last.description }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row gutter-y-30">
+                    {% for process in ourworkprocess %}
+                    <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="00ms">
+                        <div class="work-process-one__col">
+                            <div class="work-process-one__col__circlewrap">
+                                <div class="work-process-one__col__icon">
+                                    {{ process.icon|safe }}
+                                </div>
+                            </div>
+                            <div class="work-process-one__col__info text-center">
+                                <h4 class="work-process-one__col__title">{{ process.pagename }}</h4>
+                                <p class="work-process-one__col__text">{{ process.page_text }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                </div>
+            </div>
+        </section>
+        <!-- work-process end -->
+
+        <section class="testimonials-one testimonials-one--two testimonials-one--three">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="sec-title">
+
+                            <div class="sec-title__img">
+                                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" direction="rtl" width="12.000000pt" height="10.000000pt" viewbox="0 0 12.000000 10.000000" preserveaspectratio="xMidYMid meet">
+                                    <g transform="translate(0.000000,10.000000) scale(0.100000,-0.100000)" stroke="none">
+                                        <path d="M58 84 c12 -8 22 -24 22 -34 0 -10 -10 -26 -22 -34 l-22 -16 27 0
+			c17 0 32 9 43 25 15 23 15 27 0 50 -11 16 -26 25 -43 25 l-27 0 22 -16z"></path>
+                                    </g>
+                                </svg>
+                            </div>
+
+
+                            <span class="sec-title__tagline">{{ ourtestimonials.last.title }}</span><!-- /.sec-title__tagline -->
+
+                            <h2 class="sec-title__title">{{ ourtestimonials.last.subtitle }}</h2><!-- /.sec-title__title -->
+                        </div><!-- /.sec-title -->
+                    </div>
+                </div>
+                <div class="testimonials-one__carousel grdeen-owl__carousel grdeen-owl__carousel--with-shadow grdeen-owl__carousel--basic-nav owl-carousel" data-owl-options='{
+			"items": 1,
+			"margin": 0,
+			"loop": false,
+			"smartSpeed": 700,
+			"nav": false,
+			"navText": "",
+			"dots": true,
+			"autoplay": false,
+			"responsive": {
+				"0": {
+					"items": 1
+				},
+				"767": {
+					"items": 2,
+					"margin": 30
+				},
+				"992": {
+					"items": 3,
+					"margin": 30
+				}
+			}
+		}'>
+        {% for testimonial in ourtestimonials %}
+                    <div class="item">
+                        <div class="testimonials-card testimonials-dark-card  wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='00ms'>
+                            <div class="testimonials-card__inner">
+                                <div class="testimonials-card__ratingwrap d-flex align-items-center justify-content-between">
+                                    <div class="testimonials-card__rating">
+                                        <span class="testimonials-card__rating__start"><i class="fa fa-star"></i></span>
+                                        <span class="testimonials-card__rating__start"><i class="fa fa-star"></i></span>
+                                        <span class="testimonials-card__rating__start"><i class="fa fa-star"></i></span>
+                                        <span class="testimonials-card__rating__start"><i class="fa fa-star"></i></span>
+                                        <span class="testimonials-card__rating__start"><i class="fa fa-star"></i></span>
+                                    </div><!-- /.testimonials-card__rating -->
+                                    <div class="testimonials-card__icon">
+                                        <img src="{% static 'assets/images/shapes/funfact-icon2-1.png' %}" alt="">
+                                    </div>
+                                </div>
+
+                                <div class="testimonials-card__content">
+                                    {{ testimonial.feedback }}
+                                </div><!-- /.testimonials-card__content -->
+                                <div class="testimonials-card__top">
+                                    <div class="testimonials-card__image">
+                                        <img src="{{ testimonial.image.url }}" alt="{{ testimonial.name }}">
+                                    </div><!-- /.testimonials-card__image -->
+
+                                    <div class="testimonials-card__top__left">
+                                        <h3 class="testimonials-card__name">
+                                            {{ testimonial.name }}
+                                        </h3><!-- /.testimonials-card__name -->
+                                        <p class="testimonials-card__designation">{{ testimonial.position }}</p><!-- /.testimonials-card__designation -->
+
+                                        <div class="testimonials-card__quote">
+                                            <i class="icon-quote"></i>
+                                        </div>
+                                    </div><!-- /.testimonials-card__top__left -->
+                                </div><!-- /.testimonials-card__top -->
+                                <div class="testimonials-card__shape2">
+                                    <img src="{% static 'assets/images/shapes/testimonial-shape2-1.png' %}" alt="">
+                                </div>
+                            </div><!-- /.testimonials-card__inner -->
+                        </div><!-- /.testimonials-card -->
+                    </div><!-- /.item -->
+{% endfor %}
+        
+                </div><!-- /.testimonials-one__carousel -->
+            </div><!-- /.container -->
+        </section><!-- /.testimonials-one -->
+
+        <section class="project-one project-one--two project-one--three">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 wow fadeInUp" data-wow-delay="100ms">
+                        <div class="project-one__sctwrap d-flex align-items-center">
+                            <div class="sec-title">
+
+                                <div class="sec-title__img">
+                                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" direction="rtl" width="12.000000pt" height="10.000000pt" viewbox="0 0 12.000000 10.000000" preserveaspectratio="xMidYMid meet">
+                                        <g transform="translate(0.000000,10.000000) scale(0.100000,-0.100000)" stroke="none">
+                                            <path d="M58 84 c12 -8 22 -24 22 -34 0 -10 -10 -26 -22 -34 l-22 -16 27 0
+			c17 0 32 9 43 25 15 23 15 27 0 50 -11 16 -26 25 -43 25 l-27 0 22 -16z"></path>
+                                        </g>
+                                    </svg>
+                                </div>
+
+
+                                <span class="sec-title__tagline">{{ ourprojects.last.title}}</span><!-- /.sec-title__tagline -->
+
+                                <h2 class="sec-title__title">{{ ourprojects.last.subtitle }}</h2><!-- /.sec-title__title -->
+                            </div><!-- /.sec-title -->
+                            <div class="project-one__info">
+                                <p class="project-one__info__text">{{ ourprojects.last.description }}</p>
+                                <a href="{% url 'projects' %}" class="grdeen-btn project-one__moreproject__btn">
+                                    <span>{{ ourprojects.last.button_name  }}</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-one__carousel grdeen-owl__carousel grdeen-owl__carousel--basic-nav owl-carousel" data-owl-options='{
+			"items": 1,
+			"margin": 30,
+			"loop": true,
+			"smartSpeed": 700,
+			"nav": false,
+			"navText": "",
+			"dots": true,
+			"center": true,
+			"autoplay": false,
+			"responsive": {
+				"0": {
+					"items": 1
+				},
+				"768": {
+					"items": 1.4
+				},
+				"1200": {
+					"items": 1.85
+				},
+				"1500": {
+					"items": 2.48,
+					"margin": 50
+				}
+			}
+			}'>
+            {% for project in ourprojects %}
+                    <div class="item">
+                        <div class="project-one__item wow fadeInUp" data-wow-delay="00ms">
+                            <div class="project-one__item__image">
+                                <img src="{{ project.image.url }}" alt="project" style="width: 775px !important; height: 466px !important; object-fit: cover;">
+                            </div>
+
+                            <div class="project-one__item__info">
+                                <div class="project-one__item__bg">
+                                    <strong class="project-one__item__tagtext">{{ project.category }}</strong>
+                                    <h5 class="project-one__item__heading"><a href="{% url 'project_details' project.id %}">{{ project.project_name }}</a></h5>
+                                    <a href="{% url 'project_details' project.id %}" class="project-one__item__right-arrow">
+                                        <i class="icon-right-arrow2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section><!-- /.project-one -->
+
+        <section class="funfact-one funfact-one--two funfact-one--three">
+            <div class="funfact-one__bg" style="background-image: url({% static 'assets/images/shapes/funfact-bg3-1.png' %});"></div>
+            <div class="funfact-one__wrapper">
+                <div class="funfact-one__wrapper__shapeleft">
+                    <img src="{% static 'assets/images/shapes/funfact-shape-right2-1.png' %}" alt="grdeen">
+                </div>
+                <div class="funfact-one__wrapper__shaperight">
+                    <img src="{% static 'assets/images/shapes/funfact-shape-left2-1.png' %}" alt="grdeen">
+                </div>
+                <div class="container">
+                    <div class="row gutter-y-30">
+                        <div class="col-lg-6">
+                            <div class="funfact-one__content">
+                                <div class="funfact-one__content__sctwrap wow fadeInUp" data-wow-delay="100ms">
+                                    <div class="sec-title">
+
+                                        <div class="sec-title__img">
+                                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" direction="rtl" width="12.000000pt" height="10.000000pt" viewbox="0 0 12.000000 10.000000" preserveaspectratio="xMidYMid meet">
+                                                <g transform="translate(0.000000,10.000000) scale(0.100000,-0.100000)" stroke="none">
+                                                    <path d="M58 84 c12 -8 22 -24 22 -34 0 -10 -10 -26 -22 -34 l-22 -16 27 0
+			c17 0 32 9 43 25 15 23 15 27 0 50 -11 16 -26 25 -43 25 l-27 0 22 -16z"></path>
+                                                </g>
+                                            </svg>
+                                        </div>
+
+
+                                        <span class="sec-title__tagline">{{ ourfacts.last.title }}</span><!-- /.sec-title__tagline -->
+
+                                        <h2 class="sec-title__title">{{ ourfacts.last.subtitle }}</h2><!-- /.sec-title__title -->
+                                    </div><!-- /.sec-title -->
+                                </div>
+                                <p class="funfact-one__content__text">{{ ourfacts.last.description }}</p>
+                                <div class="funfact-one__content__bookwrap d-flex align-items-center">
+                                    <a href="{{ ourfacts.last.button_url }}" class="grdeen-btn funfact-one__content__bookwrap__btn"><span>{{ ourfacts.last.button_name }}</span></a>
+                                    <p class="funfact-one__content__bookwrap__text">{{ ourfacts.last.button_text }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <ul class="list-unstyled funfact-one__list">
+                                <li class="funfact-one__item count-box">
+                                    <div class="work-process-one__col">
+                                        <div class="work-process-one__col__circlewrap">
+                                            <div class="work-process-one__col__shapetree">
+                                                <img src="{% static 'assets/images/shapes/funfact-icon2-1.png' %}" alt="grdeen">
+                                            </div>
+                                            <div class="work-process-one__col__icon">
+                                                <div class="funfact-one__countwrap">
+                                                    <strong class="funfact-one__count count-text" data-stop="{{ ourfacts.last.project_number }}" data-speed="1500"></strong>
+                                                    <span class="funfact-one__count">K</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="work-process-one__col__info text-center">
+                                            <h3 class="work-process-one__col__title">Projects Completed</h3>
+                                            <p class="work-process-one__col__text">{{ ourfacts.last.project_content }}</p>
+                                        </div>
+                                        <div class="work-process-one__col__shapebg"></div>
+                                    </div>
+                                </li><!-- /.funfact-one__item -->
+
+                                <li class="funfact-one__item count-box">
+                                    <div class="work-process-one__col">
+                                        <div class="work-process-one__col__circlewrap">
+                                            <div class="work-process-one__col__shapetree">
+                                                <img src="{% static 'assets/images/shapes/funfact-icon2-1.png' %}" alt="grdeen">
+                                            </div>
+                                            <div class="work-process-one__col__icon">
+                                                <div class="funfact-one__countwrap">
+                                                    <strong class="funfact-one__count count-text" data-stop="{{ ourfacts.last.customer_number }}" data-speed="1500"></strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="work-process-one__col__info text-center">
+                                            <h3 class="work-process-one__col__title">Satisfied Customers</h3>
+                                            <p class="work-process-one__col__text">{{ ourfacts.last.customer_content }}</p>
+                                        </div>
+                                        <div class="work-process-one__col__shapebg"></div>
+                                    </div>
+                                </li><!-- /.funfact-one__item -->
+                            </ul><!-- /.list-unstyled funfact-one__list -->
+                        </div>
+                    </div>
+                </div><!-- /.container -->
+            </div>
+        </section><!-- /.funfact-one -->
+
+        <section class="our-benefits-one our-benefits-one--two our-benefits-one--three">
+            <div class="our-benefits-one__bg" style="background-image: url('{% static 'assets/images/shapes/work-shape3-5.png' %}');"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="our-benefits-one__image wow fadeInLeft" data-wow-delay="100ms">
+                            <div class="our-benefits-one__image__shape1" style="background-image: url('{% static 'assets/images/shapes/skill-shape3-1.png' %}');"></div>
+                            <div class="our-benefits-one__image__shape2" style="background-image: url('{% static 'assets/images/shapes/skill-shape3-2.png' %}');"></div>
+                            <img class="our-benefits-one__bigimage" src="{{ ourbenefits.last.image.url }}" alt="grdeen">
+                        </div>
+                    </div><!-- /.col-lg-6 -->
+
+                    <div class="col-lg-6 wow fadeInRight" data-wow-delay="100ms">
+                        <div class="our-benefits-one__content">
+                            <div class="our-benefits-one__content__sctwap">
+                                <div class="sec-title">
+
+                                    <div class="sec-title__img">
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" direction="rtl" width="12.000000pt" height="10.000000pt" viewbox="0 0 12.000000 10.000000" preserveaspectratio="xMidYMid meet">
+                                            <g transform="translate(0.000000,10.000000) scale(0.100000,-0.100000)" stroke="none">
+                                                <path d="M58 84 c12 -8 22 -24 22 -34 0 -10 -10 -26 -22 -34 l-22 -16 27 0
+			c17 0 32 9 43 25 15 23 15 27 0 50 -11 16 -26 25 -43 25 l-27 0 22 -16z"></path>
+                                            </g>
+                                        </svg>
+                                    </div>
+
+
+                                    <span class="sec-title__tagline">{{ ourbenefits.last.title }}</span><!-- /.sec-title__tagline -->
+
+                                    <h2 class="sec-title__title">{{ ourbenefits.last.subtitle }}</h2><!-- /.sec-title__title -->
+                                </div><!-- /.sec-title -->
+                            </div>
+
+                            <p class="our-benefits-one__content__text">{{ ourbenefits.last.description }}</p>
+
+                            <div class="our-benefits-one__content__qualitwrap d-flex flex-wrap">
+                                <div class="our-benefits-one__content__qualitwrap__col d-flex flex-wrap">
+                                    <div class="our-benefits-one__content__qualitwrap__icon">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <h4 class="our-benefits-one__content__qualitwrap__title">{{ ourbenefits.last.benefit1 }}</h4>
+                                    <p class="our-benefits-one__content__text skill-text">{{ ourbenefits.last.benefit1_text }}</p>
+                                </div>
+
+                                <div class="our-benefits-one__content__qualitwrap__col d-flex flex-wrap">
+                                    <div class="our-benefits-one__content__qualitwrap__icon our-benefits-one__content__qualitwrap__icon">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <h4 class="our-benefits-one__content__qualitwrap__title">{{ ourbenefits.last.benefit2 }}</h4>
+                                    <p class="our-benefits-one__content__text skill-text">{{ ourbenefits.last.benefit2_text }}</p>
+                                </div>
+                            </div>
+                            <div class="our-benefits-one__content__listwrap d-flex justify-content-between">
+                                <ul class="list-unstyled our-benefits-one__content__list">
+                                    <li><i class="icon-check-solid"></i>{{ ourbenefits.last.benefit1_quality1 }}</li>
+                                    <li><i class="icon-check-solid"></i>{{ ourbenefits.last.benefit1_quality2 }}</li>
+                                    <li><i class="icon-check-solid"></i>{{ ourbenefits.last.benefit1_quality3 }}</li>
+                                    <li><i class="icon-check-solid"></i>{{ ourbenefits.last.benefit1_quality4 }}</li>
+                                </ul>
+                                <div class="about-one__content__qualitwrap__pricesbox text-center">
+                                    <div class="about-one__content__qualitwrap__tpright">
+                                        <img src="{% static 'assets/images/shapes/skill-icon2-1.png' %}" alt="grdeen">
+                                    </div>
+                                    <div class="about-one__content__qualitwrap__inner">
+                                        <strong class="about-one__content__qualitwrap__price">{{ ourbenefits.last.client_count }}+</strong>
+                                        <span class="about-one__content__qualitwrap__text">{{ ourbenefits.last.client_text }}</span>
+                                        <div class="testimonials-card__rating">
+                                            <span class="testimonials-card__rating__start"><i class="fa fa-star"></i></span>
+                                            <span class="testimonials-card__rating__start"><i class="fa fa-star"></i></span>
+                                            <span class="testimonials-card__rating__start"><i class="fa fa-star"></i></span>
+                                            <span class="testimonials-card__rating__start"><i class="fa fa-star"></i></span>
+                                            <span class="testimonials-card__rating__start"><i class="fa fa-star"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.col-lg-6 -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </section><!-- /.our-benefits-one -->
+
+        <section class="free-booking-one free-booking-one--three">
+            <div class="free-booking-one__bg" style="background-image: url({% static 'assets/images/shapes/booking-shape3-bg.png' %});"></div>
+            <div class="free-booking-one__shape1"><img src="{% static 'assets/images/shapes/booking-shape3-1.png' %}" alt="grdeen"></div>
+            <div class="free-booking-one__shape2"><img src="{% static 'assets/images/shapes/booking-shape3-2.png' %}" alt="grdeen"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 wow fadeInUp" data-wow-delay="100ms">
+                        <div class="free-booking-one__content">
+                            <div class="free-booking-one__sctwrap wow fadeInUp" data-wow-delay="100ms">
+                                <div class="sec-title">
+
+                                    <div class="sec-title__img">
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" direction="rtl" width="12.000000pt" height="10.000000pt" viewbox="0 0 12.000000 10.000000" preserveaspectratio="xMidYMid meet">
+                                            <g transform="translate(0.000000,10.000000) scale(0.100000,-0.100000)" stroke="none">
+                                                <path d="M58 84 c12 -8 22 -24 22 -34 0 -10 -10 -26 -22 -34 l-22 -16 27 0
+			c17 0 32 9 43 25 15 23 15 27 0 50 -11 16 -26 25 -43 25 l-27 0 22 -16z"></path>
+                                            </g>
+                                        </svg>
+                                    </div>
+
+
+                                    <span class="sec-title__tagline">Free Book Now</span><!-- /.sec-title__tagline -->
+
+                                    <h2 class="sec-title__title">Book a FREE <br> professional gardening <br> consultation!</h2><!-- /.sec-title__title -->
+                                </div><!-- /.sec-title -->
+                            </div>
+                            <form class="form-one contact-one__form " method="POST">
+                        {% csrf_token %}
+                       
+                        <div class="form-one__group">
+                            <div class="form-one__control">
+                                <label for="name">Your Name</label>
+                                <input type="text" name="name" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-one__control">
+                                <label for="email">Email</label>
+                                <input type="email" name="email" placeholder="Email Address" required>
+                            </div>
+                            <div class="form-one__control">
+                                <label for="tel">Phone</label>
+                                <input type="text" name="tel" placeholder="Phone">
+                            </div>
+                            <div class="form-one__control">
+                            <div class="form-one__control__select">
+                                <label class="sr-only" for="language-select">Choose Services</label>
+                                <select class="selectpicker" id="language-select" name="service">
+                                    <option value="Choose Services">Choose Services</option>
+                                    <option value="Choose Services 01">Choose Services 01</option>
+                                    <option value="Choose Services 02">Choose Services 02</option>
+                                </select>
+                                </div>
+                            </div>
+
+                            <div class="form-one__control form-one__control--full">
+                                <textarea name="message" placeholder="Your Message here" required></textarea>
+                            </div>
+                           
+                            <div class="form-one__control form-one__control--full text-center">
+                                <button type="submit" class="grdeen-btn"><span>Send a message</span></button>
+                            </div>
+                        </div>
+                        </form>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 wow fadeInUp" data-wow-delay="100ms">
+                        <div class="grdeen-stretch-element-inside-column">
+                            <div class="free-booking-one__image">
+                                <div class="free-booking-one__image__maskingimg">
+                                    <img src="{% static 'assets/images/resources/skill-image2-1.jpg' %}" alt="grdeen">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.container -->
+            <div class="free-booking-one__shadow">
+                <h1 class="free-booking-one__shadow__title">Gardening</h1>
+            </div>
+            <div class="free-booking-one__shape3"><img src="{% static 'assets/images/shapes/booking-shape3-3.png' %}" alt="grdeen"></div>
+        </section><!-- /.free-booking-two -->
+
+        <section class="blog-two">
+            <div class="container">
+                <div class="blog-one__sctwrap wow fadeInUp" data-wow-delay="100ms">
+                    <div class="sec-title">
+
+                        <div class="sec-title__img">
+                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" direction="rtl" width="12.000000pt" height="10.000000pt" viewbox="0 0 12.000000 10.000000" preserveaspectratio="xMidYMid meet">
+                                <g transform="translate(0.000000,10.000000) scale(0.100000,-0.100000)" stroke="none">
+                                    <path d="M58 84 c12 -8 22 -24 22 -34 0 -10 -10 -26 -22 -34 l-22 -16 27 0
+			c17 0 32 9 43 25 15 23 15 27 0 50 -11 16 -26 25 -43 25 l-27 0 22 -16z"></path>
+                                </g>
+                            </svg>
+                        </div>
+
+
+                        <span class="sec-title__tagline">{{ ourblogs.last.title }} </span><!-- /.sec-title__tagline -->
+
+                        <h2 class="sec-title__title">{{ ourblogs.last.subtitle }}</h2><!-- /.sec-title__title -->
+                    </div><!-- /.sec-title -->
+                </div>
+                <div class="blog-one__carousel grdeen-owl__carousel grdeen-owl__carousel--with-shadow grdeen-owl__carousel--basic-nav owl-carousel owl-theme" data-owl-options='{
+			"items": 1,
+			"margin": 30,
+			"loop": false,
+			"smartSpeed": 700,
+			"nav": false,
+			"navText": "",
+			"dots": false,
+			"autoplay": false,
+			"responsive": {
+				"0": {
+					"items": 1,
+					"dots": true
+				},
+				"768": {
+					"items": 2,
+					"dots": true
+				},
+				"992": {
+					"items": 3
+				},
+				"1400": {
+					"items": 4
+				}
+			}
+			}'>
+            {% for blog in ourblogs %}
+                    <div class="item">
+                        <div class="blog-card blog-card--two  wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='00ms'>
+                            <div class="blog-card__image">
+                                <div class="blog-card__image__inner">
+                                    <img src="{{ blog.image.url }}" alt="{{ blog.minititle }}">
+                                    <a href="{{ blog.url }}" class="blog-card__image__link"></a>
+                                </div>
+                                <div class="blog-card__date">{{ blog.publish_date }}</div><!-- /.blog-card__date -->
+                            </div><!-- /.blog-card__image -->
+                            <div class="blog-card__content">
+                                <div class="blog-card--two__shape" style="background-image: url({% static 'assets/images/shapes/blog-post2-shape.png' %});"></div>
+                                <ul class="list-unstyled blog-card__meta">
+                                    <li>
+                                        <a href="{{ blog.url }}">
+                                            <span><i class="fas fa-user"></i></span>
+                                            By {{ blog.author }}
+                                        </a>
+                                    </li>
+                                </ul><!-- /.list-unstyled blog-card__meta -->
+                                <h3 class="blog-card__title"><a href="{{ blog.url }}">{{ blog.minititle }}</a></h3><!-- /.blog-card__title -->
+                                <p class="blog-card-two__text">
+                                    {{ blog.content|safe }}
+                                </p><!-- /.blog-card-two__text -->
+                            </div><!-- /.blog-card-two__content -->
+                        </div><!-- /.blog-card -->
+                    </div><!-- /.item -->
+                    {% endfor %}
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </section><!-- /.blog-two -->
+
+    {% endblock %}
+
+    

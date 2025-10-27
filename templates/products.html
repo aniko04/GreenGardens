@@ -1,0 +1,468 @@
+﻿   {% extends "base.html" %} {% load static %}
+
+<style>
+/* Product Action Buttons Styles */
+.product__action-buttons {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+}
+
+.action-buttons-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.product-action-btn {
+    width: 60px !important;
+    height: 60px !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 2px solid #e8f5e8 !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #1a9120 !important;
+    text-decoration: none !important;
+    font-size: 25px !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1) !important;
+    backdrop-filter: blur(5px) !important;
+}
+
+.product-action-btn:hover {
+    background: #1a9120 !important;
+    color: white !important;
+    transform: translateY(-2px) scale(1.05) !important;
+    box-shadow: 0 6px 20px rgba(26, 145, 32, 0.4) !important;
+    border-color: #1a9120 !important;
+}
+
+.product-action-btn:active {
+    transform: translateY(0px) scale(0.98) !important;
+}
+
+/* Wishlist specific styling */
+.wishlist-btn:hover {
+    background: #ff4757 !important;
+    border-color: #ff4757 !important;
+}
+
+.wishlist-btn:hover {
+    box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4) !important;
+}
+
+/* Cart specific styling */
+.cart-btn:hover {
+    background: #2ed573 !important;
+    border-color: #2ed573 !important;
+    box-shadow: 0 6px 20px rgba(46, 213, 115, 0.4) !important;
+}
+
+/* Tooltip styles */
+.btn-tooltip {
+    position: absolute;
+    right: 55px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.btn-tooltip::after {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 5px solid transparent;
+    border-right-color: rgba(0, 0, 0, 0.8);
+}
+
+.product-action-btn:hover .btn-tooltip {
+    opacity: 1;
+    visibility: visible;
+    right: 60px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .product-action-btn {
+        width: 38px !important;
+        height: 38px !important;
+        font-size: 14px !important;
+    }
+    
+    .btn-tooltip {
+        display: none !important;
+    }
+    
+    .product__action-buttons {
+        right: 10px !important;
+        top: 10px !important;
+    }
+}
+
+/* Animation for liked/added state */
+.product-action-btn.liked {
+    background: #ff4757 !important;
+    color: white !important;
+    border-color: #ff4757 !important;
+}
+
+.product-action-btn.added-to-cart {
+    background: #2ed573 !important;
+    color: white !important;
+    border-color: #2ed573 !important;
+}
+
+/* Pulse animation for interactions */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.product-action-btn.pulse {
+    animation: pulse 0.3s ease-in-out;
+}
+
+/* Enhanced Pagination Styles */
+.blog-pagination {
+    margin-top: 50px !important;
+    margin-bottom: 30px !important;
+}
+
+.blog-pagination .next {
+    padding: 12px 20px !important;
+    border-radius: 25px !important;
+    background: linear-gradient(45deg, #1a9120, #22a82a) !important;
+    color: white !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(26, 145, 32, 0.3) !important;
+}
+
+.blog-pagination .next:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(26, 145, 32, 0.4) !important;
+    background: linear-gradient(45deg, #22a82a, #1a9120) !important;
+}
+
+.blog-pagination a:not(.next),
+.blog-pagination span:not(.next) {
+    transition: all 0.3s ease !important;
+    border: 2px solid #e7ebe7 !important;
+}
+
+.blog-pagination a:hover:not(.next) {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important;
+}
+
+.blog-pagination span:not(.current):not(.next) {
+    background: transparent !important;
+    color: #666 !important;
+    cursor: default !important;
+    border: none !important;
+    font-weight: bold !important;
+}
+
+@media (max-width: 576px) {
+    .blog-pagination .next {
+        padding: 10px 15px !important;
+        font-size: 14px !important;
+    }
+    
+    .blog-pagination a:not(.next),
+    .blog-pagination span:not(.next) {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 14px !important;
+    }
+}
+</style>
+
+   {% block content %}
+        <section class="page-header">
+            <div class="page-header__bg"></div>
+            <div class="page-header__shape wow fadeInUp" data-wow-delay="200ms"></div>
+            <div class="page-header__overlay"></div>
+            <!-- /.page-header__bg -->
+            <div class="container">
+                <h2 class="page-header__title">Our shop</h2>
+                <ul class="grdeen-breadcrumb list-unstyled">
+                    <li><a href="index.html">Home</a></li>
+                    <li><span>Shop</span></li>
+                </ul><!-- /.thm-breadcrumb list-unstyled -->
+            </div><!-- /.container -->
+        </section><!-- /.page-header -->
+
+        <section class="product-one">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="product__info-top">
+                            <div class="product__showing-text-box">
+                                <p class="product__showing-text">Showing page {{ products.number }} of {{ products.paginator.num_pages }} 
+                                ({{ products.paginator.count }} total products)</p>
+                            </div>
+                            <div class="product__showing-sort">
+                                <select class="selectpicker" aria-label="Default sorting" id="sortProducts" onchange="sortProducts()">
+                                    <option value="" {% if not selected_sort %}selected{% endif %}>Default sorting</option>
+                                    <option value="name" {% if selected_sort == 'name' %}selected{% endif %}>Sort by name (A-Z)</option>
+                                    <option value="price_low" {% if selected_sort == 'price_low' %}selected{% endif %}>Sort by price (Low to High)</option>
+                                    <option value="price_high" {% if selected_sort == 'price_high' %}selected{% endif %}>Sort by price (High to Low)</option>
+                                    <option value="views_high" {% if selected_sort == 'views_high' %}selected{% endif %}>Sort by views (Most viewed)</option>
+                                    <option value="views_low" {% if selected_sort == 'views_low' %}selected{% endif %}>Sort by views (Least viewed)</option>
+                                    <option value="newest" {% if selected_sort == 'newest' %}selected{% endif %}>Sort by newest</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row gutter-y-30">
+                            {% for product in products %}
+                            <div class="col-md-6 col-lg-4">
+                                <div class="product__item wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='000ms'>
+                                    <div class="product__item__img">
+                                        {% if product.main_image %}
+                                        <a href="{% url 'product_details' product.id %}"><img src="{{ product.main_image.url }}" alt="grdeen" style="width:290px; height:243px"></a>
+                                        {% else %}
+                                        <a href="{% url 'product_details' product.id %}"><img src="{% static 'assets/images/image404.png' %}" alt="grdeen" style="width:290px; height:243px"></a>
+                                        {% endif %}
+                                        <div class="product__item__label">
+                                            <span class="product__item__label__sale">{{ product.status }}   </span>
+                                        </div>
+                        <div class="product__item__label2 product__action-buttons" style="position: absolute;right: 15px; top: 15px; z-index: 1;">
+                            <div class="action-buttons-wrapper">
+                                <a href="" class="product-action-btn wishlist-btn like_product" data-id="{{product.id}}" title="Add to Wishlist">
+                                    <i class="icon-heart"></i>
+                                    <span class="btn-tooltip">Add to Wishlist</span>
+                                </a>
+                                <a href="" class="product-action-btn cart-btn cart_api cart-active" data-id="{{product.id}}" title="Add to Cart">
+                                    <i class="icon-shopping-cart"></i>
+                                    <span class="btn-tooltip">Add to Cart</span>
+                                </a>
+                            </div>
+                        </div>                                       
+                                        <!-- /.product-label -->
+
+                                    </div><!-- /.product-image -->
+                                    <div class="product__item__content-wrap">
+                                        <div class="product__item__btn">
+                                            <a href="cart.html" class="grdeen-btn"><span>Buy Now</span></a>
+                                        </div>
+                                        <div class="product__item__content">
+                                            <h4 class="product__item__title"><a href="{% url 'product_details' product.id %}">{{ product.name }}</a></h4><!-- /.product-title -->
+                                            <div class="product__item__price">
+                                                <span class="product__item__price__regular">{{ product.price }}</span>
+                                                {% if product.old_price %}
+                                                <span class="product__item__price__offer">{{ product.old_price }}</span>
+                                                {% endif %}
+                                            </div><!-- /.product-price -->
+                                            <div class="product__item__ratings">
+                                                <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="far fa-star"></span>
+                                            </div><!-- /.product-ratings -->
+                                            <div class="product__item__views" style="margin-top: 8px; color: #666; font-size: 13px;">
+                                                <i class="fa fa-eye" style="margin-right: 5px;"></i>{{ product.views }} views
+                                            </div><!-- /.product-views -->
+                                        </div><!-- /.product-content -->
+                                    </div>
+                                </div><!-- /.product-item -->
+                            </div><!-- /.col-md-6 col-lg-4 -->
+                            {% endfor %}
+                        </div><!-- /.row -->
+                        
+                        <!-- Modern Pagination -->
+                        {% if products.has_other_pages %}
+                        <div class="blog-pagination">
+                            <!-- Previous Page -->
+                            {% if products.has_previous %}
+                                <a href="?{% if selected_sort %}sort={{ selected_sort }}&{% endif %}page={{ products.previous_page_number }}" 
+                                   class="next" title="Previous Page">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            {% endif %}
+
+                            <!-- Page Numbers -->
+                            {% for num in products.paginator.page_range %}
+                                {% if products.number == num %}
+                                    <span class="current">{{ num }}</span>
+                                {% elif num > products.number|add:'-3' and num < products.number|add:'3' %}
+                                    <a href="?{% if selected_sort %}sort={{ selected_sort }}&{% endif %}page={{ num }}">
+                                        {{ num }}
+                                    </a>
+                                {% elif num == 1 %}
+                                    <a href="?{% if selected_sort %}sort={{ selected_sort }}&{% endif %}page={{ num }}">
+                                        {{ num }}
+                                    </a>
+                                    {% if products.number > 4 %}
+                                        <span>...</span>
+                                    {% endif %}
+                                {% elif num == products.paginator.num_pages %}
+                                    {% if products.number < products.paginator.num_pages|add:'-3' %}
+                                        <span>...</span>
+                                    {% endif %}
+                                    <a href="?{% if selected_sort %}sort={{ selected_sort }}&{% endif %}page={{ num }}">
+                                        {{ num }}
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+
+                            <!-- Next Page -->
+                            {% if products.has_next %}
+                                <a href="?{% if selected_sort %}sort={{ selected_sort }}&{% endif %}page={{ products.next_page_number }}" 
+                                   class="next" title="Next Page">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Pagination Info -->
+                        <div class="pagination-info text-center mt-3" style="margin-top: 25px;">
+                            <p style="color: #666; font-size: 14px; margin: 0;">
+                                Showing page {{ products.number }} of {{ products.paginator.num_pages }} 
+                                ({{ products.paginator.count }} total products)
+                            </p>
+                        </div>
+                        {% endif %}
+                        </div><!-- /.row -->
+                    </div><!-- /.col-lg-9 -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </section><!-- /.product-one product-one--page -->
+
+        <script>
+        function sortProducts() {
+            const sortValue = document.getElementById('sortProducts').value;
+            const currentUrl = new URL(window.location.href);
+            
+            if (sortValue) {
+                currentUrl.searchParams.set('sort', sortValue);
+            } else {
+                currentUrl.searchParams.delete('sort');
+            }
+            
+            // Reset to page 1 when sorting changes
+            currentUrl.searchParams.delete('page');
+            
+            // Redirect to the new URL
+            window.location.href = currentUrl.toString();
+        }
+
+        // Enhanced button functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wishlist button functionality
+            document.querySelectorAll('.like_product').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const productId = this.dataset.id;
+                    const btn = this;
+                    
+                    // Add pulse animation
+                    btn.classList.add('pulse');
+                    setTimeout(() => btn.classList.remove('pulse'), 300);
+                    
+                    // Toggle liked state
+                    if (btn.classList.contains('liked')) {
+                        btn.classList.remove('liked');
+                        showNotification('Removed from wishlist', 'info');
+                    } else {
+                        btn.classList.add('liked');
+                        showNotification('Added to wishlist!', 'success');
+                    }
+                    
+                    // Here you can add AJAX call to your backend
+                    // Example: addToWishlist(productId);
+                });
+            });
+
+            // Cart button functionality
+            document.querySelectorAll('.cart_api').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const productId = this.dataset.id;
+                    const btn = this;
+                    
+                    // Add pulse animation
+                    btn.classList.add('pulse');
+                    setTimeout(() => btn.classList.remove('pulse'), 300);
+                    
+                    // Add to cart visual feedback
+                    btn.classList.add('added-to-cart');
+                    showNotification('Added to cart!', 'success');
+                    
+                    // Remove the added state after 2 seconds
+                    setTimeout(() => {
+                        btn.classList.remove('added-to-cart');
+                    }, 2000);
+                    
+                    // Here you can add AJAX call to your backend
+                    // Example: addToCart(productId);
+                });
+            });
+        });
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            // Remove existing notifications
+            const existingNotifications = document.querySelectorAll('.toast-notification');
+            existingNotifications.forEach(notification => notification.remove());
+            
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `toast-notification toast-${type}`;
+            notification.innerHTML = `
+                <div class="toast-content">
+                    <i class="fa fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            // Add styles
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#2ed573' : '#3742fa'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                z-index: 10000;
+                opacity: 0;
+                transform: translateX(100%);
+                transition: all 0.3s ease;
+                font-size: 14px;
+                min-width: 250px;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Show notification
+            setTimeout(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Hide notification after 3 seconds
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+        </script>
+    {% endblock %}

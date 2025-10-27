@@ -1,0 +1,41 @@
+﻿   {% extends "base.html" %} {% load static %}
+   {% block content %}
+        <section class="page-header">
+            <div class="page-header__bg"></div>
+            <div class="page-header__shape wow fadeInUp" data-wow-delay="200ms"></div>
+            <div class="page-header__overlay"></div>
+            <!-- /.page-header__bg -->
+            <div class="container">
+                <h2 class="page-header__title">{{ ourprojects.last.title }}</h2>
+                <ul class="grdeen-breadcrumb list-unstyled">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><span>Our projects</span></li>
+                </ul><!-- /.thm-breadcrumb list-unstyled -->
+            </div><!-- /.container -->
+        </section><!-- /.page-header -->
+
+        <section class="project-one project-one--page">
+            <div class="container">
+                <div class="row gutter-y-30">
+                    {% for project in ourprojects %}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="project-one__item wow fadeInUp" data-wow-delay="00ms">
+                            <div class="project-one__item__image">
+                                <img src="{{ project.image.url }}" alt="project" style="width: 402px !important; height: 426px !important; object-fit: cover;">
+                            </div>
+                            <div class="project-one__item__info">
+                                <div class="project-one__item__bg">
+                                    <strong class="project-one__item__tagtext">{{ project.category }}</strong>
+                                    <h5 class="project-one__item__heading"><a href="{% url 'project_details' project.id %}">{{ project.project_name }}</a></h5>
+                                    <a href="{% url 'project_details' project.id %}" class="project-one__item__right-arrow">
+                                        <i class="icon-right-arrow2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section><!-- /.project-one -->
+    {% endblock %}

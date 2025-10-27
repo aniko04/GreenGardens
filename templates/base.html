@@ -1,0 +1,955 @@
+<!DOCTYPE html>{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Three || Grdeen || HTML Template For Gardening And Landscaping</title>
+    <!-- favicons Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/images/favicons/apple-touch-icon.png' %}"> 
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/images/favicons/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/images/favicons/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'assets/images/favicons/site.webmanifest' %}">
+    <meta name="description" content="Grdeen is a modern HTML Template for Garden care, Spring cleaning, Lawn care, Garden Design, Planting, Garden maintenance and Lawn care & mowing
+    .The template perfectly fits Garden care, Spring cleaning, Lawn care and Wellness Treatments websites and businesses.">
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="../css2?family=DM+Sans:wght@100;200;300;400;500;600;700;800;900;1000&display=swap" rel="stylesheet">
+    <link href="../css2-1?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="../css2-2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'assets/vendors/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/bootstrap-select/bootstrap-select.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/animate/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/fontawesome/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/jquery-ui/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/jarallax/jarallax.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/jquery-magnific-popup/jquery.magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/nouislider/nouislider.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/nouislider/nouislider.pips.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/tiny-slider/tiny-slider.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/grdeen-icons/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/owl-carousel/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/owl-carousel/css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/grdeen-two-icons/style.css' %}">
+
+    <!-- template styles -->
+    <link rel="stylesheet" href="{% static 'assets/css/grdeen.css' %}">
+    
+    <!-- Notification System Styles -->
+    <link rel="stylesheet" href="{% static 'assets/css/notifications.css' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body class="custom-cursor">
+
+    <div class="custom-cursor__cursor"></div>
+    <div class="custom-cursor__cursor-two"></div>
+
+    <div class="preloader">
+        <div class="preloader__image" style="background-image: url('{% static 'assets/images/loader.png' %}')"></div>
+    </div>
+    <!-- /.preloader -->
+    <div class="page-wrapper">
+        <div class="topbar-one topbar-one--three">
+            <div class="container-fluid">
+                <div class="topbar-one__inner">
+                    <ul class="list-unstyled topbar-one__info">
+                        <li class="topbar-one__info__item">
+                            <div class="topbar-one__info__iconwrap">
+                                <i class="icon-pin"></i>
+                            </div>
+                            <a href="{% url 'contact' %}">{{info.address}}</a>
+                        </li>
+                        <li class="topbar-one__info__item">
+                            <div class="topbar-one__info__iconwrap">
+                                <i class="icon-email"></i>
+                            </div>
+                            <a href="mailto:{{info.contact_email}}">{{info.contact_email}}</a>
+                        </li>
+                    </ul><!-- /.list-unstyled topbar-one__info -->
+                    <div class="topbar-one__right">
+                        <div class="topbar-one__right__openitme d-flex align-items-center">
+                            <div class="topbar-one__right__iconwrap">
+                                <i class="fas fa-phone-square-alt"></i>
+                            </div>
+                            <p class="topbar-one__text">Open: {{ info.opening_hours }}</p><!-- /.topbar-one__text -->
+                        </div>
+                        <ul class="list-unstyled topbar-one__right__list">
+                            <li><a href="{% url 'contact' %}">Support</a></li>
+                            <li><a href="{% url 'team' %}">Career</a></li>
+                            <li><a href="{% url 'about' %}">Office</a></li>
+                        </ul>
+                        <div class="topbar-one__social">
+                            {% for social in social_links %}
+                            <a href="{{ social.url }}" target="_blank">{{ social.icon|safe }}
+                                <span class="sr-only">{{ social.platform }}</span>
+                            </a>
+                            {% endfor %}
+                        </div><!-- /.topbar-one__social -->
+                    </div><!-- /.topbar-one__right -->
+                </div><!-- /.topbar-one__inner -->
+            </div><!-- /.container-fluid -->
+        </div><!-- /.topbar-one -->
+
+        <header class="main-header main-header--three sticky-header sticky-header--normal">
+            <div class="container-fluid">
+                <div class="main-header__inner">
+                    <div class="main-header__logo">
+                        <a href="{% url 'home' %}">
+                            <img src="{% static 'assets/images/logo-dark.png' %}" alt="Grdeen HTML">
+                        </a>
+                    </div><!-- /.main-header__logo -->
+
+                    <nav class="main-header__nav main-menu">
+                        <ul class="main-menu__list">
+
+
+                            
+
+
+                            <li class="dropdown">
+                                <a href="{% url 'services' %}">Services</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'about' %}">About</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="{% url 'projects' %}">Projects</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#">Pages</a>
+                                <ul>
+                                    <li><a href="{% url 'team' %}">Our team</a></li>
+                                    <li><a href="{% url 'faq' %}">FAQs</a></li>
+                                    <li><a href="{% url 'login' %}">Login</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#">Shop</a>
+                                <ul class="sub-menu">
+                                    <li class="dropdown">
+                                        <a href="{% url 'products' %}">Products</a></li>
+                                    <li><a href="{% url 'cart' %}">Cart</a></li>
+                                    <li><a href="{% url 'my_likes' %}">My Likes</a></li>
+                                    <li><a href="{% url 'checkout' %}">Checkout</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#">Blog</a>
+                                <ul class="sub-menu">
+                                    <li class="dropdown">
+                                        <a href="#">Blog grid</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="blog-grid.html">No sidebar</a></li>
+                                            <li><a href="blog-grid-left.html">Left sidebar</a></li>
+                                            <li><a href="blog-grid-right.html">Right sidebar</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="#">Blog list</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="blog-list.html">No sidebar</a></li>
+                                            <li><a href="blog-list-left.html">Left sidebar</a></li>
+                                            <li><a href="blog-list-right.html">Right sidebar</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="blog-carousel.html">Blog carousel</a></li>
+                                    <li class="dropdown">
+                                        <a href="#">Blog details</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="blog-details.html">No sidebar</a></li>
+                                            <li><a href="blog-details-left.html">Left sidebar</a></li>
+                                            <li><a href="blog-details-right.html">Right sidebar</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="{% url 'contact' %}">Contact</a>
+                            </li>
+                        </ul>
+                    </nav><!-- /.main-header__nav -->
+                    <div class="main-header__right">
+                        <div class="mobile-nav__btn mobile-nav__toggler">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div><!-- /.mobile-nav__toggler -->
+                        <a href="{% url 'contact' %}" class="grdeen-btn main-header__btn">
+                            <span>Get A Quote</span>
+                        </a><!-- /.thm-btn main-header__btn -->
+                        <a href="#" class="search-toggler main-header__search">
+                            <div class="main-header__search__icon">
+                                <i class="icon-search" aria-hidden="true"></i>
+                            </div>
+                            <span class="sr-only">Search</span>
+                        </a><!-- /.search-toggler -->
+                        <a href="{% url 'cart' %}" class="main-header__cart">
+                            <div class="main-header__cart__icon">
+                                <i class="icon-shop-bag" aria-hidden="true"></i>
+                            </div>
+                            <span class="main-header__cart__count" id="cart_count">{{ cart_item_count }}</span>
+                            <span class="sr-only">cart</span>
+                        </a><!-- /.cart-toggler -->
+                        <a href="{% url 'my_likes' %}" class="main-header__cart">
+                            <div class="main-header__cart__icon">
+                                <i class="fas fa-heart" aria-hidden="true"></i>
+                            </div>
+                            <span class="main-header__cart__count" id="likes_count">{{ likes_count }}</span>
+                            <span class="sr-only">likes</span>
+                        </a><!-- /.likes-toggler -->
+
+                        <div class="main-header__helpline">
+                            <div class="main-header__helpline__bg" style="background-image: url('{% static 'assets/images/shapes/nav-phone-icon3-1.png' %}')"></div>
+                            <div class="main-header__helpline__icon">
+                                <i class="icon-phone-receiver-silhouette"></i>
+                            </div>
+                            <div class="main-header__helpline__phonewrap">
+                                <p class="main-header__helpline__text">Helpline</p>
+                                <a class="main-header__helpline__tel" href="tel:{{ info.phone_number }}">{{ info.phone_number }}</a>
+                            </div>
+                        </div>
+                    </div><!-- /.main-header__right -->
+                </div><!-- /.main-header__inner -->
+            </div><!-- /.container-fluid -->
+        </header><!-- /.main-header -->
+        
+        <!-- Notification Container -->
+        <div class="notification-container" id="notification-container">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="notification notification-{{ message.tags }}" data-auto-dismiss="5000">
+                        <div class="notification-icon">
+                            {% if message.tags == 'success' %}
+                                <i class="fas fa-check-circle"></i>
+                            {% elif message.tags == 'error' %}
+                                <i class="fas fa-times-circle"></i>
+                            {% elif message.tags == 'warning' %}
+                                <i class="fas fa-exclamation-triangle"></i>
+                            {% elif message.tags == 'info' %}
+                                <i class="fas fa-info-circle"></i>
+                            {% else %}
+                                <i class="fas fa-bell"></i>
+                            {% endif %}
+                        </div>
+                        <div class="notification-content">
+                            {{ message }}
+                        </div>
+                        <button class="notification-close" onclick="dismissNotification(this)">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+        {% block content %}
+        {% endblock %}
+        <footer class="main-footer main-footer--two">
+            <div class="main-footer__bg" style="background-image: url({% static 'assets/images/backgrounds/footer-bg1-1.jpg' %})"></div>
+            <div class="main-footer__overlay"></div>
+            <!-- /.main-footer__bg -->
+            <div class="main-footer__top">
+                <div class="container">
+                    <div class="row">
+                        <div class="footer-widget__col footer-widget__col__col1">
+                            <div class="footer-widget footer-widget--about">
+                                <a href="index.html" class="footer-widget__logo">
+                                    <img src="{% static 'assets/images/logo-light.png' %}" width="155" alt="Agrofa HTML Template">
+                                </a>
+                                <p class="footer-widget__experience-text">Over 20 years of experience we’ll ensure you get the best guidance.</p>
+                                <div class="footer-widget__newsletterwrap">
+                                    <h6 class="footer-widget__title footer-widget__title--newsletter">Newsletter</h6>
+                                    <form action="#" data-url="MAILCHIMP_FORM_URL" class="footer-widget__newsletter mc-form">
+                                        <div class="footer-widget__mail-address">
+                                            <input type="email" name="email" placeholder="Email Address">
+                                        </div>
+                                        <button type="submit" class="form-submit-btn">Submit</button>
+                                    </form><!-- /.footer-widget__newsletter mc-form -->
+                                    <div class="mc-form__response"></div><!-- /.mc-form__response -->
+                                </div>
+                            </div><!-- /.footer-widget -->
+                        </div><!-- /.col-md-6 -->
+
+                        <div class="footer-widget__col  footer-widget__col__col2">
+                            <div class="footer-widget footer-widget--links">
+                                <h6 class="footer-widget__title">Links</h6>
+                                <ul class="list-unstyled footer-widget__links">
+                                    <li><a href="checkout.html">Cookie Policy</a></li>
+                                    <li><a href="products-right.html">Shop</a></li>
+                                    <li><a href="login.html">Login</a></li>
+                                    <li><a href="{% url 'about' %}">About us</a></li>
+                                    <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                                </ul><!-- /.list-unstyled footer-widget__links -->
+                            </div><!-- /.footer-widget -->
+                        </div><!-- /.col-md-6 -->
+                        <div class="footer-widget__col  footer-widget__col__col3">
+                            <div class="footer-widget footer-widget--gallery">
+                                <h6 class="footer-widget__title">Gallery</h6><!-- /.footer-widget__title -->
+                                <div class="footer-widget__gallerywrap d-flex flex-wrap">
+                                    <div class="footer-widget__gallerywrap__img">
+                                        <img src="{% static 'assets/images/resources/footer-gallery1-1.jpg' %}" alt="">
+                                    </div>
+                                    <div class="footer-widget__gallerywrap__img">
+                                        <img src="{% static 'assets/images/resources/footer-gallery1-2.jpg' %}" alt="">
+                                    </div>
+                                    <div class="footer-widget__gallerywrap__img">
+                                        <img src="{% static 'assets/images/resources/footer-gallery1-3.jpg' %}" alt="">
+                                    </div>
+                                    <div class="footer-widget__gallerywrap__img">
+                                        <img src="{% static 'assets/images/resources/footer-gallery1-4.jpg' %}" alt="">
+                                    </div>
+                                    <div class="footer-widget__gallerywrap__img">
+                                        <img src="{% static 'assets/images/resources/footer-gallery1-5.jpg' %}" alt="">
+                                    </div>
+                                    <div class="footer-widget__gallerywrap__img">
+                                        <img src="{% static 'assets/images/resources/footer-gallery1-6.jpg' %}" alt="">
+                                    </div>
+                                </div>
+                            </div><!-- /.footer-widget -->
+                        </div><!-- /.col-md-6 -->
+                        <div class="footer-widget__col  footer-widget__col__col4">
+                            <div class="footer-widget footer-widget--blog">
+                                <h5 class="footer-widget__title">Popular Post</h5><!-- /.footer-widget__title -->
+
+                                <div class="footer-widget__post-wrap">
+                                    <div class="footer-widget__post-col">
+                                        <div class="footer-widget__post-img">
+                                            <img src="{% static 'assets/images/resources/footer-post1-1.jpg' %}" alt="">
+                                        </div>
+                                        <div class="footer-widget__post-info">
+                                            <span class="footer-widget__post-date"><i class="far fa-calendar"></i>
+                                                <span> 02 Sep 2023</span>
+                                            </span>
+                                            <h6 class="footer-widget__post-heading"><a href="blog.html">Vegetable crops that do not need pollinators</a></h6>
+                                        </div>
+                                    </div>
+
+                                    <div class="footer-widget__post-col">
+                                        <div class="footer-widget__post-img">
+                                            <img src="{% static 'assets/images/resources/footer-post1-2.jpg' %}" alt="">
+                                        </div>
+                                        <div class="footer-widget__post-info">
+                                            <span class="footer-widget__post-date"><i class="far fa-calendar"></i>
+                                                <span> 05 Sep 2023</span>
+                                            </span>
+                                            <h6 class="footer-widget__post-heading"><a href="blog.html">Grow your own pumpkins even in small spaces</a></h6>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div><!-- /.footer-widget -->
+                        </div><!-- /.col-md-6 -->
+                    </div><!-- /.row -->
+                </div><!-- /.container -->
+            </div><!-- /.main-footer__top -->
+
+            <div class="main-footer__bottom">
+                <div class="container">
+                    <div class="main-footer__bottom__inner">
+                        <p class="main-footer__copyright"> &copy; <span class="dynamic-year"></span> {{ info.footer_text }}</p>
+                        <div class="main-footer__social-row">
+                            <p class="main-footer__social-row-text">Social</p>
+                            <ul class="main-footer__social-list">
+                                {% for social in social_links %}
+                                <li><a href="#" target="_blank">{{ social.icon|safe }}<span class="sr-only">{{ social.platform }}</span></a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div><!-- /.main-footer__inner -->
+                </div><!-- /.container -->
+            </div><!-- /.main-footer__bottom -->
+        </footer><!-- /.main-footer -->
+
+    </div><!-- /.page-wrapper -->
+
+    <div class="mobile-nav__wrapper">
+        <div class="mobile-nav__overlay mobile-nav__toggler"></div>
+        <!-- /.mobile-nav__overlay -->
+        <div class="mobile-nav__content">
+            <span class="mobile-nav__close mobile-nav__toggler"><i class="fa fa-times"></i></span>
+
+            <div class="logo-box">
+                <a href="{% url 'home' %}" aria-label="logo image"><img src="{% static 'assets/images/logo-light.png' %}" width="155" alt=""></a>
+            </div>
+            <!-- /.logo-box -->
+            <div class="mobile-nav__container"></div>
+            <!-- /.mobile-nav__container -->
+
+            <ul class="mobile-nav__contact list-unstyled">
+                <li>
+                    <i class="fa fa-envelope"></i>
+                    <a href="mailto:needhelp@grdeen.com">needhelp@grdeen.com</a>
+                </li>
+                <li>
+                    <i class="fa fa-phone-alt"></i>
+                    <a href="tel:666-888-0000">666 888 0000</a>
+                </li>
+            </ul><!-- /.mobile-nav__contact -->
+            <div class="mobile-nav__social">
+                <a href="https://facebook.com">
+                    <i class="fab fa-facebook-f"></i>
+                    <span class="sr-only">Facebook</span>
+                </a>
+                <a href="https://twitter.com">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                    <span class="sr-only">Twitter</span>
+                </a>
+                <a href="https://linkedin.com">
+                    <i class="fab fa-linkedin-in"></i>
+                    <span class="sr-only">Linkedin</span>
+                </a>
+                <a href="https://www.instagram.com/">
+                    <i class="fab fa-instagram"></i>
+                    <span class="sr-only">Instagram</span>
+                </a>
+            </div><!-- /.mobile-nav__social -->
+        </div>
+        <!-- /.mobile-nav__content -->
+    </div>
+    <!-- /.mobile-nav__wrapper -->
+    <div class="search-popup">
+        <div class="search-popup__overlay search-toggler"></div>
+        <!-- /.search-popup__overlay -->
+        <div class="search-popup__content">
+            <form role="search" method="get" class="search-popup__form" action="#">
+                <input type="text" id="search" placeholder="Search Here...">
+                <button type="submit" aria-label="search submit" class="grdeen-btn">
+                    <span><i class="icon-search"></i></span>
+                </button>
+            </form>
+        </div>
+        <!-- /.search-popup__content -->
+    </div>
+    <!-- /.search-popup -->
+
+    <a href="#" data-target="html" class="scroll-to-target scroll-to-top">
+        <span class="scroll-to-top__text">back top</span>
+        <span class="scroll-to-top__wrapper"><span class="scroll-to-top__inner"></span></span>
+    </a>
+
+    <script src="{% static 'assets/vendors/jquery/jquery-3.7.0.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/bootstrap-select/bootstrap-select.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/jarallax/jarallax.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/jquery-ui/jquery-ui.js' %}"></script>
+    <script src="{% static 'assets/vendors/jquery-ajaxchimp/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/jquery-appear/jquery.appear.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/jquery-circle-progress/jquery.circle-progress.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/jquery-magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/jquery-validate/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/nouislider/nouislider.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/tiny-slider/tiny-slider.js' %}"></script>
+    <script src="{% static 'assets/vendors/wnumb/wNumb.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/owl-carousel/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/wow/wow.js' %}"></script>
+    <script src="{% static 'assets/vendors/imagesloaded/imagesloaded.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/isotope/isotope.js' %}"></script>
+    <script src="{% static 'assets/vendors/countdown/countdown.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/jquery-circleType/jquery.circleType.js' %}"></script>
+    <script src="{% static 'assets/vendors/jquery-lettering/jquery.lettering.min.js' %}"></script>
+    <!-- template js -->
+    <script src="{% static 'assets/js/grdeen.js' %}"></script>
+    
+    <!-- Notification System JavaScript -->
+    <script src="{% static 'assets/js/notifications.js' %}"></script>
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/68fb1c7bd84f3b1958009630/1j8aeegsf';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+<!--End of Tawk.to Script-->
+<script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const likeButtons = document.querySelectorAll('.like_product');
+                            likeButtons.forEach(a => {
+                                    const productId = a.getAttribute('data-id');
+                                    fetch(`/api/user/${productId}/likes/`, {
+                                        method: 'GET',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        }
+                                    })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.liked) {
+                                            a.innerHTML = '<i class="fas fa-heart"></i>';
+                                        } else {
+                                            a.innerHTML = '<i class="icon-heart"></i>';
+                                        }
+                                    })
+                                    .catch(error => console.info('Error:', error));
+                                });
+                            likeButtons.forEach(button => {
+                                    button.addEventListener('click', function(event) {
+                                        event.preventDefault();
+                                        const productId = this.getAttribute('data-id');
+                                        fetch(`/api/user/${productId}/like/add`, {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'X-CSRFToken': '{{ csrf_token }}'
+                                            },
+                                            body: JSON.stringify({}) // Body can be empty for this request
+                                        })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (data.status == 'liked') {
+                                                this.innerHTML = '<i class="fas fa-heart"></i>';
+                                               
+                                            } else {
+                                                this.innerHTML = '<i class="far fa-heart"></i>';
+                                                
+                                            }
+                                            updateLikesCount();
+                                        })
+                                        .catch(error => console.error('Error:', error));
+                                    });
+                                });
+                            });
+                        
+</script>
+<script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const cartButtons = document.querySelectorAll('.cart_api');
+                            cartButtons.forEach(a => {
+                                    const productId = a.getAttribute('data-id');
+                                    fetch(`/api/user/${productId}/cart/`, {
+                                        method: 'GET',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        }
+                                    })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        console.log(data);
+                                        if (data.added) {
+                                            a.classList.add('cart-active');
+                                            a.innerHTML = '<i class="fas fa-shopping-cart"></i>';
+                                            
+                                        } else {
+                                            // a.classList.remove('cart-active');
+                                            
+                                            a.innerHTML = '<i class="fas fa-cart-plus"></i>';
+                                        }
+                                    })
+                                    .catch(error => console.info('Error:', error));
+                                });
+                            cartButtons.forEach(button => {
+                                    button.addEventListener('click', function(event) {
+                                        event.preventDefault();
+                                        const productId = this.getAttribute('data-id');
+                                        fetch(`/api/user/${productId}/cart/add`, {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'X-CSRFToken': '{{ csrf_token }}'
+                                            },
+                                            body: JSON.stringify({}) // Body can be empty for this request
+                                        })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (data.status == 'added') {
+                                                this.classList.add('cart-active');
+                                                this.innerHTML = '<i class="fas fa-shopping-cart"></i>';
+                                                
+                                                updateCartCount();
+                                            } else   {
+                                                this.classList.remove('cart-active');
+                                                this.innerHTML = '<i class="fas fa-cart-plus"></i>';
+                                            }
+                                        })
+                                        .catch(error => console.error('Error:', error));
+                                        
+                                    });
+                                });
+                            });
+</script>
+<script>
+                        
+                  function updateCartCount() {
+                     const cart_count = document.querySelector('#cart_count');
+                     const main_header_cart_count = document.querySelector('.main-header__cart__count');
+                     
+                     fetch('/api/cart/count/', {
+                         method: 'GET',
+                         headers: {
+                             'Content-Type': 'application/json',
+                         }
+                     })
+                     .then(response => response.json())
+                     .then(data => {
+                         // Barcha cart count elementlarini yangilash
+                         if (cart_count) {
+                             cart_count.textContent = data.cart_count;
+                         }
+                         if (main_header_cart_count) {
+                             main_header_cart_count.textContent = data.cart_count;
+                         }
+                         
+                         // Header dagi cart count ni ham yangilash
+                         const headerCartCount = document.querySelector('.main-header__cart__count');
+                         if (headerCartCount) {
+                             headerCartCount.textContent = data.cart_count;
+                         }
+                     })
+                     .catch(error => console.error('Error fetching cart count:', error));
+                  }
+
+                  document.addEventListener('DOMContentLoaded', function() {
+                     updateCartCount();
+                  });
+</script>
+
+
+<script>
+                  function updateLikesCount() {
+                     const likes_count = document.querySelector('#likes_count');
+                     fetch('/api/likes/count/', {
+                         method: 'GET',
+                         headers: {
+                             'Content-Type': 'application/json',
+                         }
+                     })
+                     .then(response => response.json())
+                     .then(data => {
+                         if (likes_count) {
+                             likes_count.textContent = data.likes_count;
+                         }
+                     })
+                     .catch(error => console.error('Error fetching likes count:', error));
+                  }
+
+                  document.addEventListener('DOMContentLoaded', function() {
+                     updateLikesCount();
+                  });
+</script>
+
+<!-- CART MANAGEMENT API FUNCTIONS -->
+<script>
+// Cart management functions - miqdorni o'zgartirish, o'chirish va tozalash
+
+
+// Cart miqdorini yangilash
+function updateCartQuantity(cartId, quantity) {
+    fetch(`/api/cart/update/${cartId}/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify({
+            quantity: quantity
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'updated') {
+            showNotification(data.message, 'success');
+            
+            // Miqdor va narxni yangilash
+            updateCartItemDisplay(cartId, data.item_quantity, data.item_total);
+            updateCartCount();
+            updateCartTotals(data.cart_total_items, data.cart_total_price);
+            
+        } else if (data.status === 'removed') {
+            showNotification(data.message, 'info');
+            
+            // Item ni o'chirish
+            const cartItem = document.querySelector(`[data-cart-id="${cartId}"]`);
+            if (cartItem) {
+                cartItem.remove();
+            }
+            
+            updateCartCount();
+            updateCartTotals(data.cart_total_items, data.cart_total_price);
+            
+        } else if (data.status === 'unauthenticated') {
+            showNotification('Iltimos login qiling', 'warning');
+        } else {
+            showNotification('Xatolik yuz berdi', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showNotification('Xatolik yuz berdi', 'error');
+    });
+}
+
+// Cart miqdorini oshirish
+function increaseQuantity(cartId) {
+    fetch(`/api/cart/increase/${cartId}/`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'increased') {
+            showNotification(data.message, 'success');
+            
+            // Miqdor va narxni yangilash
+            updateCartItemDisplay(cartId, data.item_quantity, data.item_total);
+            updateCartCount();
+            updateCartTotals(data.cart_total_items, data.cart_total_price);
+            
+        } else if (data.status === 'unauthenticated') {
+            showNotification('Iltimos login qiling', 'warning');
+        } else {
+            showNotification('Xatolik yuz berdi', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showNotification('Xatolik yuz berdi', 'error');
+    });
+}
+
+// Cart miqdorini kamaytirish
+function decreaseQuantity(cartId) {
+    // Joriy miqdorni tekshirish
+    const qtyInput = document.getElementById(`qty-${cartId}`);
+    if (qtyInput) {
+        const currentQuantity = parseInt(qtyInput.value);
+        if (currentQuantity <= 1) {
+            showNotification('Miqdor kamida 1 bo\'lishi kerak', 'warning');
+            return;
+        }
+    }
+    
+    fetch(`/api/cart/decrease/${cartId}/`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'decreased') {
+            showNotification(data.message, 'success');
+            
+            // Miqdor va narxni yangilash
+            updateCartItemDisplay(cartId, data.item_quantity, data.item_total);
+            updateCartCount();
+            updateCartTotals(data.cart_total_items, data.cart_total_price);
+            
+        } else if (data.status === 'removed') {
+            showNotification(data.message, 'info');
+            
+            // Item ni o'chirish
+            const cartItem = document.querySelector(`[data-cart-id="${cartId}"]`);
+            if (cartItem) {
+                cartItem.remove();
+            }
+            
+            updateCartCount();
+            updateCartTotals(data.cart_total_items, data.cart_total_price);
+            
+        } else if (data.status === 'unauthenticated') {
+            showNotification('Iltimos login qiling', 'warning');
+        } else {
+            showNotification('Xatolik yuz berdi', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showNotification('Xatolik yuz berdi', 'error');
+    });
+}
+
+// Barcha cart ni tozalash
+function clearCart() {
+    if (!confirm('Barcha mahsulotlarni o\'chirishga ishonchingiz komilmi? Bu amalni bekor qilib bo\'lmaydi!')) {
+        return;
+    }
+    
+    fetch('/api/cart/clear/', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'cleared') {
+            showNotification(data.message, 'success');
+            
+            // Barcha cart itemlarni o'chirish
+            const cartItems = document.querySelectorAll('[data-cart-id]');
+            cartItems.forEach(item => item.remove());
+            
+            // Cart count va totallarni yangilash
+            updateCartCount();
+            updateCartTotals(0, 0);
+            
+            // Agar cart sahifasida bo'lsak, bo'sh holat ko'rsatish
+            if (window.location.pathname.includes('/cart')) {
+                showEmptyCartState();
+            }
+            
+        } else if (data.status === 'empty') {
+            showNotification(data.message, 'info');
+        } else if (data.status === 'unauthenticated') {
+            showNotification('Iltimos login qiling', 'warning');
+        } else {
+            showNotification('Xatolik yuz berdi', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showNotification('Xatolik yuz berdi', 'error');
+    });
+}
+
+// Helper functions
+function updateQuantityButtons(cartId, quantity) {
+    const decreaseBtn = document.querySelector(`button[onclick="decreaseQuantity(${cartId})"]`);
+    
+    if (decreaseBtn) {
+        if (quantity <= 1) {
+            decreaseBtn.disabled = true;
+            decreaseBtn.style.opacity = '0.5';
+            decreaseBtn.style.cursor = 'not-allowed';
+            decreaseBtn.setAttribute('title', 'Miqdor kamida 1 bo\'lishi kerak');
+        } else {
+            decreaseBtn.disabled = false;
+            decreaseBtn.style.opacity = '1';
+            decreaseBtn.style.cursor = 'pointer';
+            decreaseBtn.removeAttribute('title');
+        }
+    }
+}
+
+function updateCartItemDisplay(cartId, quantity, total) {
+    // Miqdorni ko'rsatuvchi elementni yangilash
+    const quantityElement = document.querySelector(`#quantity-${cartId}`);
+    if (quantityElement) {
+        quantityElement.textContent = quantity;
+    }
+    
+    // Input maydoni bo'lsa
+    const quantityInput = document.querySelector(`#qty-${cartId}`);
+    if (quantityInput) {
+        quantityInput.value = quantity;
+    }
+    
+    // Jami narxni yangilash
+    const totalElement = document.querySelector(`#total-${cartId}`);
+    if (totalElement) {
+        totalElement.textContent = `$${total.toFixed(2)}`;
+    }
+    
+    // Quantity button holatini yangilash (agar updateQuantityButtons funksiyasi mavjud bo'lsa)
+    if (typeof updateQuantityButtons === 'function') {
+        updateQuantityButtons(cartId, quantity);
+    }
+}
+
+function updateCartTotals(totalItems, totalPrice) {
+    // Subtotal ni yangilash
+    const subtotalElements = document.querySelectorAll('.cart-subtotal, #cartSubtotal, #subtotal');
+    subtotalElements.forEach(element => {
+        if (element) {
+            element.textContent = `$${totalPrice.toFixed(2)}`;
+        }
+    });
+    
+    // Total ni yangilash (shipping bilan birga)
+    const shipping = 20;
+    const finalTotal = totalPrice + shipping;
+    const totalElements = document.querySelectorAll('#cartTotal, .cart-total, #total');
+    totalElements.forEach(element => {
+        if (element) {
+            element.innerHTML = `<strong>$${finalTotal.toFixed(2)}</strong>`;
+        }
+    });
+    
+    // Cart count ni yangilash
+    const cartCountElements = document.querySelectorAll('.main-header__cart__count, .cart-count, #cart_count');
+    cartCountElements.forEach(element => {
+        if (element) {
+            element.textContent = totalItems;
+        }
+    });
+}
+
+function showEmptyCartState() {
+    const cartContainer = document.querySelector('#cartItemsContainer, .cart-items-container');
+    if (cartContainer) {
+        cartContainer.innerHTML = `
+            <div class="empty-cart-message" style="text-align: center; padding: 50px;">
+                <div class="empty-cart-icon" style="font-size: 64px; color: #ccc; margin-bottom: 20px;">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <h3>Savatingiz Bo'sh</h3>
+                <p>Hali hech qanday mahsulot qo'shilmagan. Mahsulotlar sahifasiga o'ting va o'zingizga yoqqan narsalarni tanlang!</p>
+                <a href="{% url 'products' %}" class="grdeen-btn" style="margin-top: 20px;">
+                    <span><i class="fas fa-shopping-cart"></i> Hozir Xarid Qiling</span>
+                </a>
+            </div>
+        `;
+    }
+}
+
+// Notification function (agar mavjud bo'lmasa)
+function showNotification(message, type = 'info') {
+    // Mavjud notification tizimidan foydalanish
+    if (typeof createNotification === 'function') {
+        createNotification(message, type);
+    } else {
+        // Oddiy alert
+        console.log(`${type.toUpperCase()}: ${message}`);
+        
+        // Yoki oddiy toast yaratish
+        const toast = document.createElement('div');
+        toast.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            padding: 15px 20px;
+            border-radius: 8px;
+            background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : type === 'warning' ? '#ffc107' : '#17a2b8'};
+            color: white;
+            font-weight: 500;
+            min-width: 300px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        `;
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            if (document.body.contains(toast)) {
+                document.body.removeChild(toast);
+            }
+        }, 3000);
+    }
+}
+
+// Sahifa yuklanganda barcha quantity button holatini tekshirish
+document.addEventListener('DOMContentLoaded', function() {
+    // Barcha quantity input'larni topish va tegishli button holatini o'rnatish
+    const qtyInputs = document.querySelectorAll('[id^="qty-"]');
+    qtyInputs.forEach(input => {
+        const cartId = input.id.replace('qty-', '');
+        const quantity = parseInt(input.value);
+        updateQuantityButtons(cartId, quantity);
+    });
+});
+</script>
+</body>
+
+</html>

@@ -1,0 +1,358 @@
+:root {
+  --grdeen-white4: #1e311e;
+  --grdeen-white4-rgb: toRGB(#1e311e);
+  --grdeen-border-color: #233b23;
+  --grdeen-border-color-rgb: toRGB(#233b23);
+}
+
+.product-details__carousel-thumb__item,
+.product__item__btn .grdeen-btn,
+.faq-page,
+.service-details__accordion .accrodion-title,
+.service-sidebar__nav li a,
+.search-popup__form input[type=search],
+.search-popup__form input[type=text],
+.main-header__helpline,
+.testimonials-card__image::after,
+.testimonials-card__image,
+.testimonials-card__masking,
+.demo-one,
+.main-header--one_only .main-header__logo,
+.main-header__logo,
+.topbar-one,
+.service-one__item,
+.funfact-one--two .funfact-one__wrapper,
+body,
+body.boxed-wrapper .page-wrapper {
+  background-color: var(--grdeen-black4);
+}
+
+.product-pagination a,
+.product-pagination span,
+.product__categories ul li a span,
+.product-details__carousel.owl-carousel .owl-nav .owl-next,
+.product-details__carousel.owl-carousel .owl-nav .owl-prev,
+.product-details__info__icon,
+.product-details__info li,
+.product-details__quantity .quantity-box input,
+.product-details__feature__icon,
+.product-details__review a,
+.product-details__price__regular,
+.product-details__tabs__specfication table th,
+.product-details__tabs__list .tab-btn,
+.product__item__btn .grdeen-btn,
+.product__item__price,
+.cart-page__table tbody tr td,
+.cart-page__table__meta__title,
+.cart-page__cart-total__shipping__rate,
+.cart-page__cart-total li,
+.cart-page__table thead tr th,
+.checkout-page__payment__condition label,
+.checkout-page__order__shipping__rate,
+.checkout-page__order li,
+.checkout-page__order__product__title,
+.checkout-page__payment__title,
+.checkout-page__check-box label,
+.checkout-page__label-text,
+.project-details__benefit__list__icon,
+.project-details__title,
+.project-details__heading,
+.project-details__benefit__title,
+.related-project__title,
+.blog-pagination a,
+.sidebar__tags a,
+.comments-one__card__reply,
+.service-details__accordion .accrodion-title h4,
+.service-sidebar__nav li a,
+.service-sidebar__title,
+.service-details__heading,
+.service-details__title,
+.team-details__info__call,
+.team-details__title,
+.team-form-one__title,
+.topbar-one__social a,
+.main-slider-three__sub-title,
+.main-slider-three__title,
+.main-slider-three__btn .grdeen-btn + .grdeen-btn,
+.our-benefits-one--three .sec-title__title,
+.our-benefits-one--three .our-benefits-one__content__qualitwrap__title,
+.main-footer__social-list li a,
+.topbar-one--three .topbar-one__social a,
+.project-one--two .project-one__item__heading:hover,
+.main-header__helpline__tel,
+.testimonials-card__quote,
+.funfact-one__content__bookwrap__text,
+.about-one__content__qualitwrap__title,
+.main-slider-one__carousel.owl-carousel .owl-nav button,
+.main-slider-two__carousel.owl-carousel .owl-nav button,
+.main-slider-three__carousel.owl-carousel .owl-nav button,
+.main-header__btn,
+.great-together__btn,
+.testimonials-card__name,
+.project-one__item__right-arrow,
+.project-one__moreproject__title,
+.our-benefits-one__content__qualitwrap__title,
+.topbar-one--one_only .topbar-one__social a,
+.topbar-one--one_only .topbar-one__info__address > a,
+.topbar-one--one_only .topbar-one__info__address__text,
+.megamenu-popup .megamenu-clickable--close,
+.demo-one__title,
+.main-header__wellcome__tagline,
+.feature-one__item__title,
+.feature-one__item__icon,
+.service-one__item__link,
+.service-one__item__iconlink,
+.service-one__item__title,
+.work-process-one__col__title,
+.project-one__item:hover .project-one__item__right-arrow,
+.project-one__item__heading,
+.blog-card__link__rightarrow,
+.blog-card__link,
+.blog-card__title,
+.sec-title__title,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--grdeen-white);
+}
+
+.faq-page__accordion .accrodion-title__icon::after,
+.faq-page__accordion .accrodion-title__icon::before,
+.service-one__item__link::after,
+.project-one__item__right-arrow {
+  background-color: var(--grdeen-white);
+}
+
+.project-one__item__heading:hover {
+  color: var(--grdeen-text-dark2);
+}
+
+.product-details__excerpt,
+.product-details__price__offer,
+.product-details__tabs__description,
+.project-details__benefit__list li,
+.faq-page__accordion .accrodion-content p,
+.team-details__text,
+.main-header__helpline__text,
+.main-menu .main-menu__list li ul li > a,
+.project-one--two .project-one__info__text,
+.project-one__item__tagtext {
+  color: rgba(var(--grdeen-white-rgb), 0.7);
+}
+
+.blog-card--list__rm,
+.project-one__item__heading:hover,
+.service-one__item:hover .service-one__item__count {
+  color: var(--grdeen-base);
+}
+
+.grdeen-owl__carousel--basic-nav.owl-carousel .owl-dots .owl-dot:hover span,
+.grdeen-owl__carousel--basic-nav.owl-carousel .owl-dots .owl-dot.active span,
+.feature-one--three .feature-one__item .service-one__item__iconlink,
+.service-one--three .service-one__item__iconlink,
+.testimonials-card__quote,
+.project-one__item__right-arrow,
+.feature-one__item__iconwrap,
+.service-one__item__iconlink,
+.project-one--two .project-one__item__bg,
+.project-one--two .grdeen-owl__carousel--basic-nav.owl-carousel .owl-dots .owl-dot span {
+  background-color: var(--grdeen-base);
+}
+
+.product-details__carousel,
+.product-details__tabs__list .tab-btn,
+.product__item__content-wrap,
+.cart-page__cart-total,
+.checkout-page__payment,
+.checkout-page__order-total,
+.checkout-page__input-box .bootstrap-select .dropdown-menu > li > a,
+.faq-page__accordion .accrodion,
+.error-404__shape,
+.blog-pagination a,
+.blog-card--list,
+.blog-details__wrapper,
+.service-details__accordion .accrodion-title__icon,
+.service-sidebar__single,
+.service-details__accordion,
+.main-slider-three__bg,
+.feature-one--three .feature-one__item,
+.service-one--three .service-one__item,
+.funfact-one--two .funfact-one__content__bookwrap,
+.main-footer__social-list li a,
+.footer-widget__mail-address input[type=text],
+.footer-widget__mail-address input[type=email],
+.funfact-one__content__bookwrap,
+.main-slider-three__title::after,
+.main-slider-two__title::after,
+.main-slider-one__title::after,
+.main-slider-one__carousel.owl-carousel .owl-nav button,
+.main-slider-two__carousel.owl-carousel .owl-nav button,
+.main-slider-three__carousel.owl-carousel .owl-nav button,
+.main-header__btn,
+.great-together__btn,
+.form-one .bootstrap-select > .dropdown-toggle,
+.form-one input[type=text],
+.form-one input[type=phone],
+.form-one input[type=email],
+.form-one textarea,
+.testimonials-card__inner,
+.project-one__item__bg,
+.project-one,
+.our-benefits-one__content__qualitwrap__col,
+.work-process-one__col,
+.service-one,
+.about-one__content__qualitwrap,
+.feature-one,
+.main-header__wellcome::after,
+.main-header__wellcome,
+.funfact-one--two .work-process-one__col,
+.team-one__item:hover .team-card__bg-base,
+.team-card__bg-black,
+.blog-card__content {
+  background-color: var(--grdeen-text-dark2);
+}
+
+.topbar-one--one_only .topbar-one__social,
+.work-process-one__col__shapebg,
+.feature-one--two .feature-one__item {
+  background-color: rgba(var(--grdeen-base-rgb), 0.1);
+}
+
+.project-one--two .project-one__bg {
+  opacity: 1;
+  mix-blend-mode: inherit;
+}
+
+.service-one__item__count {
+  color: rgba(var(--grdeen-base-rgb), 0.2);
+}
+
+.faq-page__sec-text,
+.about-one--three .about-one__smimage,
+.our-benefits-one__smimage img,
+.about-one__smimage img {
+  border-color: var(--grdeen-text-dark);
+}
+
+.product-details__carousel.owl-carousel .owl-nav .owl-next,
+.product-details__carousel.owl-carousel .owl-nav .owl-prev,
+.project-one--two .grdeen-owl__carousel--basic-nav.owl-carousel .owl-dots .owl-dot:hover span,
+.project-one--two .grdeen-owl__carousel--basic-nav.owl-carousel .owl-dots .owl-dot.active span,
+.grdeen-owl__carousel--basic-nav.owl-carousel .owl-dots .owl-dot span,
+.faq-page__accordion .accrodion-title__icon,
+.error-404__search input[type=text],
+.topbar-one__social a,
+.main-slider-three__btn .grdeen-btn + .grdeen-btn,
+.topbar-one--three .topbar-one__social a,
+.main-header__btn::before {
+  background-color: var(--grdeen-text-dark);
+}
+
+.service-one__item__iconwrap {
+  box-shadow: 0px 0px 0px 4px rgba(var(--grdeen-base-rgb), 0.7);
+}
+
+.work-process-one__col__icon {
+  box-shadow: 0px 0px 0px 8px rgba(var(--grdeen-base-rgb), 0.7);
+}
+
+.service-one--three .service-one__item__iconwrap,
+.testimonials-one--two .testimonials-card__image,
+.team-card__social__iconwrap {
+  box-shadow: 0px 0px 0px 4px var(--grdeen-text-dark);
+}
+
+.sticky-header--cloned {
+  background-color: var(--grdeen-black4);
+  box-shadow: 0px 3px 18px rgba(var(--grdeen-white-rgb), 0.07);
+}
+
+.testimonials-card,
+.demo-one__card,
+.home-showcase__inner,
+.main-menu .main-menu__list li ul {
+  background-color: var(--grdeen-black4);
+  box-shadow: 0px 10px 60px 0px rgba(var(--grdeen-white-rgb), 0.07);
+}
+
+.product__item__content-wrap,
+.testimonials-card {
+  box-shadow: 0px 0 10px rgba(var(--grdeen-white-rgb), 0.07);
+}
+
+.companies-one__inner-img img {
+  filter: none;
+  opacity: 0.3;
+}
+
+.companies-one__inner-img img:hover {
+  opacity: 0.6;
+}
+
+.checkout-page__payment__item,
+.work-process-one--three .work-process-one__col,
+.companies-one__inner-img::after {
+  border-color: rgba(var(--grdeen-white-rgb), 0.1);
+}
+
+.checkout-page__payment__item--active {
+  border-color: var(--grdeen-base);
+}
+
+.service-one--three .service-one__item:hover .service-one__item__bgeffect,
+.testimonials-card:hover .testimonials-card__shape2 img {
+  filter: none;
+}
+
+.blog-card--list__shape,
+.feature-one--three .feature-one__item__bg,
+.service-one--three .service-one__item__bgeffect,
+.blog-card--two__shape {
+  opacity: 0.05;
+}
+
+.feature-one--two,
+.feature-one--three,
+.service-one--three,
+.project-one--three {
+  background-color: transparent;
+}
+
+.faq-page__accordion .accrodion {
+  border-color: transparent;
+}
+
+.comments-form__form .bootstrap-select > .dropdown-toggle:focus,
+.comments-form__form input[type=text]:focus,
+.comments-form__form input[type=phone]:focus,
+.comments-form__form input[type=email]:focus,
+.comments-form__form textarea:focus,
+.contact-one__form .bootstrap-select > .dropdown-toggle,
+.contact-one__form input[type=text],
+.contact-one__form input[type=email],
+.contact-one__form textarea {
+  color: rgba(var(--grdeen-white-rgb), 0.7);
+}
+.comments-form__form .bootstrap-select > .dropdown-toggle:focus:focus,
+.comments-form__form input[type=text]:focus:focus,
+.comments-form__form input[type=phone]:focus:focus,
+.comments-form__form input[type=email]:focus:focus,
+.comments-form__form textarea:focus:focus,
+.contact-one__form .bootstrap-select > .dropdown-toggle:focus,
+.contact-one__form input[type=text]:focus,
+.contact-one__form input[type=email]:focus,
+.contact-one__form textarea:focus {
+  color: rgba(var(--grdeen-white-rgb), 1);
+}
+
+.google-map iframe {
+  filter: grayscale(100%) invert(92%) contrast(83%);
+}
+
+.checkout-page__payment__title::before {
+  border-color: var(--grdeen-white);
+}
+/*# sourceMappingURL=grdeen-dark.css.map */
