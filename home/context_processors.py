@@ -10,6 +10,11 @@ def social_links(request):
     social_links = SocialLink.objects.filter(is_active=True)
     return {'social_links': social_links}
 
+def populars(request):
+    from .models import OurBlog
+    populars = OurBlog.objects.filter(is_active=True).order_by('-publish_date')[:3]
+    return {'populars': populars}
+
 def cart_context(request):
     """Cart ma'lumotlarini barcha sahifalarda mavjud qilish"""
     if request.user.is_authenticated:

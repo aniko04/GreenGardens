@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <section class="page-header">
+        <div class="page-header__bg"></div>
+        <div class="page-header__shape wow fadeInUp" data-wow-delay="200ms"></div>
+        <div class="page-header__overlay"></div>
+        <!-- /.page-header__bg -->
+        <div class="container">
+            <h2 class="page-header__title">Faq's</h2>
+            <ul class="grdeen-breadcrumb list-unstyled">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><span>Faq's</span></li>
+            </ul><!-- /.thm-breadcrumb list-unstyled -->
+        </div><!-- /.container -->
+    </section><!-- /.page-header -->
+
+    <section class="faq-page">
+        <div class="container">
+            <h3 class="faq-page__sec-title">Questions & Answers</h3>
+            <p class="faq-page__sec-text">
+                There are many variations of passages of lorem Ipsum available but the majority have<br> suffered alteration in some form by injected humour.
+            </p>
+            <h3 class="faq-page__title">Our FAQ Service</h3>
+            <div class="faq-page__accordion grdeen-accrodion" data-grp-name="grdeen-accrodion">
+                {% for faq in faqs %}
+                <div class="accrodion {% if forloop.first %}active{% endif %}">
+                    <div class="accrodion-title">
+                        <h4>{{ faq.question }}
+                            <span class="accrodion-title__icon"></span><!-- /.accrodion-title__icon -->
+                        </h4>
+                    </div><!-- /.accordian-title -->
+                    <div class="accrodion-content">
+                        <div class="inner">
+                            <p>
+                                {{ faq.answer|safe }}
+                            </p>
+                        </div><!-- /.accordian-content -->
+                    </div>
+                </div><!-- /.accordian-item -->
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

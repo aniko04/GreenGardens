@@ -29,7 +29,7 @@
                                     <i class="icon-location"></i>
                                 </div><!-- /.contact-one__info__icon -->
                                 <h4 class="contact-one__info__title">Our office</h4><!-- /.contact-one__info__title -->
-                                <p class="contact-one__info__text">100 Navda St,West End, right area, London</p><!-- /.contact-one__info__text -->
+                                <p class="contact-one__info__text">{{ info.address }}</p><!-- /.contact-one__info__text -->
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
@@ -39,8 +39,7 @@
                                 </div><!-- /.contact-one__info__icon -->
                                 <h4 class="contact-one__info__title">Make a call</h4><!-- /.contact-one__info__title -->
                                 <p class="contact-one__info__text">
-                                    <a href="tel:0881682648101">(088) 168.26.48.101</a>
-                                    <a href="tel:0881682648101">(088) 22.11.22.11.201</a>
+                                    <a href="tel:{{ info.phone_number}}">{{ info.phone_number }}</a>
                                 </p><!-- /.contact-one__info__text -->
                             </div>
                         </div>
@@ -51,8 +50,7 @@
                                 </div><!-- /.contact-one__info__icon -->
                                 <h4 class="contact-one__info__title">Support</h4><!-- /.contact-one__info__title -->
                                 <p class="contact-one__info__text">
-                                    <a href="mailto:Info@gmail.com">Info@gmail.com</a>
-                                    <a href="mailto:Grdeen@gmail.com">Grdeen@gmail.com</a>
+                                    <a href="mailto:{{ info.contact_email }}">{{ info.contact_email }}</a>
                                 </p><!-- /.contact-one__info__text -->
                             </div>
                         </div>
@@ -82,8 +80,9 @@
                                 <label class="sr-only" for="language-select">Choose Services</label>
                                 <select class="selectpicker" id="language-select" name="service">
                                     <option value="Choose Services">Choose Services</option>
-                                    <option value="Choose Services 01">Choose Services 01</option>
-                                    <option value="Choose Services 02">Choose Services 02</option>
+                                    {% for service in ourservices %}
+                                        <option value="{{ service.pagename }}">{{ service.pagename }}</option>
+                                    {% endfor %}
                                 </select>
                                 </div>
                             </div>

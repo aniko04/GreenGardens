@@ -16,6 +16,102 @@
 
         <section class="blog-page">
             <div class="container">
+                <!-- Modern Filter and Sort Controls -->
+                <div class="blog-controls" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 25px; border-radius: 15px; margin-bottom: 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <div class="row align-items-center">
+                        <!-- Category Filter -->
+                        <div class="col-lg-6 col-md-6 mb-3 mb-md-0">
+                            <div class="filter-group">
+                                <div class="filter-label" style="display: flex; align-items: center; margin-bottom: 10px;">
+                                    <i class="fas fa-filter" style="color: #28a745; margin-right: 8px; font-size: 16px;"></i>
+                                    <span style="font-weight: 600; color: #2c3e50; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Filter by Category</span>
+                                </div>
+                                <div class="custom-select-wrapper" style="position: relative;">
+                                    <select id="category-select" class="custom-select" style="width: 100%; padding: 12px 40px 12px 15px; border: 2px solid #e9ecef; border-radius: 10px; background: white; font-size: 14px; color: #495057; cursor: pointer; transition: all 0.3s ease; appearance: none;">
+                                        <option value="">🌿 All Categories</option>
+                                        {% for category in categories %}
+                                            <option value="{{ category.id }}" {% if selected_category == category.id|stringformat:"s" %}selected{% endif %}>
+                                                {{ category.name }} ({{ category.events_count }})
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                    <div class="select-arrow" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); pointer-events: none;">
+                                        <i class="fas fa-chevron-down" style="color: #28a745; font-size: 12px;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sort Options -->
+                        <div class="col-lg-6 col-md-6">
+                            <div class="sort-group">
+                                <div class="sort-label" style="display: flex; align-items: center; margin-bottom: 10px;">
+                                    <i class="fas fa-sort-amount-down" style="color: #28a745; margin-right: 8px; font-size: 16px;"></i>
+                                    <span style="font-weight: 600; color: #2c3e50; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Sort by Date</span>
+                                </div>
+                                <div class="sort-buttons" style="display: flex; gap: 10px;">
+                                    <button type="button" class="sort-btn {% if not selected_sort or selected_sort == 'newest' %}active{% endif %}" 
+                                            data-sort="" 
+                                            style="flex: 1; padding: 12px 20px; border: 2px solid #28a745; background: {% if not selected_sort or selected_sort == 'newest' %}#28a745{% else %}white{% endif %}; color: {% if not selected_sort or selected_sort == 'newest' %}white{% else %}#28a745{% endif %}; border-radius: 10px; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                        <i class="fas fa-arrow-down" style="font-size: 12px;"></i>
+                                        <span>Newest First</span>
+                                    </button>
+                                    <button type="button" class="sort-btn {% if selected_sort == 'oldest' %}active{% endif %}" 
+                                            data-sort="oldest" 
+                                            style="flex: 1; padding: 12px 20px; border: 2px solid #28a745; background: {% if selected_sort == 'oldest' %}#28a745{% else %}white{% endif %}; color: {% if selected_sort == 'oldest' %}white{% else %}#28a745{% endif %}; border-radius: 10px; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                        <i class="fas fa-arrow-up" style="font-size: 12px;"></i>
+                                        <span>Oldest First</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Active Filters Display -->
+                    <div class="active-filters" style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #dee2e6;">
+                        <div class="filter-tags" style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                            <span style="font-size: 13px; color: #6c757d; font-weight: 500;">Active filters:</span>
+                            {% if selected_category %}
+                                {% for category in categories %}
+                                    {% if category.id|stringformat:"s" == selected_category %}
+                                        <span class="filter-tag" style="background: #28a745; color: white; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; display: inline-flex; align-items: center; gap: 5px;">
+                                            <i class="fas fa-tag"></i>
+                                            {{ category.name }}
+                                            <button type="button" onclick="clearCategoryFilter()" style="background: none; border: none; color: white; margin-left: 5px; cursor: pointer; padding: 0; font-size: 14px;">×</button>
+                                        </span>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            {% if selected_sort == 'oldest' %}
+                                <span class="filter-tag" style="background: #17a2b8; color: white; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; display: inline-flex; align-items: center; gap: 5px;">
+                                    <i class="fas fa-sort"></i>
+                                    Oldest First
+                                </span>
+                            {% endif %}
+                            {% if not selected_category and not selected_sort %}
+                                <span style="color: #6c757d; font-size: 12px; font-style: italic;">No filters applied</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Info -->
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="results-info" style="padding: 10px 0; border-bottom: 1px solid #eee; margin-bottom: 20px;">
+                            <p style="margin: 0; color: #666; font-size: 14px;">
+                                {% if selected_category or selected_sort %}
+                                    Showing {{ ourblogs.paginator.count }} result{{ ourblogs.paginator.count|pluralize }} 
+                                    {% if category %}for category "{{ category.name }}"{% endif %}
+                                    {% if selected_sort %}sorted by {{ selected_sort }}{% endif %}
+                                {% else %}
+                                    {{ ourblogs.paginator.count }} blog{{ ourblogs.paginator.count|pluralize }} found
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row gutter-y-30">
                     {% for blog in ourblogs %}
                     <div class="col-md-6 col-lg-4">
@@ -23,7 +119,7 @@
                             <div class="blog-card__image">
                                 <div class="blog-card__image__inner">
                                     <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
-                                    <a href="blog-details-right.html" class="blog-card__image__link"></a>
+                                    <a href="{% url 'blog_details' blog.id %}" class="blog-card__image__link"></a>
                                 </div>
                                 <div class="blog-card__date">{{ blog.publish_date}}</div><!-- /.blog-card__date -->
                             </div><!-- /.blog-card__image -->
@@ -31,30 +127,210 @@
                                 <div class="blog-card--two__shape" style="background-image: url({% static 'assets/images/shapes/blog-post2-shape.png' %});"></div>
                                 <ul class="list-unstyled blog-card__meta">
                                     <li>
-                                        <a href="blog-grid-right.html">
                                             <span><i class="fas fa-user"></i></span>
                                             By {{ blog.author }}
-                                        </a>
+                                    </li>
+                                    <li>
+                                        <span><i class="fas fa-folder-open"></i></span>
+                                     <span>{{ blog.category.name }}</span>
                                     </li>
                                 </ul><!-- /.list-unstyled blog-card__meta -->
-                                <h3 class="blog-card__title"><a href="blog-details-right.html">{{ blog.minititle }}</a></h3><!-- /.blog-card__title -->
+                                <h3 class="blog-card__title"><a href="{% url 'blog_details' blog.id %}">{{ blog.minititle }}</a></h3><!-- /.blog-card__title -->
                                 <p class="blog-card-two__text">
-                                    {{ blog.content|truncatewords:20|safe }}
+                                    {{ blog.content|truncatewords:10|safe }}
                                 </p><!-- /.blog-card-two__text -->
                             </div><!-- /.blog-card-two__content -->
                         </div><!-- /.blog-card -->
                     </div><!-- /.col-md-6 col-lg-4 -->
                     {% endfor %}
                     <div class="col-md-12">
+                        <!-- Modern Pagination -->
+                        {% if ourblogs.has_other_pages %}
                         <div class="blog-pagination">
-                            <span class="page-numbers current">1</span>
-                            <a class="page-numbers" href="blog-grid-right.html">2</a>
-                            <a class="page-numbers" href="blog-grid-right.html">3</a>
-                            <a class="page-numbers" href="blog-grid-right.html">4</a>
-                            <a class="next page-numbers" href="blog-grid-right.html">Last<i class="icon-up-arrow1"></i></a>
+                            <!-- Previous Page -->
+                            {% if ourblogs.has_previous %}
+                                <a href="?{% if selected_category %}category={{ selected_category }}&{% endif %}{% if selected_sort %}sort={{ selected_sort }}&{% endif %}page={{ ourblogs.previous_page_number }}" 
+                                   class="next" title="Previous Page">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            {% endif %}
+
+                            <!-- Page Numbers -->
+                            {% for num in ourblogs.paginator.page_range %}
+                                {% if ourblogs.number == num %}
+                                    <span class="current">{{ num }}</span>
+                                {% elif num > ourblogs.number|add:'-3' and num < ourblogs.number|add:'3' %}
+                                    <a href="?{% if selected_category %}category={{ selected_category }}&{% endif %}{% if selected_sort %}sort={{ selected_sort }}&{% endif %}page={{ num }}">
+                                        {{ num }}
+                                    </a>
+                                {% elif num == 1 %}
+                                    <a href="?{% if selected_category %}category={{ selected_category }}&{% endif %}{% if selected_sort %}sort={{ selected_sort }}&{% endif %}page={{ num }}">
+                                        {{ num }}
+                                    </a>
+                                    {% if ourblogs.number > 4 %}
+                                        <span>...</span>
+                                    {% endif %}
+                                {% elif num == ourblogs.paginator.num_pages %}
+                                    {% if ourblogs.number < ourblogs.paginator.num_pages|add:'-3' %}
+                                        <span>...</span>
+                                    {% endif %}
+                                    <a href="?{% if selected_category %}category={{ selected_category }}&{% endif %}{% if selected_sort %}sort={{ selected_sort }}&{% endif %}page={{ num }}">
+                                        {{ num }}
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+
+                            <!-- Next Page -->
+                            {% if ourblogs.has_next %}
+                                <a href="?{% if selected_category %}category={{ selected_category }}&{% endif %}{% if selected_sort %}sort={{ selected_sort }}&{% endif %}page={{ ourblogs.next_page_number }}" 
+                                   class="next" title="Next Page">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            {% endif %}
                         </div>
+                        
+                        <!-- Pagination Info -->
+                        <div class="pagination-info text-center mt-3" style="margin-top: 25px;">
+                            <p style="color: #666; font-size: 14px; margin: 0;">
+                                Showing page {{ ourblogs.number }} of {{ ourblogs.paginator.num_pages }} 
+                                ({{ ourblogs.paginator.count }} total blogs)
+                            </p>
+                        </div>
+                        {% endif %}
                     </div>
                 </div><!-- /.row -->
             </div><!-- /.container -->
         </section><!-- /.blog-one blog-one--page -->
+
+        <style>
+        /* Hover effects for custom select */
+        .custom-select:hover {
+            border-color: #28a745 !important;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25) !important;
+        }
+        
+        .custom-select:focus {
+            border-color: #28a745 !important;
+            outline: 0 !important;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25) !important;
+        }
+        
+        /* Sort button hover effects */
+        .sort-btn:hover {
+            background: #28a745 !important;
+            color: white !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3) !important;
+        }
+        
+        .sort-btn.active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4) !important;
+        }
+        
+        /* Animation for filter tags */
+        .filter-tag {
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .blog-controls {
+                padding: 20px 15px !important;
+            }
+            
+            .sort-buttons {
+                flex-direction: column !important;
+            }
+            
+            .sort-btn {
+                margin-bottom: 10px !important;
+            }
+        }
+        </style>
+
+        <script>
+        // Category dropdown functionality
+        document.getElementById('category-select').addEventListener('change', function() {
+            updateFilters();
+        });
+        
+        // Sort button functionality
+        document.querySelectorAll('.sort-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons
+                document.querySelectorAll('.sort-btn').forEach(function(b) {
+                    b.classList.remove('active');
+                    b.style.background = 'white';
+                    b.style.color = '#28a745';
+                });
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                this.style.background = '#28a745';
+                this.style.color = 'white';
+                
+                // Update filters
+                updateFilters();
+            });
+        });
+        
+        function updateFilters() {
+            const categoryValue = document.getElementById('category-select').value;
+            const activeSort = document.querySelector('.sort-btn.active');
+            const sortValue = activeSort ? activeSort.getAttribute('data-sort') : '';
+            
+            const currentUrl = new URL(window.location);
+            
+            // Update sort parameter
+            if (sortValue) {
+                currentUrl.searchParams.set('sort', sortValue);
+            } else {
+                currentUrl.searchParams.delete('sort');
+            }
+            
+            // Update category parameter
+            if (categoryValue) {
+                currentUrl.searchParams.set('category', categoryValue);
+            } else {
+                currentUrl.searchParams.delete('category');
+            }
+            
+            // Reset page to 1 when filters change
+            currentUrl.searchParams.delete('page');
+            
+            window.location.href = currentUrl.toString();
+        }
+        
+        // Clear category filter function
+        function clearCategoryFilter() {
+            document.getElementById('category-select').value = '';
+            updateFilters();
+        }
+        
+        // Add loading effect when filters change
+        function showLoading() {
+            const controls = document.querySelector('.blog-controls');
+            controls.style.opacity = '0.7';
+            controls.style.pointerEvents = 'none';
+        }
+        
+        // Update the updateFilters function to show loading
+        const originalUpdateFilters = updateFilters;
+        updateFilters = function() {
+            showLoading();
+            originalUpdateFilters();
+        }
+        </script>
 {% endblock %}

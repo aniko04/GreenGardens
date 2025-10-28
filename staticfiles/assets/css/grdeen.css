@@ -4753,7 +4753,7 @@ h6 {
 .main-header__cart {
   position: relative;
   border-left: 1px solid rgba(var(--grdeen-white-rgb, 255, 255, 255), 0.3);
-  padding-right: 0;
+  padding-right: 15px;
 }
 
 .main-header__cart__count {

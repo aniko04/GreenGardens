@@ -695,8 +695,9 @@
                                 <label class="sr-only" for="language-select">Choose Services</label>
                                 <select class="selectpicker" id="language-select" name="service">
                                     <option value="Choose Services">Choose Services</option>
-                                    <option value="Choose Services 01">Choose Services 01</option>
-                                    <option value="Choose Services 02">Choose Services 02</option>
+                                    {% for service in ourservices %}
+                                        <option value="{{ service.pagename }}">{{ service.pagename }}</option>
+                                    {% endfor %}
                                 </select>
                                 </div>
                             </div>

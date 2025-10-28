@@ -7,10 +7,10 @@
     <div class="page-header__shape wow fadeInUp" data-wow-delay="200ms"></div>
     <div class="page-header__overlay"></div>
     <div class="container">
-        <h2 class="page-header__title">Savat</h2>
+        <h2 class="page-header__title">Cart</h2>
         <ul class="grdeen-breadcrumb list-unstyled">
-            <li><a href="{% url 'home' %}">Bosh sahifa</a></li>
-            <li><span>Savat</span></li>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><span>Cart</span></li>
         </ul>
     </div>
 </section>
@@ -118,7 +118,7 @@
                     {% if cart_items %}
                     <div style="margin-top: 30px;">
                         <a class="cart-page__link grdeen-btn" href="{% url 'products' %}">
-                            <span><i class="fas fa-arrow-left"></i> Xaridni davom ettirish</span>
+                            <span style="color: #fff !important;"><i class="fas fa-arrow-left"></i> Xaridni davom ettirish</span>
                         </a>
                     </div>
                     {% endif %}

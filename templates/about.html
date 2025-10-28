@@ -82,7 +82,7 @@
                                 <li><i class="icon-check-solid"></i>{{ intro.list2|safe }}</li>
                                 <li><i class="icon-check-solid"></i>{{ intro.list3|safe }}</li>
                             </ul>
-                            <a href="{{ intro.button_url }}" class="grdeen-btn">
+                            <a href="{% url 'about' %}" class="grdeen-btn">
                                 <span>{{ intro.button_name }}</span>
                             </a>
                         </div>
@@ -143,7 +143,7 @@
                             </div>
                             <p class="funfact-one__content__text">{{ ourfacts.last.description }}</p>
                             <div class="funfact-one__content__bookwrap d-flex align-items-center">
-                                <a href="{{ ourfacts.last.button_url }}" class="grdeen-btn funfact-one__content__bookwrap__btn"><span>{{ ourfacts.last.button_name }}</span></a>
+                                <a href="{% url 'contact' %}" class="grdeen-btn funfact-one__content__bookwrap__btn"><span>{{ ourfacts.last.button_name }}</span></a>
                                 <p class="funfact-one__content__bookwrap__text">{{ ourfacts.last.button_text }}</p>
                             </div>
                         </div>
@@ -408,40 +408,43 @@
                                     <h2 class="sec-title__title">Book a FREE <br> professional gardening <br> consultation!</h2><!-- /.sec-title__title -->
                                 </div><!-- /.sec-title -->
                             </div>
-                            <form class="free-booking-one__form contact-form-validated form-one wow fadeInUp" data-wow-duration="1500ms" action="inc/sendemail.php">
-                                <div class="form-one__group">
-                                    <div class="form-one__control">
-                                        <input type="text" name="name" placeholder="Your Name">
-                                    </div><!-- /.form-one__control -->
-                                    <div class="form-one__control">
-                                        <input type="email" name="email" placeholder="Your Email">
-                                    </div><!-- /.form-one__control -->
-                                    <div class="form-one__control">
-                                        <input type="text" name="tel" placeholder="Your Phone">
-                                    </div><!-- /.form-one__control -->
-                                    <div class="form-one__control">
-                                        <div class="form-one__control__select">
-                                            <label class="sr-only" for="language-select">Choose Services</label>
-                                            <!-- /#language-select.sr-only -->
-                                            <select class="selectpicker" id="language-select">
-                                                <option value="Choose Services">Choose Services</option>
-                                                <option value="Choose Services 01">Choose Services 01</option>
-                                                <option value="Choose Services 02">Choose Services 02</option>
-                                            </select>
-                                        </div><!-- /.main-menu__language -->
-                                    </div><!-- /.form-one__control -->
-                                    <div class="form-one__control form-one__control--full d-none">
-                                        <input class="grdeen-datepicker" type="text" name="date" placeholder="Select date">
-                                        <i class="fa fa-calendar-alt form-one__control__icon"></i>
-                                    </div><!-- /.form-one__control form-one__control--full -->
-                                    <div class="form-one__control form-one__control--full">
-                                        <textarea name="message" placeholder="Message"></textarea><!-- /# -->
-                                    </div><!-- /.form-one__control -->
-                                    <div class="form-one__control form-one__control--full">
-                                        <button type="submit" class="grdeen-btn free-booking-one__submit"><span>Submit Message</span></button>
-                                    </div><!-- /.form-one__control -->
-                                </div><!-- /.form-one__group -->
-                            </form>
+                            <form class="form-one contact-one__form " method="POST">
+                        {% csrf_token %}
+                       
+                        <div class="form-one__group">
+                            <div class="form-one__control">
+                                <label for="name">Your Name</label>
+                                <input type="text" name="name" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-one__control">
+                                <label for="email">Email</label>
+                                <input type="email" name="email" placeholder="Email Address" required>
+                            </div>
+                            <div class="form-one__control">
+                                <label for="tel">Phone</label>
+                                <input type="text" name="tel" placeholder="Phone">
+                            </div>
+                            <div class="form-one__control">
+                            <div class="form-one__control__select">
+                                <label class="sr-only" for="language-select">Choose Services</label>
+                                <select class="selectpicker" id="language-select" name="service">
+                                    <option value="Choose Services">Choose Services</option>
+                                    {% for service in ourservices %}
+                                        <option value="{{ service.pagename }}">{{ service.pagename }}</option>
+                                    {% endfor %}
+                                </select>
+                                </div>
+                            </div>
+
+                            <div class="form-one__control form-one__control--full">
+                                <textarea name="message" placeholder="Your Message here" required></textarea>
+                            </div>
+                           
+                            <div class="form-one__control form-one__control--full text-center">
+                                <button type="submit" class="grdeen-btn"><span>Send a message</span></button>
+                            </div>
+                        </div>
+                        </form>
                         </div>
                     </div>
                     <div class="col-lg-6 wow fadeInUp" data-wow-delay="100ms">
@@ -520,7 +523,7 @@
                                 <div class="team-card__content">
                                     <div class="team-card__titlewrap">
                                         <h4 class="team-card__title">
-                                            <a href="team-details.html">{{ expert.name }}</a>
+                                            <a href="{% url 'team_details' expert.id %}">{{ expert.name }}</a>
                                         </h4><!-- /.team-card__title -->
                                         <span class="team-card__designation">{{ expert.position }}</span><!-- /.team-card__designation -->
                                     </div>

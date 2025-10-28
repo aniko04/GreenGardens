@@ -174,34 +174,8 @@
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#">Blog</a>
-                                <ul class="sub-menu">
-                                    <li class="dropdown">
-                                        <a href="#">Blog grid</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="blog-grid.html">No sidebar</a></li>
-                                            <li><a href="blog-grid-left.html">Left sidebar</a></li>
-                                            <li><a href="blog-grid-right.html">Right sidebar</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#">Blog list</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="blog-list.html">No sidebar</a></li>
-                                            <li><a href="blog-list-left.html">Left sidebar</a></li>
-                                            <li><a href="blog-list-right.html">Right sidebar</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="blog-carousel.html">Blog carousel</a></li>
-                                    <li class="dropdown">
-                                        <a href="#">Blog details</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="blog-details.html">No sidebar</a></li>
-                                            <li><a href="blog-details-left.html">Left sidebar</a></li>
-                                            <li><a href="blog-details-right.html">Right sidebar</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                                <a href="{% url 'blog' %}">Blog</a>
+                               
                             </li>
                             <li>
                                 <a href="{% url 'contact' %}">Contact</a>
@@ -299,19 +273,8 @@
                                     <img src="{% static 'assets/images/logo-light.png' %}" width="155"
                                         alt="Agrofa HTML Template">
                                 </a>
-                                <p class="footer-widget__experience-text">Over 20 years of experience we’ll ensure you
-                                    get the best guidance.</p>
-                                <div class="footer-widget__newsletterwrap">
-                                    <h6 class="footer-widget__title footer-widget__title--newsletter">Newsletter</h6>
-                                    <form action="#" data-url="MAILCHIMP_FORM_URL"
-                                        class="footer-widget__newsletter mc-form">
-                                        <div class="footer-widget__mail-address">
-                                            <input type="email" name="email" placeholder="Email Address">
-                                        </div>
-                                        <button type="submit" class="form-submit-btn">Submit</button>
-                                    </form><!-- /.footer-widget__newsletter mc-form -->
-                                    <div class="mc-form__response"></div><!-- /.mc-form__response -->
-                                </div>
+                                <p class="footer-widget__experience-text">{{ info.description }}</p>
+                          
                             </div><!-- /.footer-widget -->
                         </div><!-- /.col-md-6 -->
 
@@ -319,9 +282,9 @@
                             <div class="footer-widget footer-widget--links">
                                 <h6 class="footer-widget__title">Links</h6>
                                 <ul class="list-unstyled footer-widget__links">
-                                    <li><a href="checkout.html">Cookie Policy</a></li>
-                                    <li><a href="products-right.html">Shop</a></li>
-                                    <li><a href="{% url 'login' %}">Login</a></li>
+                                    <li><a href="{% url 'services' %}">Services</a></li>
+                                    <li><a href="{% url 'products' %}">Shop</a></li>
+                                    <li><a href="{% url 'projects' %}">Projects</a></li>
                                     <li><a href="{% url 'about' %}">About us</a></li>
                                     <li><a href="{% url 'contact' %}">Contact Us</a></li>
                                 </ul><!-- /.list-unstyled footer-widget__links -->
@@ -357,31 +320,20 @@
                                 <h5 class="footer-widget__title">Popular Post</h5><!-- /.footer-widget__title -->
 
                                 <div class="footer-widget__post-wrap">
+                                    {% for post in populars|slice:":2" %}
                                     <div class="footer-widget__post-col">
                                         <div class="footer-widget__post-img">
-                                            <img src="{% static 'assets/images/resources/footer-post1-1.jpg' %}" alt="">
+                                            <img src="{{ post.image.url }}" alt="{{ post.minititle }}">
                                         </div>
                                         <div class="footer-widget__post-info">
                                             <span class="footer-widget__post-date"><i class="far fa-calendar"></i>
-                                                <span> 02 Sep 2023</span>
+                                                <span> {{ post.publish_date|date:"d M Y" }}</span>
                                             </span>
-                                            <h6 class="footer-widget__post-heading"><a href="blog.html">Vegetable crops
-                                                    that do not need pollinators</a></h6>
+                                            <h6 class="footer-widget__post-heading"><a href="">{{ post.minititle|truncatechars:50 }}</a></h6>
                                         </div>
                                     </div>
-
-                                    <div class="footer-widget__post-col">
-                                        <div class="footer-widget__post-img">
-                                            <img src="{% static 'assets/images/resources/footer-post1-2.jpg' %}" alt="">
-                                        </div>
-                                        <div class="footer-widget__post-info">
-                                            <span class="footer-widget__post-date"><i class="far fa-calendar"></i>
-                                                <span> 05 Sep 2023</span>
-                                            </span>
-                                            <h6 class="footer-widget__post-heading"><a href="blog.html">Grow your own
-                                                    pumpkins even in small spaces</a></h6>
-                                        </div>
-                                    </div>
+                                    {% endfor %}
+                                  
                                 </div>
 
                             </div><!-- /.footer-widget -->
@@ -398,8 +350,7 @@
                             <p class="main-footer__social-row-text">Social</p>
                             <ul class="main-footer__social-list">
                                 {% for social in social_links %}
-                                <li><a href="#" target="_blank">{{ social.icon|safe }}<span class="sr-only">{{
-                                            social.platform }}</span></a></li>
+                                <li><a href="{{ social.url }}" target="_blank">{{ social.icon|safe }}<span class="sr-only">{{ social.platform }}</span></a></li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -435,22 +386,13 @@
                 </li>
             </ul><!-- /.mobile-nav__contact -->
             <div class="mobile-nav__social">
-                <a href="https://facebook.com">
-                    <i class="fab fa-facebook-f"></i>
-                    <span class="sr-only">Facebook</span>
+                {% for social in social_links %}
+                <a href="{{ social.url }}" target="_blank">
+                    {{ social.icon|safe }}
+                    <span class="sr-only">{{ social.platform }}</span>
                 </a>
-                <a href="https://twitter.com">
-                    <i class="fab fa-twitter" aria-hidden="true"></i>
-                    <span class="sr-only">Twitter</span>
-                </a>
-                <a href="https://linkedin.com">
-                    <i class="fab fa-linkedin-in"></i>
-                    <span class="sr-only">Linkedin</span>
-                </a>
-                <a href="https://www.instagram.com/">
-                    <i class="fab fa-instagram"></i>
-                    <span class="sr-only">Instagram</span>
-                </a>
+                {% endfor %}
+       
             </div><!-- /.mobile-nav__social -->
         </div>
         <!-- /.mobile-nav__content -->
@@ -1005,7 +947,14 @@ function googleTranslateElementInit() {
     },
     'google_translate_element'
   );
+  const sel = document.querySelector('.goog-te-combo');
+if (sel) {
+  sel.style.padding = '8px';
+  sel.style.borderRadius = '5px';
+  sel.style.border = '1px solid #ccc';
 }
+}
+
 </script>
 
 <script type="text/javascript" 

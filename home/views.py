@@ -62,20 +62,36 @@ def home(request):
                }
     return render(request, 'home.html', context)
 def about(request):
-    intro = IntroOurCompany.objects.filter(is_active=True).last()
+    if request.method == "POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        phone = request.POST.get('tel')
+        service = request.POST.get('service')
+        message = request.POST.get('message')
+
+        ContactMessage.objects.create(
+            name=name,
+            email=email,
+            phone=phone,
+            service=service if service != "Choose Services" else None,  # tanlanmagan bo'lsa None
+            message=message
+        )
+
+        messages.success(request, "Your message has been sent successfully!")   
+    
+    intro = IntroOurCompany.objects.filter(is_active=True).first()
     features = MainFeature.objects.filter(is_active=True)
     ourfacts = OurFact.objects.filter(is_active=True)
     ourbenefits = OurBenefit.objects.filter(is_active=True)
+    ourservices = OurService.objects.filter(is_active=True)
     ourtestimonials = OurTestimonial.objects.filter(is_active=True)
     ourexperts = OurExpert.objects.filter(is_active=True)
-   
-
-
     context = {'intro': intro,
                'features': features,
                'ourfacts': ourfacts,
                 'ourbenefits': ourbenefits,
                 'ourtestimonials': ourtestimonials,
+                'ourservices': ourservices,
                 'ourexperts': ourexperts
                }
     return render(request, 'about.html', context)
@@ -100,8 +116,10 @@ def contact(request):
         messages.success(request, "Your message has been sent successfully!")
         #return redirect('contact')  # contact url nomi bilan qayta yo‘naltirish
         return render(request, 'contact.html')
+    ourservices = OurService.objects.filter(is_active=True)
+    context = {'ourservices': ourservices}
 
-    return render(request, 'contact.html')
+    return render(request, 'contact.html', context)
 
 def services(request):
     ourservices = OurService.objects.filter(is_active=True)
@@ -265,9 +283,82 @@ def team_details(request, id):
     return render(request, 'team-details.html', context)
 
 def blog(request):
-    ourblogs = OurBlog.objects.filter(is_active=True)
+    # Get sorting and category parameters
+    sort_by = request.GET.get('sort', '')
+    category_id = request.GET.get('category', '')
+    
+    # Base queryset
+    blogs = OurBlog.objects.filter(is_active=True)
+    
+    # Filter by category if selected
+    if category_id:
+        blogs = blogs.filter(category_id=category_id)
+    
+    # Apply sorting
+    if sort_by == 'oldest':
+        blogs = blogs.order_by('publish_date', 'id')
+    else:
+        blogs = blogs.order_by('-publish_date', '-id')  # Default: newest first
+    
+    # Get all categories for dropdown
+    categories = Category.objects.all()
+    
+    # Pagination
+    paginator = Paginator(blogs, 6)  # 6 blogs per page
+    page_number = request.GET.get('page')
+    ourblogs = paginator.get_page(page_number)
+    
     context = {
-        'ourblogs': ourblogs
+        'ourblogs': ourblogs,
+        'selected_sort': sort_by,
+        'selected_category': category_id,
+        'categories': categories,
+    }
+    return render(request, 'blog.html', context)
+
+def blog_details(request, id):
+    ourblogs = get_object_or_404(OurBlog, id=id, is_active=True)
+    allblogs = OurBlog.objects.filter(is_active=True).exclude(id=ourblogs.id)
+    categories = Category.objects.all()
+    if not ourblogs:
+        messages.error(request, "Requested blog not found!")
+    
+    context = {
+        'allblogs': allblogs,
+        'ourblogs': ourblogs,
+        'categories': categories
+    }
+    return render(request, 'blog-details.html', context)
+
+def category_events(request, id):
+    ct = get_object_or_404(Category, id=id)
+    
+    # Get sorting parameter
+    sort_by = request.GET.get('sort', '')
+    
+    # Base queryset for category
+    blogs = OurBlog.objects.filter(category=ct, is_active=True)
+    
+    # Apply sorting
+    if sort_by == 'oldest':
+        blogs = blogs.order_by('publish_date', 'id')
+    else:
+        blogs = blogs.order_by('-publish_date', '-id')  # Default: newest first
+    
+    # Get all categories for dropdown
+    categories = Category.objects.all()
+    
+    # Pagination
+    paginator = Paginator(blogs, 6)  # 6 blogs per page
+    page_number = request.GET.get('page')
+    ourblogs = paginator.get_page(page_number)
+    
+    context = {
+        'ourblogs': ourblogs,
+        'category': ct,
+        'selected_sort': sort_by,
+        'selected_category': str(ct.id),
+        'categories': categories,
     }
     return render(request, 'blog.html', context)
 

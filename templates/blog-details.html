@@ -1,0 +1,76 @@
+﻿{% extends "base.html" %}
+{% load static %}
+{% block content %}
+        <section class="page-header">
+            <div class="page-header__bg"></div>
+            <div class="page-header__shape wow fadeInUp" data-wow-delay="200ms"></div>
+            <div class="page-header__overlay"></div>
+            <!-- /.page-header__bg -->
+            <div class="container">
+                <h2 class="page-header__title">Blog details</h2>
+                <ul class="grdeen-breadcrumb list-unstyled">
+                    <li><a href="index.html">Home</a></li>
+                    <li><span>Blog details</span></li>
+                </ul><!-- /.thm-breadcrumb list-unstyled -->
+            </div><!-- /.container -->
+        </section><!-- /.page-header -->
+
+        <section class="blog-details">
+            <div class="container">
+                <div class="row gutter-y-60">
+                    <div class="col-lg-8">
+
+                        <div class="blog-details__image">
+                            <img src="{{ ourblogs.image.url }}" alt="{{ ourblogs.minititle }}">
+                        </div><!-- /.blog-details__image -->
+                        <div class="blog-details__wrapper">
+                            <div class="blog-details__content">
+                                <ul class="list-unstyled blog-details__post-meta">
+                                    <li><span><i class="fas fa-user"></i></span>By {{ ourblogs.author }}</li> 
+                                </ul>
+                               {{ ourblogs.content|safe }}
+                                <div class="blog-details__meta">
+                                    <div class="blog-details__cats">
+                                        <h4 class="blog-details__cats__title">Category:</h4><!-- /.blog-details__tags__title -->
+                                        <a href="{% url 'category_events' ourblogs.category.id %}">{{ ourblogs.category.name }}</a>
+                                    </div><!-- /.blog-details__tags -->
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div><!-- /.col-lg-8 -->
+                    <div class="col-lg-4">
+                        <div class="sidebar">
+                            <aside class="widget-area">
+                                <div class="sidebar__single">
+                                    <h4 class="sidebar__title">Blog Categories</h4><!-- /.sidebar__title -->
+                                    <ul class="sidebar__categories list-unstyled">
+                                        {% for category in categories %}
+                                            <li><a href="{% url 'category_events' category.id %}">{{ category.name }}<span>({{ category.ourblog_set.count }})</span></a></li>
+                                        {% endfor %}
+                                    </ul><!-- /.sidebar__categories list-unstyled -->
+                                </div><!-- /.sidebar__single -->
+                                <div class="sidebar__single">
+                                    <h4 class="sidebar__title">Recent News</h4><!-- /.sidebar__title -->
+                                    <ul class="sidebar__posts list-unstyled">
+                                        {% for post in populars %}
+                                        <li class="sidebar__posts__item">
+                                            <div class="sidebar__posts__image">
+                                                <img src="{{ post.image.url }}" alt="{{ post.minititle }}">
+                                            </div><!-- /.sidebar__posts__image -->
+                                            <div class="sidebar__posts__content">
+                                                <h4 class="sidebar__posts__title"><a href="{% url 'blog_details' post.id %}">{{ post.minititle|truncatechars:40 }}</a></h4><!-- /.sidebar__posts__title -->
+                                                <p class="sidebar__posts__meta">{{ post.publish_date }}</p><!-- /.sidebar__posts__date -->
+                                            </div><!-- /.sidebar__posts__content -->
+                                        </li>
+                                      {% endfor %}
+                                    </ul><!-- /.sidebar__posts list-unstyled -->
+                                </div><!-- /.sidebar__single -->
+                                
+                            </aside><!-- /.widget-area -->
+                        </div><!-- /.sidebar -->
+                    </div><!-- /.col-lg-4 -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </section><!-- /.blog-one blog-one--page -->
+{% endblock %}

@@ -84,12 +84,16 @@ class OurBenefitAdmin(admin.ModelAdmin):
 
 @admin.register(OurBlog)
 class OurBlogAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'category', 'publish_date', 'is_active')
+    list_display = ('minititle', 'author', 'category', 'publish_date', 'is_active')
     list_filter = ('category', 'is_active')
     search_fields = ('title', 'author', 'category')
     list_editable = ('is_active',)
     date_hierarchy = 'publish_date'
 
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description')
+    search_fields = ('name',)
 
 @admin.register(OurExpert)
 class OurExpertAdmin(admin.ModelAdmin):
