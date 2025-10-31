@@ -4753,7 +4753,7 @@ h6 {
 .main-header__cart {
   position: relative;
   border-left: 1px solid rgba(var(--grdeen-white-rgb, 255, 255, 255), 0.3);
-  padding-right: 15px;
+  padding-right: 15px !important;
 }
 
 .main-header__cart__count {
@@ -4762,7 +4762,7 @@ h6 {
   height: 19px;
   border-radius: 50%;
   top: 7px;
-  right: -11px;
+  right: 0px;
   z-index: 1;
   background-color: var(--grdeen-white, #fff);
   display: flex;
@@ -5149,13 +5149,13 @@ h6 {
   }
 }
 
-.main-header--four .main-header__cart {
+.main-header--four  {
   padding: 0;
   border: 0;
 }
 
 @media (max-width: 1199px) {
-  .main-header--four .main-header__cart {
+  .main-header--four {
     margin-left: 20px;
     padding: 8px 0 8px 20px;
     border-left: 1px solid rgba(var(--grdeen-white-rgb, 255, 255, 255), 0.3);
@@ -5163,7 +5163,7 @@ h6 {
 }
 
 @media (max-width: 360px) {
-  .main-header--four .main-header__cart {
+  .main-header--four  {
     margin-left: 15px;
     padding: 8px 0 8px 15px;
   }
@@ -21276,6 +21276,94 @@ body.boxed-wrapper .main-header__wellcome__tagline {
 
 .companies-one__inner-img:hover img {
   filter: opacity(1) brightness(1);
+}
+
+/* Custom styles for likes counter - cart counter bilan aynan bir xil */
+.main-header__likes__count {
+    position: absolute;
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    top: 7px;
+    right: 0px;
+    z-index: 1;
+    background-color: var(--grdeen-white, #fff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--grdeen-black, #172000);
+    font-family: var(--grdeen-heading-font, "DM Sans", sans-serif);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1;
+}
+
+/* Custom Pagination Styles for Related Products */
+.pagination-wrapper {
+    margin-top: 40px;
+    padding: 20px 0;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.pagination .page-item {
+    margin: 0 5px;
+}
+
+.pagination .page-link {
+    display: block;
+    padding: 8px 16px;
+    color: var(--grdeen-text, #626f62);
+    text-decoration: none;
+    background-color: var(--grdeen-white, #fff);
+    border: 1px solid var(--grdeen-border-color, #e7e7e7);
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-family: var(--grdeen-font, "Inter", sans-serif);
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.pagination .page-link:hover {
+    color: var(--grdeen-white, #fff);
+    background-color: var(--grdeen-base, #1a9120);
+    border-color: var(--grdeen-base, #1a9120);
+    text-decoration: none;
+}
+
+.pagination .page-item.active .page-link {
+    color: var(--grdeen-white, #fff);
+    background-color: var(--grdeen-base, #1a9120);
+    border-color: var(--grdeen-base, #1a9120);
+}
+
+.pagination .page-item.disabled .page-link {
+    color: var(--grdeen-gray3, #a9b8a9);
+    background-color: var(--grdeen-gray4, #e9ebe9);
+    border-color: var(--grdeen-border-color, #e7e7e7);
+    cursor: not-allowed;
+}
+
+@media (max-width: 767px) {
+    .pagination .page-link {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+    
+    .pagination .page-item {
+        margin: 0 2px;
+    }
+    
+    .pagination-wrapper {
+        margin-top: 20px;
+        padding: 15px 0;
+    }
 }
 
 /*# sourceMappingURL=grdeen.css.map */

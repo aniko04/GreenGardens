@@ -210,7 +210,14 @@ def product_details(request, id):
     products.views += 1
     products.save()
     
-    allproducts = Product.objects.filter(is_active=True, is_top=True).exclude(id=products.id)
+    # Related products - pagination qo'shish
+    allproducts_queryset = Product.objects.filter(is_active=True, is_top=True).exclude(id=products.id)
+    
+    # Pagination
+    paginator = Paginator(allproducts_queryset, 3)  # 3 tadan chiqarish
+    page_number = request.GET.get('page')
+    allproducts = paginator.get_page(page_number)
+    
     print("-----------------------------")
     for image in products.images.all():
         print(image.image.url)
@@ -221,6 +228,7 @@ def product_details(request, id):
     context = {
         'products': products,
         'allproducts': allproducts,
+        'page_obj': allproducts,
         'item': item
     }
     return render(request, 'product-details.html', context)
@@ -464,6 +472,12 @@ def search(request):
     
     products_obj = products_paginator.get_page(products_page)
     services_obj = services_paginator.get_page(services_page)
+    
+    # DEBUG: Product names-ni konsolga chop etish
+    if products:
+        print("DEBUG: Found products:")
+        for product in products[:3]:  # Faqat birinchi 3 tani
+            print(f"  - ID: {product.id}, Name: '{product.name}'")
     
     context = {
         'query': query,

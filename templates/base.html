@@ -132,6 +132,7 @@
         <header class="main-header main-header--three sticky-header sticky-header--normal">
             <div class="container-fluid">
                 <div class="main-header__inner">
+                    
                     <div class="main-header__logo">
                         <a href="{% url 'home' %}">
                             <img src="{% static 'assets/images/logo-dark.png' %}" alt="Grdeen HTML">
@@ -206,7 +207,7 @@
                             <div class="main-header__cart__icon">
                                 <i class="fas fa-heart" aria-hidden="true"></i>
                             </div>
-                            <span class="main-header__cart__count" id="likes_count">{{ likes_count }}</span>
+                            <span class="main-header__likes__count" id="likes_count">{{ likes_count }}</span>
                             <span class="sr-only">likes</span>
                         </a><!-- /.likes-toggler -->
 
@@ -493,14 +494,41 @@
                     })
                         .then(response => response.json())
                         .then(data => {
-                            if (data.status == 'liked') {
-                                this.innerHTML = '<i class="fas fa-heart"></i>';
-
+                            console.log('Like API response:', data); // Debug log
+                            
+                            // Heart ikonni yangilash
+                            let heartIcon = '<i class="far fa-heart"></i>';
+                            
+                            // Server dan kelgan message ga qarab harakat qilish
+                            if (data.message === 'Mahsulot likega qo\'shildi!' || data.status === 'liked') {
+                                // LIKE qo'shildi
+                                heartIcon = '<i class="fas fa-heart" style="color: #1a9120;"></i>';
+                                console.log(`✅ LIKED: ${data.message}`);
+                                
+                            } else if (data.message === 'Mahsulot likedan o\'chirildi!' || data.status === 'unliked') {
+                                // LIKE o'chirildi
+                                heartIcon = '<i class="far fa-heart"></i>';
+                                console.log(`❌ UNLIKED: ${data.message}`);
+                                
+                            } else if (data.status === 'error') {
+                                // Xatolik holati
+                                console.log(`🚫 ERROR: ${data.message}`);
+                                showNotification(data.message || 'Xatolik yuz berdi!', 'error');
+                                return; // Countni o'zgartirmaslik
+                                
                             } else {
-                                this.innerHTML = '<i class="far fa-heart"></i>';
-
+                                // Noma'lum holat
+                                console.log(`⚠️ UNKNOWN STATUS: ${data.status} | Message: ${data.message}`);
+                                showNotification(data.message || 'Noma\'lum holat', 'warning');
+                                return;
                             }
+                            
+                            // Heart ikonni yangilash
+                            this.innerHTML = heartIcon;
+                            
+                            // Likes countni serverdan yangilash
                             updateLikesCount();
+
                         })
                         .catch(error => console.error('Error:', error));
                 });
@@ -551,11 +579,17 @@
                             if (data.status == 'added') {
                                 this.classList.add('cart-active');
                                 this.innerHTML = '<i class="fas fa-shopping-cart"></i>';
-
+                                showNotification('Mahsulot savatga qo\'shildi!', 'success');
+                                updateCartCount();
+                            } else if (data.status == 'removed') {
+                                this.classList.remove('cart-active');
+                                this.innerHTML = '<i class="fas fa-cart-plus"></i>';
+                                showNotification('Mahsulot savatdan o\'chirildi!', 'info');
                                 updateCartCount();
                             } else {
                                 this.classList.remove('cart-active');
                                 this.innerHTML = '<i class="fas fa-cart-plus"></i>';
+                                updateCartCount();
                             }
                         })
                         .catch(error => console.error('Error:', error));
@@ -568,7 +602,6 @@
 
         function updateCartCount() {
             const cart_count = document.querySelector('#cart_count');
-            const main_header_cart_count = document.querySelector('.main-header__cart__count');
 
             fetch('/api/cart/count/', {
                 method: 'GET',
@@ -578,19 +611,16 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    // Barcha cart count elementlarini yangilash
+                    // Faqat cart count elementlarini yangilash
                     if (cart_count) {
                         cart_count.textContent = data.cart_count;
                     }
-                    if (main_header_cart_count) {
-                        main_header_cart_count.textContent = data.cart_count;
-                    }
 
-                    // Header dagi cart count ni ham yangilash
-                    const headerCartCount = document.querySelector('.main-header__cart__count');
-                    if (headerCartCount) {
-                        headerCartCount.textContent = data.cart_count;
-                    }
+                    // Boshqa cart count elementlarini ham yangilash
+                    const allCartCounts = document.querySelectorAll('#cart_count');
+                    allCartCounts.forEach(element => {
+                        element.textContent = data.cart_count;
+                    });
                 })
                 .catch(error => console.error('Error fetching cart count:', error));
         }
@@ -602,22 +632,133 @@
 
 
     <script>
+        // Log collector for debugging
+        window.debugLogs = [];
+        const originalConsoleLog = console.log;
+        console.log = function(...args) {
+            window.debugLogs.push({
+                time: new Date().toLocaleTimeString(),
+                message: args.join(' ')
+            });
+            originalConsoleLog.apply(console, args);
+        };
+        
         function updateLikesCount() {
-            const likes_count = document.querySelector('#likes_count');
+            console.log('updateLikesCount called at:', new Date().toLocaleTimeString()); // Debug log
+            
+            // Barcha mumkin bo'lgan likes count elementlarini topish
+            const likesCountSelectors = [
+                '#likes_count',
+                '.main-header__likes__count',
+                '[class*="likes"][class*="count"]',
+                'span[id*="likes"]',
+                '*[data-likes-count]'
+            ];
+            
+            let likesCountElements = [];
+            likesCountSelectors.forEach(selector => {
+                const elements = document.querySelectorAll(selector);
+                elements.forEach(el => {
+                    if (!likesCountElements.includes(el)) {
+                        likesCountElements.push(el);
+                    }
+                });
+            });
+            
+            console.log('Found likes count elements:', likesCountElements.length, likesCountElements); // Debug log
+            
             fetch('/api/likes/count/', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 }
             })
-                .then(response => response.json())
+                .then(response => {
+                    console.log('Likes count API response status:', response.status); // Debug log
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
                 .then(data => {
-                    if (likes_count) {
-                        likes_count.textContent = data.likes_count;
+                    console.log('Likes count API data:', data); // Debug log
+                    
+                    // Total likes count ni aniqlash
+                    const displayCount = data.total_likes_count !== undefined ? data.total_likes_count : 
+                                       data.likes_count !== undefined ? data.likes_count : 0;
+                    
+                    console.log('Display count will be:', displayCount); // Debug log
+                    
+                    // Barcha likes count elementlarini yangilash
+                    likesCountElements.forEach((element, index) => {
+                        if (element) {
+                            const oldValue = element.textContent;
+                            
+                            // Bir necha usul bilan yangilash
+                            element.textContent = displayCount;
+                            element.innerHTML = displayCount;
+                            element.innerText = displayCount;
+                            
+                            // Attribute orqali ham yangilash
+                            element.setAttribute('data-count', displayCount);
+                            
+                            console.log(`Updated element ${index + 1} from "${oldValue}" to "${displayCount}"`); // Debug log
+                            
+                            // Visual feedback effect
+                            element.style.transition = 'all 0.4s ease';
+                            element.style.backgroundColor = '#28a745';
+                            element.style.color = 'white';
+                            element.style.transform = 'scale(1.15)';
+                            element.style.borderRadius = '50%';
+                            element.style.boxShadow = '0 0 15px rgba(40, 167, 69, 0.6)';
+                            
+                            // Reset styles after animation
+                            setTimeout(() => {
+                                element.style.backgroundColor = '';
+                                element.style.color = '';
+                                element.style.transform = '';
+                                element.style.borderRadius = '';
+                                element.style.boxShadow = '';
+                            }, 800);
+                            
+                            // Force DOM reflow
+                            element.offsetHeight;
+                        }
+                    });
+                    
+                    if (likesCountElements.length === 0) {
+                        console.warn('⚠️ No likes count elements found! Searching all elements...'); // Debug log
+                        // Barcha mumkin bo'lgan elementlarni qidirish
+                        const allElements = document.querySelectorAll('*');
+                        const possibleElements = Array.from(allElements).filter(el => 
+                            el.id && el.id.toLowerCase().includes('like') ||
+                            el.className && el.className.toLowerCase().includes('like') ||
+                            el.textContent && /^\d+$/.test(el.textContent.trim())
+                        );
+                        console.log('Possible likes elements:', possibleElements);
                     }
                 })
-                .catch(error => console.error('Error fetching likes count:', error));
+                .catch(error => {
+                    console.error('Error fetching likes count:', error);
+                });
         }
+        
+        // Debug function to show logs
+        function showDebugLogs() {
+            console.log('=== DEBUG LOGS ===');
+            window.debugLogs.forEach((log, index) => {
+                console.log(`${index + 1}. [${log.time}] ${log.message}`);
+            });
+            console.log('=== ELEMENT CHECK ===');
+            console.log('likes_count element:', document.querySelector('#likes_count'));
+            console.log('All like-related elements:', document.querySelectorAll('[id*="like"], [class*="like"]'));
+        }
+        
+        // Automatic debug after 3 seconds
+        setTimeout(() => {
+            console.log('=== AUTOMATIC DEBUG AFTER PAGE LOAD ===');
+            showDebugLogs();
+        }, 3000);
 
         document.addEventListener('DOMContentLoaded', function () {
             updateLikesCount();
@@ -864,10 +1005,10 @@
                 }
             });
 
-            // Cart count ni yangilash
-            const cartCountElements = document.querySelectorAll('.main-header__cart__count, .cart-count, #cart_count');
+            // Cart count ni yangilash - faqat cart count elementlarini tanlaymiz
+            const cartCountElements = document.querySelectorAll('#cart_count, .cart-count');
             cartCountElements.forEach(element => {
-                if (element) {
+                if (element && element.id !== 'likes_count') {
                     element.textContent = totalItems;
                 }
             });

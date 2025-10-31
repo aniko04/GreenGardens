@@ -116,7 +116,7 @@
 
 /* Animation for liked/added state */
 .product-action-btn.liked {
-    background: #ff4757 !important;
+    background: #2ed573 !important;
     color: white !important;
     border-color: #ff4757 !important;
 }
@@ -234,52 +234,7 @@
                         </div>
                         <div class="row gutter-y-30">
                             {% for product in products %}
-                            <div class="col-md-6 col-lg-4">
-                                <div class="product__item wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='000ms'>
-                                    <div class="product__item__img">
-                                        {% if product.main_image %}
-                                        <a href="{% url 'product_details' product.id %}"><img src="{{ product.main_image.url }}" alt="grdeen" style="width:290px; height:243px"></a>
-                                        {% else %}
-                                        <a href="{% url 'product_details' product.id %}"><img src="{% static 'assets/images/image404.png' %}" alt="grdeen" style="width:290px; height:243px"></a>
-                                        {% endif %}
-                                        <div class="product__item__label">
-                                            <span class="product__item__label__sale">{{ product.status }}   </span>
-                                        </div>
-                        <div class="product__item__label2 product__action-buttons" style="position: absolute;right: 15px; top: 15px; z-index: 1;">
-                            <div class="action-buttons-wrapper">
-                                <a href="" class="product-action-btn wishlist-btn like_product" data-id="{{product.id}}" title="Add to Wishlist">
-                                    <i class="icon-heart"></i>
-                                    <span class="btn-tooltip">Add to Wishlist</span>
-                                </a>
-                                <a href="" class="product-action-btn cart-btn cart_api cart-active" data-id="{{product.id}}" title="Add to Cart">
-                                    <i class="icon-shopping-cart"></i>
-                                    <span class="btn-tooltip">Add to Cart</span>
-                                </a>
-                            </div>
-                        </div>                                       
-                                        <!-- /.product-label -->
-
-                                    </div><!-- /.product-image -->
-                                    <div class="product__item__content-wrap">
-                                        <div class="product__item__btn">
-                                            <a href="{% url 'cart' %}" class="grdeen-btn"><span>Buy Now</span></a>
-                                        </div>
-                                        <div class="product__item__content">
-                                            <h4 class="product__item__title"><a href="{% url 'product_details' product.id %}">{{ product.name }}</a></h4><!-- /.product-title -->
-                                            <div class="product__item__price">
-                                                <span class="product__item__price__regular">{{ product.price }}</span>
-                                                {% if product.old_price %}
-                                                <span class="product__item__price__offer">{{ product.old_price }}</span>
-                                                {% endif %}
-                                            </div><!-- /.product-price -->
-                                            
-                                            <div class="product__item__views" style="margin-top: 8px; color: #666; font-size: 13px;">
-                                                <i class="fa fa-eye" style="margin-right: 5px;"></i>{{ product.views }} views
-                                            </div><!-- /.product-views -->
-                                        </div><!-- /.product-content -->
-                                    </div>
-                                </div><!-- /.product-item -->
-                            </div><!-- /.col-md-6 col-lg-4 -->
+                                {% include 'includes/product_card.html' %}
                             {% endfor %}
                         </div><!-- /.row -->
                         
@@ -360,107 +315,11 @@
             window.location.href = currentUrl.toString();
         }
 
-        // Enhanced button functionality
+        // Enhanced button functionality - base.html dagi API ishlatiladi
         document.addEventListener('DOMContentLoaded', function() {
-            // Wishlist button functionality
-            document.querySelectorAll('.like_product').forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const productId = this.dataset.id;
-                    const btn = this;
-                    
-                    // Add pulse animation
-                    btn.classList.add('pulse');
-                    setTimeout(() => btn.classList.remove('pulse'), 300);
-                    
-                    // Toggle liked state
-                    if (btn.classList.contains('liked')) {
-                        btn.classList.remove('liked');
-                        showNotification('Removed from wishlist', 'info');
-                    } else {
-                        btn.classList.add('liked');
-                        showNotification('Added to wishlist!', 'success');
-                    }
-                    
-                    // Here you can add AJAX call to your backend
-                    // Example: addToWishlist(productId);
-                });
-            });
-
-            // Cart button functionality
-            document.querySelectorAll('.cart_api').forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const productId = this.dataset.id;
-                    const btn = this;
-                    
-                    // Add pulse animation
-                    btn.classList.add('pulse');
-                    setTimeout(() => btn.classList.remove('pulse'), 300);
-                    
-                    // Add to cart visual feedback
-                    btn.classList.add('added-to-cart');
-                    showNotification('Added to cart!', 'success');
-                    
-                    // Remove the added state after 2 seconds
-                    setTimeout(() => {
-                        btn.classList.remove('added-to-cart');
-                    }, 2000);
-                    
-                    // Here you can add AJAX call to your backend
-                    // Example: addToCart(productId);
-                });
-            });
+            // Bu yerda qo'shimcha kod bo'lishi mumkin, lekin like/cart tugmachalari
+            // base.html da API orqali ishlaydi va updateLikesCount() chaqiriladi
+            console.log('Products page JavaScript loaded - likes/cart handled by base.html API');
         });
-
-        // Notification system
-        function showNotification(message, type = 'info') {
-            // Remove existing notifications
-            const existingNotifications = document.querySelectorAll('.toast-notification');
-            existingNotifications.forEach(notification => notification.remove());
-            
-            // Create notification element
-            const notification = document.createElement('div');
-            notification.className = `toast-notification toast-${type}`;
-            notification.innerHTML = `
-                <div class="toast-content">
-                    <i class="fa fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
-                    <span>${message}</span>
-                </div>
-            `;
-            
-            // Add styles
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: ${type === 'success' ? '#2ed573' : '#3742fa'};
-                color: white;
-                padding: 15px 20px;
-                border-radius: 8px;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-                z-index: 10000;
-                opacity: 0;
-                transform: translateX(100%);
-                transition: all 0.3s ease;
-                font-size: 14px;
-                min-width: 250px;
-            `;
-            
-            document.body.appendChild(notification);
-            
-            // Show notification
-            setTimeout(() => {
-                notification.style.opacity = '1';
-                notification.style.transform = 'translateX(0)';
-            }, 100);
-            
-            // Hide notification after 3 seconds
-            setTimeout(() => {
-                notification.style.opacity = '0';
-                notification.style.transform = 'translateX(100%)';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
-        }
         </script>
     {% endblock %}

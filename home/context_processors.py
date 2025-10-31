@@ -26,9 +26,12 @@ def cart_context(request):
             'cart_items_total': cart_items.count()
         }
     else:
+        # Session-based cart for anonymous users
+        session_cart = request.session.get('cart', {})
+        cart_item_count = sum(int(quantity) for quantity in session_cart.values())
         return {
-            'cart_item_count': 0,
-            'cart_items_total': 0
+            'cart_item_count': cart_item_count,
+            'cart_items_total': len(session_cart)
         }
 
 def likes_context(request):
@@ -40,6 +43,8 @@ def likes_context(request):
             'likes_count': likes_count
         }
     else:
+        # Session-based likes for anonymous users
+        session_likes = request.session.get('likes', [])
         return {
-            'likes_count': 0
+            'likes_count': len(session_likes)
         }

@@ -378,6 +378,10 @@ function removeFromCart(cartId) {
                 showNotification(data.message, 'success');
                 removeCartItemFromPage(cartId);
                 updateCartTotals(data.cart_total_items, data.cart_total_price);
+                // Cart count'ni yangilash
+                if (typeof updateCartCount === 'function') {
+                    updateCartCount();
+                }
             } else {
                 showNotification(data.message || 'Xatolik yuz berdi', 'error');
             }
@@ -411,6 +415,10 @@ function increaseQuantity(cartId) {
             showNotification(data.message, 'success');
             updateCartItemOnPage(cartId, data.item_quantity, data.item_total);
             updateCartTotals(data.cart_total_items, data.cart_total_price);
+            // Cart count'ni yangilash
+            if (typeof updateCartCount === 'function') {
+                updateCartCount();
+            }
         } else {
             showNotification(data.message || 'Xatolik yuz berdi', 'error');
         }
@@ -443,10 +451,18 @@ function decreaseQuantity(cartId) {
             showNotification(data.message, 'success');
             updateCartItemOnPage(cartId, data.item_quantity, data.item_total);
             updateCartTotals(data.cart_total_items, data.cart_total_price);
+            // Cart count'ni yangilash
+            if (typeof updateCartCount === 'function') {
+                updateCartCount();
+            }
         } else if (data.status === 'removed') {
             showNotification(data.message, 'info');
             removeCartItemFromPage(cartId);
             updateCartTotals(data.cart_total_items, data.cart_total_price);
+            // Cart count'ni yangilash
+            if (typeof updateCartCount === 'function') {
+                updateCartCount();
+            }
         } else {
             showNotification(data.message || 'Xatolik yuz berdi', 'error');
         }

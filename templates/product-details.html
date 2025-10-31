@@ -93,7 +93,7 @@
                             <div class="product-details__views" style="margin-top: 10px; margin-bottom: 15px; color: #666; font-size: 14px;">
                                 <i class="fa fa-eye" style="margin-right: 8px; color: #1a9120;"></i>{{ products.views }} views
                             </div>
-                                <a href="product-details.html">( 5 Customer Review )</a>
+                              
                             </div><!-- /.review-ratings -->
                             <div class="product-details__excerpt">
                                 {{ products.mini_description }}
@@ -168,60 +168,50 @@
         <section class="related-product">
             <div class="container">
                 <h3 class="related-product__title">Related Products</h3>
-                <div class="product-one__carousel grdeen-owl__carousel grdeen-owl__carousel--with-shadow grdeen-owl__carousel--basic-nav owl-carousel owl-theme" data-owl-options='{
-			"items": 1,
-			"margin": 30,
-			"loop": false,
-			"smartSpeed": 700,
-			"nav": false,
-			"navText": ["<span class=\"fa fa-angle-left\"></span>","<span class=\"fa fa-angle-right\"></span>"],
-			"dots": true,
-			"autoplay": false,
-			"responsive": {
-				"0": {
-					"items": 1
-				},
-				"768": {
-					"items": 2
-				},
-				"992": {
-					"items": 3
-				}
-			}
-		}'>
-        {% for product in allproducts %}
-                    <div class="item">
-                        <div class="product__item wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='000ms'>
-                            <div class="product__item__img">
-                                {% if product.main_image %}
-                                <img src="{{ product.main_image.url }}" alt="{{ product.name }}" style="width:290px; height:243px">
-                                {% else %}
-                                <img src="{% static 'assets/images/image404.png' %}" alt="{{ product.name }}" style="width:290px; height:243px">
+                <div class="row gutter-y-30">
+                {% for product in allproducts %}
+                 {% include 'includes/product_card.html' %}
+                {% endfor %}
+            </div>
+            
+            <!-- Pagination Start -->
+            {% if page_obj.has_other_pages %}
+            <div class="row">
+                <div class="col-12">
+                    <div class="pagination-wrapper text-center">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo; Previous</a>
+                                </li>
                                 {% endif %}
-
-                                <div class="product__item__label">
-                                    <span class="product__item__label__sale">Sale</span>
-                                </div><!-- /.product-label -->
-
-                            </div><!-- /.product-image -->
-                            <div class="product__item__content-wrap">
-                                <div class="product__item__btn">
-                                    <a href="cart.html" class="grdeen-btn"><span>Buy Now</span></a>
-                                </div>
-                                <div class="product__item__content">
-                                    <h4 class="product__item__title"><a href="{% url 'product_details' product.id %}">{{ product.name }}</a></h4><!-- /.product-title -->
-                                    <div class="product__item__price">
-                                        <span class="product__item__price__regular">{{ product.price }}</span>
-                                        <span class="product__item__price__offer">{{ product.old_price }}</span>
-
-                                    </div><!-- /.product-price -->
-                                    
-                                </div><!-- /.product-content -->
-                            </div>
-                        </div><!-- /.product-item -->
-                    </div><!-- /.item -->
-                   {% endfor %}
-                </div><!-- /.row -->
+                                
+                                {% for num in page_obj.paginator.page_range %}
+                                    {% if page_obj.number == num %}
+                                    <li class="page-item active">
+                                        <span class="page-link">{{ num }}</span>
+                                    </li>
+                                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                    </li>
+                                    {% endif %}
+                                {% endfor %}
+                                
+                                {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next &raquo;</a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <!-- Pagination End -->
+            
             </div>
         </section>
         <!-- Related Products End -->

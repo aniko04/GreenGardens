@@ -339,6 +339,11 @@
                 if (showingText) {
                     showingText.textContent = `Showing 1-${remainingProducts} of ${remainingProducts} liked products`;
                 }
+                
+                // Header dagi likes counter'ni ham yangilash
+                if (typeof updateLikesCount === 'function') {
+                    updateLikesCount();
+                }
             }
 
             function checkIfWishlistEmpty() {

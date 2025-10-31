@@ -4,64 +4,161 @@ from django.shortcuts import get_object_or_404
 from .models import Cart, Like, Product
 
 def user_product_like_api(request, product_id):
-    if request.user.is_authenticated:
-        try:
-            p = Product.objects.get(id=product_id, is_active=True)
+    try:
+        p = Product.objects.get(id=product_id, is_active=True)
+        
+        if request.user.is_authenticated:
             result = Like.objects.filter(user=request.user, product=p).exists()
-            return JsonResponse({'liked': result}, safe=False)
-        except Product.DoesNotExist:
-            return JsonResponse({'liked': False, 'error': 'Product not found'}, safe=False)
-    return JsonResponse({'liked': False}, safe=False)
+        else:
+            # Session-based like check for anonymous users
+            session_likes = request.session.get('likes', [])
+            result = int(product_id) in session_likes
+        
+        return JsonResponse({'liked': result}, safe=False)
+    except Product.DoesNotExist:
+        return JsonResponse({'liked': False, 'error': 'Product not found'}, safe=False)
 
 def user_like_add_api(request, product_id):
-    if request.user.is_authenticated and request.method == 'POST':
+    if request.method == 'POST':
         try:
             p = Product.objects.get(id=product_id, is_active=True)
-            like, created = Like.objects.get_or_create(user=request.user, product=p)
-            if created:
-                return JsonResponse({'status': 'liked'}, safe=False)
+            
+            if request.user.is_authenticated:
+                # Authenticated user - database like
+                like, created = Like.objects.get_or_create(user=request.user, product=p)
+                if created:
+                    user_likes_count = Like.objects.filter(user=request.user).count()
+                    print(f"DEBUG: User {request.user.id} LIKED product {product_id}. User likes count: {user_likes_count}")
+                    return JsonResponse({
+                        'status': 'liked', 
+                        'message': 'Mahsulot likega qo\'shildi!',
+                        'total_likes': user_likes_count
+                    }, safe=False)
+                else:
+                    like.delete()
+                    user_likes_count = Like.objects.filter(user=request.user).count()
+                    print(f"DEBUG: User {request.user.id} UNLIKED product {product_id}. User likes count: {user_likes_count}")
+                    return JsonResponse({
+                        'status': 'unliked', 
+                        'message': 'Mahsulot likedan o\'chirildi!',
+                        'total_likes': user_likes_count
+                    }, safe=False)
             else:
-                like.delete()
-                return JsonResponse({'status': 'unliked'}, safe=False)
+                # Anonymous user - session-based like
+                session_likes = request.session.get('likes', [])
+                product_id_int = int(product_id)
+                
+                if product_id_int in session_likes:
+                    # Unlike - remove from session
+                    session_likes.remove(product_id_int)
+                    request.session['likes'] = session_likes
+                    request.session.modified = True
+                    print(f"DEBUG: Anonymous user UNLIKED product {product_id}. Session likes count: {len(session_likes)}")
+                    return JsonResponse({
+                        'status': 'unliked',
+                        'message': 'Mahsulot likedan o\'chirildi!',
+                        'total_likes': len(session_likes)
+                    }, safe=False)
+                else:
+                    # Like - add to session
+                    session_likes.append(product_id_int)
+                    request.session['likes'] = session_likes
+                    request.session.modified = True
+                    print(f"DEBUG: Anonymous user LIKED product {product_id}. Session likes count: {len(session_likes)}")
+                    return JsonResponse({
+                        'status': 'liked',
+                        'message': 'Mahsulot likega qo\'shildi!',
+                        'total_likes': len(session_likes)
+                    }, safe=False)
+                    
         except Product.DoesNotExist:
             return JsonResponse({'status': 'error', 'message': 'Product not found'}, safe=False)
-    return JsonResponse({'status': 'unauthenticated'}, safe=False)
+    return JsonResponse({'status': 'error', 'message': 'POST method required'}, safe=False)
 
 def cart_api(request, product_id):
-    if request.user.is_authenticated:
-        try:
-            p = Product.objects.get(id=product_id, is_active=True)
+    try:
+        p = Product.objects.get(id=product_id, is_active=True)
+        
+        if request.user.is_authenticated:
             result = Cart.objects.filter(user=request.user, product=p).exists()
-            return JsonResponse({'added': result}, safe=False)
-        except Product.DoesNotExist:
-            return JsonResponse({'added': False, 'error': 'Product not found'}, safe=False)
-    return JsonResponse({'added': 'false'}, safe=False)
+        else:
+            # Session-based cart check for anonymous users
+            session_cart = request.session.get('cart', {})
+            result = str(product_id) in session_cart
+        
+        return JsonResponse({'added': result}, safe=False)
+    except Product.DoesNotExist:
+        return JsonResponse({'added': False, 'error': 'Product not found'}, safe=False)
 
 def add_to_cart_api(request, product_id):
-    if request.user.is_authenticated and request.method == 'POST':
+    if request.method == 'POST':
         try:
             p = Product.objects.get(id=product_id, is_active=True)
-            cart_item, created = Cart.objects.get_or_create(user=request.user, product=p)
-            if created:
-                return JsonResponse({'status': 'added', 'cart_item_id': cart_item.id}, safe=False)
+            
+            if request.user.is_authenticated:
+                # Authenticated user - database cart
+                cart_item, created = Cart.objects.get_or_create(user=request.user, product=p)
+                if created:
+                    return JsonResponse({'status': 'added', 'cart_item_id': cart_item.id}, safe=False)
+                else:
+                    cart_item.delete()
+                    return JsonResponse({'status': 'removed'}, safe=False)
             else:
-                cart_item.delete()
-                return JsonResponse({'status': 'removed'}, safe=False)
+                # Anonymous user - session-based cart
+                session_cart = request.session.get('cart', {})
+                product_id_str = str(product_id)
+                
+                if product_id_str in session_cart:
+                    # Remove from cart
+                    del session_cart[product_id_str]
+                    request.session['cart'] = session_cart
+                    request.session.modified = True
+                    print(f"DEBUG: Anonymous user REMOVED product {product_id} from cart. Session cart count: {len(session_cart)}")
+                    return JsonResponse({'status': 'removed'}, safe=False)
+                else:
+                    # Add to cart with quantity 1
+                    session_cart[product_id_str] = 1
+                    request.session['cart'] = session_cart
+                    request.session.modified = True
+                    print(f"DEBUG: Anonymous user ADDED product {product_id} to cart. Session cart count: {len(session_cart)}")
+                    return JsonResponse({'status': 'added'}, safe=False)
+                    
         except Product.DoesNotExist:
             return JsonResponse({'status': 'error', 'message': 'Product not found'}, safe=False)
-    return JsonResponse({'status': 'unauthenticated'}, safe=False)
+    return JsonResponse({'status': 'error', 'message': 'POST method required'}, safe=False)
 
 def cart_count_api(request):
     if request.user.is_authenticated:
-        count = Cart.objects.filter(user=request.user).count()
-        return JsonResponse({'cart_count': count}, safe=False)
-    return JsonResponse({'cart_count': 0}, safe=False)
+        cart_items = Cart.objects.filter(user=request.user)
+        # Barcha mahsulotlar miqdorini hisoblaymiz
+        total_quantity = sum(item.quantity for item in cart_items)
+        return JsonResponse({'cart_count': total_quantity}, safe=False)
+    else:
+        # Session-based cart for anonymous users
+        session_cart = request.session.get('cart', {})
+        total_quantity = sum(int(quantity) for quantity in session_cart.values())
+        return JsonResponse({'cart_count': total_quantity}, safe=False)
 
 def likes_count_api(request):
     if request.user.is_authenticated:
-        count = Like.objects.filter(user=request.user).count()
-        return JsonResponse({'likes_count': count}, safe=False)
-    return JsonResponse({'likes_count': 0}, safe=False)
+        # Current user ning likes soni
+        user_likes_count = Like.objects.filter(user=request.user).count()
+        # Barcha likes soni (header uchun)
+        total_likes_count = Like.objects.all().count()
+        print(f"DEBUG: User {request.user.id} likes: {user_likes_count}, Total likes: {total_likes_count}")
+        return JsonResponse({
+            'likes_count': user_likes_count,
+            'total_likes_count': total_likes_count
+        }, safe=False)
+    else:
+        # Session-based likes for anonymous users
+        session_likes = request.session.get('likes', [])
+        likes_count = len(session_likes)
+        print(f"DEBUG: Anonymous user session likes: {likes_count}")
+        return JsonResponse({
+            'likes_count': likes_count,
+            'total_likes_count': likes_count
+        }, safe=False)
 
 # CART MANAGEMENT API'LAR
 
