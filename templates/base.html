@@ -57,6 +57,32 @@
             .goog-te-gadget {
                 font-size: 0;
             }
+            
+            /* Consistent main menu colors - fix for home page menu color issue */
+            .main-header--three .main-menu .main-menu__list > li > a,
+            .main-menu .main-menu__list > li > a {
+                color: var(--grdeen-white, #fff) !important;
+                text-shadow: none !important;
+            }
+            
+            /* Only show different color on actual hover or when truly current page */
+            .main-header--three .main-menu .main-menu__list > li:hover > a,
+            .main-menu .main-menu__list > li:hover > a {
+                color: var(--grdeen-black, #172000) !important;
+                text-shadow: 0 0 0.5px var(--grdeen-black, #172000) !important;
+            }
+            
+            /* Remove current class styling from all menu items on home page */
+            body .main-menu .main-menu__list > li.current > a {
+                color: var(--grdeen-white, #fff) !important;
+                text-shadow: none !important;
+            }
+            
+            /* Only apply current styling when actually hovering */
+            body .main-menu .main-menu__list > li.current:hover > a {
+                color: var(--grdeen-black, #172000) !important;
+                text-shadow: 0 0 0.5px var(--grdeen-black, #172000) !important;
+            }
         </style>
 </head>
 
@@ -90,7 +116,7 @@
                     <div class="topbar-one__right">
                         {% if user.is_authenticated %}
                         <div class="user-menu-dropdown dropdown">
-                            <a href="#" class="grdeen-btn main-header__btn dropdown-toggle" data-bs-toggle="dropdown"
+                            <a href="" class="grdeen-btn main-header__btn dropdown-toggle" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                                 <i class="fas fa-user me-2"></i>
                                 <span>{{ user.email|default:user.username }}</span>
@@ -141,30 +167,24 @@
 
                     <nav class="main-header__nav main-menu">
                         <ul class="main-menu__list">
-
-
-
-
-
-                            <li class="dropdown">
+                            <li {% if request.resolver_match.url_name == 'services' or request.resolver_match.url_name == 'service_details' %}class="current"{% endif %}>
                                 <a href="{% url 'services' %}">Services</a>
                             </li>
-                            <li>
+                            <li {% if request.resolver_match.url_name == 'about' %}class="current"{% endif %}>
                                 <a href="{% url 'about' %}">About</a>
                             </li>
-                            <li class="dropdown">
+                            <li {% if request.resolver_match.url_name == 'projects' or request.resolver_match.url_name == 'project_details' %}class="current"{% endif %}>
                                 <a href="{% url 'projects' %}">Projects</a>
                             </li>
-                            <li class="dropdown">
-                                <a href="#">Pages</a>
+                            <li class="dropdown {% if request.resolver_match.url_name == 'team' or request.resolver_match.url_name == 'team_details' or request.resolver_match.url_name == 'faq' %}current{% endif %}">
+                                <a href="">Pages</a>
                                 <ul>
                                     <li><a href="{% url 'team' %}">Our team</a></li>
                                     <li><a href="{% url 'faq' %}">FAQs</a></li>
-
                                 </ul>
                             </li>
-                            <li class="dropdown">
-                                <a href="#">Shop</a>
+                            <li class="dropdown {% if request.resolver_match.url_name == 'products' or request.resolver_match.url_name == 'product_details' or request.resolver_match.url_name == 'cart' or request.resolver_match.url_name == 'my_likes' or request.resolver_match.url_name == 'checkout' %}current{% endif %}">
+                                <a href="">Shop</a>
                                 <ul class="sub-menu">
                                     <li class="dropdown">
                                         <a href="{% url 'products' %}">Products</a>
@@ -174,11 +194,11 @@
                                     <li><a href="{% url 'checkout' %}">Checkout</a></li>
                                 </ul>
                             </li>
-                            <li class="dropdown">
+                            <li {% if request.resolver_match.url_name == 'blog' or request.resolver_match.url_name == 'blog_details' %}class="current"{% endif %}>
                                 <a href="{% url 'blog' %}">Blog</a>
                                
                             </li>
-                            <li>
+                            <li {% if request.resolver_match.url_name == 'contact' %}class="current"{% endif %}>
                                 <a href="{% url 'contact' %}">Contact</a>
                             </li>
                         </ul>
@@ -190,7 +210,7 @@
                             <span></span>
                         </div><!-- /.mobile-nav__toggler -->
 
-                        <a href="#" class="search-toggler main-header__search">
+                        <a href="" class="search-toggler main-header__search">
                             <div class="main-header__search__icon">
                                 <i class="icon-search" aria-hidden="true"></i>
                             </div>
@@ -379,11 +399,11 @@
             <ul class="mobile-nav__contact list-unstyled">
                 <li>
                     <i class="fa fa-envelope"></i>
-                    <a href="mailto:needhelp@grdeen.com">needhelp@grdeen.com</a>
+                    <a href="mailto:{{ info.contact_email }}">{{ info.contact_email }}</a>
                 </li>
                 <li>
                     <i class="fa fa-phone-alt"></i>
-                    <a href="tel:666-888-0000">666 888 0000</a>
+                    <a href="tel:{{ info.phone_number }}">{{ info.phone_number }}</a>
                 </li>
             </ul><!-- /.mobile-nav__contact -->
             <div class="mobile-nav__social">
@@ -415,7 +435,7 @@
     </div>
     <!-- /.search-popup -->
 
-    <a href="#" data-target="html" class="scroll-to-target scroll-to-top">
+    <a href="" data-target="html" class="scroll-to-target scroll-to-top">
         <span class="scroll-to-top__text">back top</span>
         <span class="scroll-to-top__wrapper"><span class="scroll-to-top__inner"></span></span>
     </a>
