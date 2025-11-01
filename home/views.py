@@ -198,7 +198,13 @@ def products(request):
 
 def product_details(request, id):
     products = get_object_or_404(Product, id=id, is_active=True)
-    item = Cart.objects.filter(product=products, user=request.user).first()
+    
+    # Check if user is authenticated before querying Cart
+    if request.user.is_authenticated:
+        item = Cart.objects.filter(product=products, user=request.user).first()
+    else:
+        item = None
+    
     print("=================================")
     if item:
         print(item.quantity)
@@ -394,13 +400,52 @@ def cart(request):
         
         return render(request, 'cart.html', context)
     else:
-        # Foydalanuvchi login qilmagan bo'lsa, bo'sh cart ko'rsatish
+        # Foydalanuvchi login qilmagan bo'lsa, sessiondan cart ma'lumotlarini olish
+        session_cart = request.session.get('cart', {})
+        
+        # Session cart ma'lumotlarini qayta ishlash
+        cart_items = []
+        subtotal = 0
+        
+        if session_cart:
+            for product_id, item_data in session_cart.items():
+                try:
+                    product = Product.objects.get(id=product_id, is_active=True)
+                    
+                    # Eski format (int) va yangi format (dict) ni qo'llab-quvvatlash
+                    if isinstance(item_data, dict):
+                        quantity = item_data.get('quantity', 1)
+                    else:
+                        # Eski format - oddiy integer
+                        quantity = item_data
+                    
+                    total_price = product.price * quantity
+                    
+                    # Cart item uchun ma'lumotlar
+                    cart_item = {
+                        'id': product_id,  # Session uchun product_id ishlatamiz
+                        'product': product,
+                        'quantity': quantity,
+                        'total_price': total_price
+                    }
+                    cart_items.append(cart_item)
+                    subtotal += total_price
+                except Product.DoesNotExist:
+                    continue
+        
+        # Yetkazib berish narxi
+        shipping = 20 if cart_items else 0
+        
+        # Umumiy narx
+        total = subtotal + shipping
+        
         context = {
-            'cart_items': None,
-            'subtotal': 0,
-            'shipping': 20,
-            'total': 20,
-            'items_count': 0
+            'cart_items': cart_items,
+            'subtotal': subtotal,
+            'shipping': shipping,
+            'total': total,
+            'items_count': len(cart_items),
+            'session_cart': session_cart
         }
         return render(request, 'cart.html', context)
 
@@ -426,13 +471,35 @@ def my_likes(request):
         
         return render(request, 'my-likes.html', context)
     else:
-        # Foydalanuvchi login qilmagan bo'lsa, login sahifasiga yo'naltirish yoki bo'sh sahifa ko'rsatish
-        messages.warning(request, "Yoqtirgan mahsulotlaringizni ko'rish uchun tizimga kiring!")
-        context = {
-            'liked_products': None,
-            'page_obj': None,
-            'likes_count': 0
-        }
+        # Foydalanuvchi login qilmagan bo'lsa, sessiondan like qilingan mahsulotlarni olish
+        session_likes = request.session.get('likes', [])
+        
+        # Session like IDs orqali mahsulotlarni olish
+        if session_likes:
+            liked_products = Product.objects.filter(
+                id__in=session_likes,
+                is_active=True
+            )
+            
+            # Pagination qo'shish
+            paginator = Paginator(liked_products, 12)  # Har sahifada 12 ta mahsulot
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
+            
+            context = {
+                'liked_products': page_obj,
+                'page_obj': page_obj,
+                'likes_count': liked_products.count(),
+                'session_likes': session_likes
+            }
+        else:
+            context = {
+                'liked_products': None,
+                'page_obj': None,
+                'likes_count': 0,
+                'session_likes': []
+            }
+        
         return render(request, 'my-likes.html', context)
     
 def faq(request):
@@ -508,7 +575,55 @@ def login_view(request):
         # Username va password bilan authenticate qilish
         user = authenticate(request, username=username, password=password)
         if user is not None:
+            # Session-dagi likes va cart ma'lumotlarini saqlash
+            session_likes = request.session.get('likes', [])
+            session_cart = request.session.get('cart', {})
+            
+            # Login qilish
             login(request, user)
+            
+            # Session-dagi likesni database-ga ko'chirish
+            if session_likes:
+                for product_id in session_likes:
+                    try:
+                        product = Product.objects.get(id=product_id)
+                        # Agar allaqachon like qilmagan bo'lsa, qo'shish
+                        Like.objects.get_or_create(user=user, product=product)
+                    except Product.DoesNotExist:
+                        continue
+                
+                # Session-dagi likesni tozalash
+                request.session['likes'] = []
+                request.session.modified = True
+            
+            # Session-dagi cartni database-ga ko'chirish
+            if session_cart:
+                for product_id, item_data in session_cart.items():
+                    try:
+                        product = Product.objects.get(id=product_id)
+                        # Quantity ni aniqlash (eski va yangi formatni qo'llab-quvvatlash)
+                        if isinstance(item_data, dict):
+                            quantity = item_data.get('quantity', 1)
+                        else:
+                            quantity = item_data
+                        
+                        # Agar allaqachon cartda bo'lsa, miqdorni qo'shish, yo'qsa yangi qo'shish
+                        cart_item, created = Cart.objects.get_or_create(
+                            user=user,
+                            product=product,
+                            defaults={'quantity': quantity}
+                        )
+                        if not created:
+                            # Agar mavjud bo'lsa, miqdorni qo'shish
+                            cart_item.quantity += quantity
+                            cart_item.save()
+                    except Product.DoesNotExist:
+                        continue
+                
+                # Session-dagi cartni tozalash
+                request.session['cart'] = {}
+                request.session.modified = True
+            
             messages.success(request, f"Welcome back, {user.username}!")
             return redirect('home')  # tizimga kirgandan so'ng bosh sahifaga yo'naltirish
         else:

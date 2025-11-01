@@ -48,85 +48,86 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-        <style>
-            .goog-logo-link,
-            .goog-te-gadget span {
-                display: none !important;
-            }
-            .goog-te-gadget {
-                font-size: 0;
-            }
-            
-            /* Consistent main menu colors - fix for home page menu color issue */
-            .main-header--three .main-menu .main-menu__list > li > a,
-            .main-menu .main-menu__list > li > a {
-                color: var(--grdeen-white, #fff) !important;
-                text-shadow: none !important;
-            }
-            
-            /* Only show different color on actual hover or when truly current page */
-            .main-header--three .main-menu .main-menu__list > li:hover > a,
-            .main-menu .main-menu__list > li:hover > a {
-                color: var(--grdeen-black, #172000) !important;
-                text-shadow: 0 0 0.5px var(--grdeen-black, #172000) !important;
-            }
-            
-            /* Remove current class styling from all menu items on home page */
-            body .main-menu .main-menu__list > li.current > a {
-                color: var(--grdeen-white, #fff) !important;
-                text-shadow: none !important;
-            }
-            
-            /* Only apply current styling when actually hovering */
-            body .main-menu .main-menu__list > li.current:hover > a {
-                color: var(--grdeen-black, #172000) !important;
-                text-shadow: 0 0 0.5px var(--grdeen-black, #172000) !important;
-            }
 
-            /*Translation CSS*/
-            /* Hide the outer container of the Google Translate toolbar */
-            .goog-te-banner-frame.skiptranslate {
-                display: none !important;
-                visibility: hidden !important;
-                height: 0 !important;
-            }
+    <style>
+        .goog-logo-link,
+        .goog-te-gadget span {
+            display: none !important;
+        }
 
-            #custom_translate_buttons {
-                position: relative;
-                z-index: 1000;
-                padding: 10px 0;
-                text-align: center;
-                display: flex;
-                gap: 5px;
-                align-items: center;
-            }
+        .goog-te-gadget {
+            font-size: 0;
+        }
 
-            #custom_translate_buttons button {
-                padding: 5px 15px;
-                margin: 0 5px;
-                border: none;
-                border-radius: 10px;
-                font-family: var(--montserrat);
-                background-color: #c69009;
-                color: #000;
-                cursor: pointer;
-                font-size: 12px;
-                font-weight: 600;
-                transition: all 0.3s ease;
-            }
+        /* Consistent main menu colors - fix for home page menu color issue */
+        .main-header--three .main-menu .main-menu__list>li>a,
+        .main-menu .main-menu__list>li>a {
+            color: var(--grdeen-white, #fff) !important;
+            text-shadow: none !important;
+        }
 
-            #custom_translate_buttons button:hover {
-                background-color: #45a049;
-                transform: translateY(-2px);
-                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            }
+        /* Only show different color on actual hover or when truly current page */
+        .main-header--three .main-menu .main-menu__list>li:hover>a,
+        .main-menu .main-menu__list>li:hover>a {
+            color: var(--grdeen-black, #172000) !important;
+            text-shadow: 0 0 0.5px var(--grdeen-black, #172000) !important;
+        }
 
-            /* Adjust the body top margin */
-            body {
-                top: 0px !important;
-            }
-        </style>
+        /* Remove current class styling from all menu items on home page */
+        body .main-menu .main-menu__list>li.current>a {
+            color: var(--grdeen-white, #fff) !important;
+            text-shadow: none !important;
+        }
+
+        /* Only apply current styling when actually hovering */
+        body .main-menu .main-menu__list>li.current:hover>a {
+            color: var(--grdeen-black, #172000) !important;
+            text-shadow: 0 0 0.5px var(--grdeen-black, #172000) !important;
+        }
+
+        /*Translation CSS*/
+        /* Hide the outer container of the Google Translate toolbar */
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+        }
+
+        #custom_translate_buttons {
+            position: relative;
+            z-index: 1000;
+            padding: 10px 0;
+            text-align: center;
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        #custom_translate_buttons button {
+            padding: 5px 15px;
+            margin: 0 5px;
+            border: none;
+            border-radius: 10px;
+            font-family: var(--montserrat);
+            background-color: #c69009;
+            color: #000;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        #custom_translate_buttons button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Adjust the body top margin */
+        body {
+            top: 0px !important;
+        }
+    </style>
 </head>
 
 <body class="custom-cursor">
@@ -185,7 +186,7 @@
                             <li><a href="{% url 'team' %}">Career</a></li>
                             <li><a href="{% url 'about' %}">Office</a></li>
                         </ul>
-                        
+
                         <!-- Custom Translate Buttons -->
                         <div id="custom_translate_buttons">
                             <button class="notranslate" onclick="translateTo('uz')">O'zbekcha</button>
@@ -208,7 +209,7 @@
         <header class="main-header main-header--three sticky-header sticky-header--normal">
             <div class="container-fluid">
                 <div class="main-header__inner">
-                    
+
                     <div class="main-header__logo">
                         <a href="{% url 'home' %}">
                             <img src="{% static 'assets/images/logo-dark.png' %}" alt="Grdeen HTML">
@@ -217,24 +218,26 @@
 
                     <nav class="main-header__nav main-menu">
                         <ul class="main-menu__list">
-                            <li {% if request.resolver_match.url_name == 'services' or request.resolver_match.url_name == 'service_details' %}class="current"{% endif %}>
+                            <li {% if request.resolver_match.url_name == 'services' or request.resolver_match.url_name == 'service_details' %}class="current" {% endif %}>
                                 <a href="{% url 'services' %}">Services</a>
                             </li>
-                            <li {% if request.resolver_match.url_name == 'about' %}class="current"{% endif %}>
+                            <li {% if request.resolver_match.url_name == 'about' %}class="current" {% endif %}>
                                 <a href="{% url 'about' %}">About</a>
                             </li>
-                            <li {% if request.resolver_match.url_name == 'projects' or request.resolver_match.url_name == 'project_details' %}class="current"{% endif %}>
+                            <li {% if request.resolver_match.url_name == 'projects' or request.resolver_match.url_name == 'project_details' %}class="current" {% endif %}>
                                 <a href="{% url 'projects' %}">Projects</a>
                             </li>
-                            <li class="dropdown {% if request.resolver_match.url_name == 'team' or request.resolver_match.url_name == 'team_details' or request.resolver_match.url_name == 'faq' %}current{% endif %}">
-                                <a href="">Pages</a>
+                            <li
+                                class="dropdown {% if request.resolver_match.url_name == 'team' or request.resolver_match.url_name == 'team_details' or request.resolver_match.url_name == 'faq' %}current{% endif %}">
+                                <a href="#" style="pointer-events: none;">Pages</a>
                                 <ul>
                                     <li><a href="{% url 'team' %}">Our team</a></li>
                                     <li><a href="{% url 'faq' %}">FAQs</a></li>
                                 </ul>
                             </li>
-                            <li class="dropdown {% if request.resolver_match.url_name == 'products' or request.resolver_match.url_name == 'product_details' or request.resolver_match.url_name == 'cart' or request.resolver_match.url_name == 'my_likes' or request.resolver_match.url_name == 'checkout' %}current{% endif %}">
-                                <a href="">Shop</a>
+                            <li
+                                class="dropdown {% if request.resolver_match.url_name == 'products' or request.resolver_match.url_name == 'product_details' or request.resolver_match.url_name == 'cart' or request.resolver_match.url_name == 'my_likes' or request.resolver_match.url_name == 'checkout' %}current{% endif %}">
+                                <a href="#" style="pointer-events: none;">Shop</a>
                                 <ul class="sub-menu">
                                     <li class="dropdown">
                                         <a href="{% url 'products' %}">Products</a>
@@ -244,11 +247,11 @@
                                     <li><a href="{% url 'checkout' %}">Checkout</a></li>
                                 </ul>
                             </li>
-                            <li {% if request.resolver_match.url_name == 'blog' or request.resolver_match.url_name == 'blog_details' %}class="current"{% endif %}>
+                            <li {% if request.resolver_match.url_name == 'blog' or request.resolver_match.url_name == 'blog_details' %}class="current" {% endif %}>
                                 <a href="{% url 'blog' %}">Blog</a>
-                               
+
                             </li>
-                            <li {% if request.resolver_match.url_name == 'contact' %}class="current"{% endif %}>
+                            <li {% if request.resolver_match.url_name == 'contact' %}class="current" {% endif %}>
                                 <a href="{% url 'contact' %}">Contact</a>
                             </li>
                         </ul>
@@ -290,8 +293,7 @@
                             </div>
                             <div class="main-header__helpline__phonewrap">
                                 <p class="main-header__helpline__text">Helpline</p>
-                                <a class="main-header__helpline__tel"
-                                    href="tel:{{ info.phone_number }}">{{ info.phone_number }}</a>
+                                <a class="main-header__helpline__tel" href="tel:{{ info.phone_number }}">{{ info.phone_number }}</a>
                             </div>
                         </div>
                     </div><!-- /.main-header__right -->
@@ -345,7 +347,7 @@
                                         alt="Agrofa HTML Template">
                                 </a>
                                 <p class="footer-widget__experience-text">{{ info.description }}</p>
-                          
+
                             </div><!-- /.footer-widget -->
                         </div><!-- /.col-md-6 -->
 
@@ -400,11 +402,12 @@
                                             <span class="footer-widget__post-date"><i class="far fa-calendar"></i>
                                                 <span> {{ post.publish_date|date:"d M Y" }}</span>
                                             </span>
-                                            <h6 class="footer-widget__post-heading"><a href="">{{ post.minititle|truncatechars:50 }}</a></h6>
+                                            <h6 class="footer-widget__post-heading"><a href="">{{
+                                                    post.minititle|truncatechars:50 }}</a></h6>
                                         </div>
                                     </div>
                                     {% endfor %}
-                                  
+
                                 </div>
 
                             </div><!-- /.footer-widget -->
@@ -416,12 +419,14 @@
             <div class="main-footer__bottom">
                 <div class="container">
                     <div class="main-footer__bottom__inner">
-                        <p class="main-footer__copyright"> &copy; <span class="dynamic-year"></span> {{ info.footer_text }}</p>
+                        <p class="main-footer__copyright"> &copy; <span class="dynamic-year"></span> {{ info.footer_text
+                            }}</p>
                         <div class="main-footer__social-row">
                             <p class="main-footer__social-row-text">Social</p>
                             <ul class="main-footer__social-list">
                                 {% for social in social_links %}
-                                <li><a href="{{ social.url }}" target="_blank">{{ social.icon|safe }}<span class="sr-only">{{ social.platform }}</span></a></li>
+                                <li><a href="{{ social.url }}" target="_blank">{{ social.icon|safe }}<span
+                                            class="sr-only">{{ social.platform }}</span></a></li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -463,7 +468,7 @@
                     <span class="sr-only">{{ social.platform }}</span>
                 </a>
                 {% endfor %}
-       
+
             </div><!-- /.mobile-nav__social -->
         </div>
         <!-- /.mobile-nav__content -->
@@ -485,7 +490,7 @@
     </div>
     <!-- /.search-popup -->
 
-    <a href="" data-target="html" class="scroll-to-target scroll-to-top">
+    <a href="#" data-target="html" class="scroll-to-target scroll-to-top">
         <span class="scroll-to-top__text">back top</span>
         <span class="scroll-to-top__wrapper"><span class="scroll-to-top__inner"></span></span>
     </a>
@@ -542,6 +547,7 @@
                 })
                     .then(response => response.json())
                     .then(data => {
+                        console.log(data.liked);
                         if (data.liked) {
                             a.innerHTML = '<i class="fas fa-heart"></i>';
                         } else {
@@ -565,37 +571,37 @@
                         .then(response => response.json())
                         .then(data => {
                             console.log('Like API response:', data); // Debug log
-                            
+
                             // Heart ikonni yangilash
                             let heartIcon = '<i class="far fa-heart"></i>';
-                            
+
                             // Server dan kelgan message ga qarab harakat qilish
                             if (data.message === 'Mahsulot likega qo\'shildi!' || data.status === 'liked') {
                                 // LIKE qo'shildi
                                 heartIcon = '<i class="fas fa-heart" style="color: #1a9120;"></i>';
                                 console.log(`✅ LIKED: ${data.message}`);
-                                
+
                             } else if (data.message === 'Mahsulot likedan o\'chirildi!' || data.status === 'unliked') {
                                 // LIKE o'chirildi
                                 heartIcon = '<i class="far fa-heart"></i>';
                                 console.log(`❌ UNLIKED: ${data.message}`);
-                                
+
                             } else if (data.status === 'error') {
                                 // Xatolik holati
                                 console.log(`🚫 ERROR: ${data.message}`);
                                 showNotification(data.message || 'Xatolik yuz berdi!', 'error');
                                 return; // Countni o'zgartirmaslik
-                                
+
                             } else {
                                 // Noma'lum holat
                                 console.log(`⚠️ UNKNOWN STATUS: ${data.status} | Message: ${data.message}`);
                                 showNotification(data.message || 'Noma\'lum holat', 'warning');
                                 return;
                             }
-                            
+
                             // Heart ikonni yangilash
                             this.innerHTML = heartIcon;
-                            
+
                             // Likes countni serverdan yangilash
                             updateLikesCount();
 
@@ -669,6 +675,42 @@
         });
     </script>
     <script>
+        // Buy Now button functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const buyNowButtons = document.querySelectorAll('.buy-now-btn');
+            buyNowButtons.forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const productId = this.getAttribute('data-id');
+
+                    // Add product to cart
+                    fetch(`/api/user/${productId}/cart/add`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({})
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status == 'added' || data.status == 'removed') {
+                                // Update cart count
+                                updateCartCount();
+                                // Redirect to cart page
+                                window.location.href = "{% url 'cart' %}";
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            // Even on error, redirect to cart page
+                            window.location.href = "{% url 'cart' %}";
+                        });
+                });
+            });
+        });
+    </script>
+    <script>
 
         function updateCartCount() {
             const cart_count = document.querySelector('#cart_count');
@@ -705,17 +747,17 @@
         // Log collector for debugging
         window.debugLogs = [];
         const originalConsoleLog = console.log;
-        console.log = function(...args) {
+        console.log = function (...args) {
             window.debugLogs.push({
                 time: new Date().toLocaleTimeString(),
                 message: args.join(' ')
             });
             originalConsoleLog.apply(console, args);
         };
-        
+
         function updateLikesCount() {
             console.log('updateLikesCount called at:', new Date().toLocaleTimeString()); // Debug log
-            
+
             // Barcha mumkin bo'lgan likes count elementlarini topish
             const likesCountSelectors = [
                 '#likes_count',
@@ -724,7 +766,7 @@
                 'span[id*="likes"]',
                 '*[data-likes-count]'
             ];
-            
+
             let likesCountElements = [];
             likesCountSelectors.forEach(selector => {
                 const elements = document.querySelectorAll(selector);
@@ -734,9 +776,9 @@
                     }
                 });
             });
-            
+
             console.log('Found likes count elements:', likesCountElements.length, likesCountElements); // Debug log
-            
+
             fetch('/api/likes/count/', {
                 method: 'GET',
                 headers: {
@@ -752,28 +794,27 @@
                 })
                 .then(data => {
                     console.log('Likes count API data:', data); // Debug log
-                    
-                    // Total likes count ni aniqlash
-                    const displayCount = data.total_likes_count !== undefined ? data.total_likes_count : 
-                                       data.likes_count !== undefined ? data.likes_count : 0;
-                    
+
+                    // Foydalanuvchining o'z likes count ini olish
+                    const displayCount = data.likes_count !== undefined ? data.likes_count : 0;
+
                     console.log('Display count will be:', displayCount); // Debug log
-                    
+
                     // Barcha likes count elementlarini yangilash
                     likesCountElements.forEach((element, index) => {
                         if (element) {
                             const oldValue = element.textContent;
-                            
+
                             // Bir necha usul bilan yangilash
                             element.textContent = displayCount;
                             element.innerHTML = displayCount;
                             element.innerText = displayCount;
-                            
+
                             // Attribute orqali ham yangilash
                             element.setAttribute('data-count', displayCount);
-                            
+
                             console.log(`Updated element ${index + 1} from "${oldValue}" to "${displayCount}"`); // Debug log
-                            
+
                             // Visual feedback effect
                             element.style.transition = 'all 0.4s ease';
                             element.style.backgroundColor = '#28a745';
@@ -781,7 +822,7 @@
                             element.style.transform = 'scale(1.15)';
                             element.style.borderRadius = '50%';
                             element.style.boxShadow = '0 0 15px rgba(40, 167, 69, 0.6)';
-                            
+
                             // Reset styles after animation
                             setTimeout(() => {
                                 element.style.backgroundColor = '';
@@ -790,17 +831,17 @@
                                 element.style.borderRadius = '';
                                 element.style.boxShadow = '';
                             }, 800);
-                            
+
                             // Force DOM reflow
                             element.offsetHeight;
                         }
                     });
-                    
+
                     if (likesCountElements.length === 0) {
                         console.warn('⚠️ No likes count elements found! Searching all elements...'); // Debug log
                         // Barcha mumkin bo'lgan elementlarni qidirish
                         const allElements = document.querySelectorAll('*');
-                        const possibleElements = Array.from(allElements).filter(el => 
+                        const possibleElements = Array.from(allElements).filter(el =>
                             el.id && el.id.toLowerCase().includes('like') ||
                             el.className && el.className.toLowerCase().includes('like') ||
                             el.textContent && /^\d+$/.test(el.textContent.trim())
@@ -812,7 +853,7 @@
                     console.error('Error fetching likes count:', error);
                 });
         }
-        
+
         // Debug function to show logs
         function showDebugLogs() {
             console.log('=== DEBUG LOGS ===');
@@ -823,7 +864,7 @@
             console.log('likes_count element:', document.querySelector('#likes_count'));
             console.log('All like-related elements:', document.querySelectorAll('[id*="like"], [class*="like"]'));
         }
-        
+
         // Automatic debug after 3 seconds
         setTimeout(() => {
             console.log('=== AUTOMATIC DEBUG AFTER PAGE LOAD ===');
@@ -1148,7 +1189,7 @@
             });
         });
     </script>
-        <!-- Custom Google Translate Script -->
+    <!-- Custom Google Translate Script -->
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
@@ -1164,27 +1205,28 @@
 
         // hideGoogleTranslateBar();
         function waitForElement(className, callback) {
-  const observer = new MutationObserver(() => {
-    const element = document.querySelector(`${className}`);
-    if (element) {
+            const observer = new MutationObserver(() => {
+                const element = document.querySelector(`${className}`);
+                if (element) {
+
+                    element.style.visibility = "hidden";
+                    element.style.opacity = "0";
+
+                    observer.disconnect(); // kuzatishni to‘xtatish
+                    callback(element);
+                }
+            });
+
+            observer.observe(document.body, { childList: true, subtree: true });
+        }
+      
+        // Misol:
+        waitForElement('#\\:1\\.container', (el) => {
+            console.log('Div paydo bo‘ldi!', el);
+            el.style.visibility = "hidden";
+            el.style.opacity = "0";
+        });
         
-                element.style.visibility = "hidden";
-                element.style.opacity = "0";
-     
-      observer.disconnect(); // kuzatishni to‘xtatish
-      callback(element);
-    }
-  });
-
-  observer.observe(document.body, { childList: true, subtree: true });
-}
-
-// Misol:
-waitForElement('#\\:1\\.container', (el) => {
-  console.log('Div paydo bo‘ldi!', el);
-          el.style.visibility = "hidden";
-          el.style.opacity = "0";
-});
 
         function translateTo(language) {
             var selectField = document.querySelector("select.goog-te-combo");

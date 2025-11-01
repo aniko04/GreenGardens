@@ -28,7 +28,13 @@ def cart_context(request):
     else:
         # Session-based cart for anonymous users
         session_cart = request.session.get('cart', {})
-        cart_item_count = sum(int(quantity) for quantity in session_cart.values())
+        cart_item_count = 0
+        for item_data in session_cart.values():
+            if isinstance(item_data, dict):
+                cart_item_count += item_data.get('quantity', 1)
+            else:
+                # Eski format - oddiy integer
+                cart_item_count += item_data
         return {
             'cart_item_count': cart_item_count,
             'cart_items_total': len(session_cart)
@@ -38,6 +44,7 @@ def likes_context(request):
     """Likes ma'lumotlarini barcha sahifalarda mavjud qilish"""
     if request.user.is_authenticated:
         from home.models import Like
+        # Faqat foydalanuvchining o'z likesini sanash
         likes_count = Like.objects.filter(user=request.user).count()
         return {
             'likes_count': likes_count

@@ -1,27 +1,27 @@
-﻿   {% extends "base.html" %} {% load static %}
-   {% block content %}
-        <section class="page-header">
-            <div class="page-header__bg"></div>
-            <div class="page-header__shape wow fadeInUp" data-wow-delay="200ms"></div>
-            <div class="page-header__overlay"></div>
-            <!-- /.page-header__bg -->
-            <div class="container">
-                <h2 class="page-header__title">Shop details</h2>
-                <ul class="grdeen-breadcrumb list-unstyled">
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><span>Shop details</span></li>
-                </ul><!-- /.thm-breadcrumb list-unstyled -->
-            </div><!-- /.container -->
-        </section><!-- /.page-header -->
+﻿{% extends "base.html" %} {% load static %}
+{% block content %}
+<section class="page-header">
+    <div class="page-header__bg"></div>
+    <div class="page-header__shape wow fadeInUp" data-wow-delay="200ms"></div>
+    <div class="page-header__overlay"></div>
+    <!-- /.page-header__bg -->
+    <div class="container">
+        <h2 class="page-header__title">Shop details</h2>
+        <ul class="grdeen-breadcrumb list-unstyled">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><span>Shop details</span></li>
+        </ul><!-- /.thm-breadcrumb list-unstyled -->
+    </div><!-- /.container -->
+</section><!-- /.page-header -->
 
-        <section class="product-details">
-            <div class="container">
-                <!-- /.product-details -->
-                <div class="row">
-                    <div class="col-lg-6 col-xl-6 wow fadeInLeft" data-wow-delay="200ms">
-                        <div class="product-details__slider">
-                            {% if products.images.all %}
-                            <div class="product-details__carousel grdeen-owl__carousel owl-theme owl-carousel" data-owl-options='{
+<section class="product-details">
+    <div class="container">
+        <!-- /.product-details -->
+        <div class="row">
+            <div class="col-lg-6 col-xl-6 wow fadeInLeft" data-wow-delay="200ms">
+                <div class="product-details__slider">
+                    {% if products.images.all %}
+                    <div class="product-details__carousel grdeen-owl__carousel owl-theme owl-carousel" data-owl-options='{
 						"items": 1,
 						"margin": 0,
 						"smartSpeed": 700,
@@ -33,227 +33,233 @@
 						"navText": ["<span class=\"icon-left-arrow\"></span>","<span class=\"icon-right-arrow3\"></span>"]
 						}'>
                         {% for image in products.images.all %}
-                                <div class="item" >
-                                    <div class="product-details__slider__image">
-                                        {% if image.image %}
-                                        <img src="{{ image.image.url }}" alt="grdeen">
-                                        {% else %}
-                                        <img src="{% static 'assets/images/image404.png' %}" alt="grdeen">
-                                        {% endif %}
-                                    </div>
-                                </div><!-- /.item -->
-                        {% endfor %}
-                                
+                        <div class="item">
+                            <div class="product-details__slider__image">
+                                {% if image.image %}
+                                <img src="{{ image.image.url }}" alt="grdeen">
+                                {% else %}
+                                <img src="{% static 'assets/images/image404.png' %}" alt="grdeen">
+                                {% endif %}
                             </div>
-                            <div class="product-details__carousel-thumb grdeen-owl__carousel owl-theme owl-carousel" data-owl-options='{
+                        </div><!-- /.item -->
+                        {% endfor %}
+
+                    </div>
+                    <div class="product-details__carousel-thumb grdeen-owl__carousel owl-theme owl-carousel"
+                        data-owl-options='{
 						"items": 2,
 						"margin": 6,
 						"smartSpeed": 700,
 						"loop":true,
 						"autoplay": true,
-						
+
 						"center": false,
-						"dots":false
+                        "dots":false
 						}'>
                         {% for image in products.images.all %}
-                                <a href="" class="item" >
-                                    <span class="product-details__carousel-thumb__item">
-                                        {% if image.image %}
-                                        <img src="{{ image.image.url }}" alt="grdeen">
-                                        {% else %}
-                                        <img src="{% static 'assets/images/image404.png' %}" alt="grdeen">
-                                        {% endif %}
-                                    </span>
-                                </a>
-                        {% endfor %}
-                               
-                            </div>
-                            {% else %}
-                            <!-- Fallback when no images exist -->
-                            <div class="product-details__slider__image">
-                                {% if products.main_image %}
-                                <img src="{{ products.main_image.url }}" alt="{{ products.name }}">
+                        <a href="" class="item">
+                            <span class="product-details__carousel-thumb__item">
+                                {% if image.image %}
+                                <img src="{{ image.image.url }}" alt="grdeen">
                                 {% else %}
-                                <img src="{% static 'assets/images/image404.png' %}" alt="{{ products.name }}">
+                                <img src="{% static 'assets/images/image404.png' %}" alt="grdeen">
                                 {% endif %}
-                            </div>
-                            {% endif %}
-                        </div>
-                    </div><!-- /.column -->
-                    <div class="col-lg-6 col-xl-6 wow fadeInRight" data-wow-delay="300ms">
-                        <div class="product-details__content">
-                            <h3 class="product-details__title">{{ products.name }}</h3><!-- /.product-title -->
-                            <div class="product-details__price">
-                                <span class="product-details__price__regular">${{ products.price }}</span>
-                                <span class="product-details__price__offer">${{ products.old_price }} </span>
-                                <span class="product-details__price__off">-20%</span>
-                                <span class="product-details__price__stock">{{ products.status }}</span>
-                            </div><!-- /.product-price -->
+                            </span>
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <!-- Fallback when no images exist -->
+                    <div class="product-details__slider__image">
+                        {% if products.main_image %}
+                        <img src="{{ products.main_image.url }}" alt="{{ products.name }}">
+                        {% else %}
+                        <img src="{% static 'assets/images/image404.png' %}" alt="{{ products.name }}">
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div><!-- /.column -->
+            <div class="col-lg-6 col-xl-6 wow fadeInRight" data-wow-delay="300ms">
+                <div class="product-details__content">
+                    <h3 class="product-details__title">{{ products.name }}</h3><!-- /.product-title -->
+                    <div class="product-details__price">
+                        <span class="product-details__price__regular">${{ products.price }}</span>
+                        {% if products.old_price and products.old_price > products.price %}
+                        <span class="product-details__price__offer">${{ products.old_price }} </span>
+                        <span class="product-details__price__off">{{ products.discount_percentage }}%</span>
+                        {% endif %}
+                        <span class="product-details__price__stock">{{ products.status }}</span>
+                    </div><!-- /.product-price -->
 
-                            <div class="product-details__views" style="margin-top: 10px; margin-bottom: 15px; color: #666; font-size: 14px;">
-                                <i class="fa fa-eye" style="margin-right: 8px; color: #1a9120;"></i>{{ products.views }} views
-                            </div>
-                              
-                            </div><!-- /.review-ratings -->
-                            <div class="product-details__excerpt">
-                                {{ products.mini_description }}
-                            </div><!-- /.excerp-text -->
-                            <div class="product-details__qty">
-                                {% if item %}
-                                <div class="product-details__quantity" id="quantity-section-{{ products.id }}">
-                                    <h3 class="product-details__quantity__title">Quantity</h3>
-                                      <div class="quantity-box">
-                                         <button type="button" class="sub" onclick="decreaseQuantity({{ item.id }})">
-                                                        <i class="icon-down-arrow"></i>
-                                                    </button>
-                                                    <input type="text" id="qty-{{ item.id }}" value="{{ item.quantity }}" readonly min="1">
-                                                    <span id="quantity-{{ item.id }}" style="display: none;">{{ item.quantity }}</span>
-                                                    <button type="button" class="add" onclick="increaseQuantity({{ item.id }})">
-                                                        <i class="icon-up-arrow"></i>
-                                                    </button>
-                                      </div>
-                                </div><!-- /.quantity -->
-                                {% endif %}
-                                <div class="product-details__buttons">
-                                    {% if item %}
-                                        <a href="{% url 'cart' %}" class="grdeen-btn"><span>Go to Cart</span></a>
-                                    {% else %}
-                                        <a href="#" class="grdeen-btn add-to-cart-btn" data-product-id="{{ products.id }}"><span>Add to Cart</span></a>
-                                    {% endif %}
-                                    <a href="cart.html" class="product-details__buttons__wishlist like_product" data-id="{{products.id}}"></a>
-                                    
-                                </div><!-- /.qty-btn -->
-                            </div>
-                            
-                        </div>
+                    <div class="product-details__views"
+                        style="margin-top: 10px; margin-bottom: 15px; color: #666; font-size: 14px;">
+                        <i class="fa fa-eye" style="margin-right: 8px; color: #1a9120;"></i>{{ products.views }} views
                     </div>
+
+                </div><!-- /.review-ratings -->
+                <div class="product-details__excerpt">
+                    {{ products.mini_description }}
+                </div><!-- /.excerp-text -->
+                <div class="product-details__qty">
+                    {% if item %}
+                    <div class="product-details__quantity" id="quantity-section-{{ products.id }}">
+                        <h3 class="product-details__quantity__title">Quantity</h3>
+                        <div class="quantity-box">
+                            <button type="button" class="sub" onclick="decreaseQuantity({{ item.id }})">
+                                <i class="icon-down-arrow"></i>
+                            </button>
+                            <input type="text" id="qty-{{ item.id }}" value="{{ item.quantity }}" readonly min="1">
+                            <span id="quantity-{{ item.id }}" style="display: none;">{{ item.quantity }}</span>
+                            <button type="button" class="add" onclick="increaseQuantity({{ item.id }})">
+                                <i class="icon-up-arrow"></i>
+                            </button>
+                        </div>
+                    </div><!-- /.quantity -->
+                    {% endif %}
+                    <div class="product-details__buttons">
+                        {% if item %}
+                        <a href="{% url 'cart' %}" class="grdeen-btn"><span>Go to Cart</span></a>
+                        {% else %}
+                        <a href="#" class="grdeen-btn add-to-cart-btn" data-product-id="{{ products.id }}"><span>Add to
+                                Cart</span></a>
+                        {% endif %}
+                        <a href="cart.html" class="product-details__buttons__wishlist like_product"
+                            data-id="{{products.id}}"></a>
+
+                    </div><!-- /.qty-btn -->
                 </div>
-                <!-- /.product-details -->
-                <!-- /.product-description -->
-                <div class="tabs-box product-details__tabs wow fadeInUp" data-wow-delay="300ms">
-                    <ul class="list-unstyled tab-buttons product-details__tabs__list">
-                        <li data-tab="#description" class="tab-btn active-btn">Description</li>
-                        <li data-tab="#specifications" class="tab-btn">Specifications</li>
-                    </ul>
-                    <div class="tabs-content">
-                        <div class="tab active-tab fadeInUp animated" id="description">
-                            <div class="product-details__tabs__description">
-                                <p class="product-details__tabs__description__text">
-                                {{ products.description }}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="tab fadeInUp animated" id="specifications">
-                            <div class="product-details__tabs__specfication">
-                                {{ products.specifications|safe }}
-                            </div>
-                        </div>
-                        <div class="tab fadeInUp animated" id="reviews">
-                            <div class="product-details__tabs__comment">
-                                <!-- /.product-comment -->
-                    
-                                <!-- /.product-comment -->
-                                <!-- /.product-comment-form -->
-                             
-                                <!-- /.product-comment-form -->
-                            </div>
-                        </div>
-                    </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- /.product-details -->
+    <!-- /.product-description -->
+    <div class="tabs-box product-details__tabs wow fadeInUp" data-wow-delay="300ms">
+        <ul class="list-unstyled tab-buttons product-details__tabs__list">
+            <li data-tab="#description" class="tab-btn active-btn">Description</li>
+            <li data-tab="#specifications" class="tab-btn">Specifications</li>
+        </ul>
+        <div class="tabs-content">
+            <div class="tab active-tab fadeInUp animated" id="description">
+                <div class="product-details__tabs__description">
+                    <p class="product-details__tabs__description__text">
+                        {{ products.description }}
+                    </p>
                 </div>
-                <!-- /.product-description -->
             </div>
-        </section>
-        <!-- Products End -->
-        <!-- Related Products Start -->
-        <section class="related-product">
-            <div class="container">
-                <h3 class="related-product__title">Related Products</h3>
-                <div class="row gutter-y-30">
-                {% for product in allproducts %}
-                 {% include 'includes/product_card.html' %}
-                {% endfor %}
+            <div class="tab fadeInUp animated" id="specifications">
+                <div class="product-details__tabs__specfication">
+                    {{ products.specifications|safe }}
+                </div>
             </div>
-            
-            <!-- Pagination Start -->
-            {% if page_obj.has_other_pages %}
-            <div class="row">
-                <div class="col-12">
-                    <div class="pagination-wrapper text-center">
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination justify-content-center">
-                                {% if page_obj.has_previous %}
-                                <li class="page-item">
-                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo; Previous</a>
+            <div class="tab fadeInUp animated" id="reviews">
+                <div class="product-details__tabs__comment">
+                    <!-- /.product-comment -->
+
+                    <!-- /.product-comment -->
+                    <!-- /.product-comment-form -->
+
+                    <!-- /.product-comment-form -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.product-description -->
+    </div>
+</section>
+<!-- Products End -->
+<!-- Related Products Start -->
+<section class="related-product">
+    <div class="container">
+        <h3 class="related-product__title">Related Products</h3>
+        <div class="row gutter-y-30">
+            {% for product in allproducts %}
+            {% include 'includes/product_card.html' %}
+            {% endfor %}
+        </div>
+
+        <!-- Pagination Start -->
+        {% if page_obj.has_other_pages %}
+        <div class="row">
+            <div class="col-12">
+                <div class="pagination-wrapper text-center">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;
+                                    Previous</a>
+                            </li>
+                            {% endif %}
+
+                            {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                            <li class="page-item active">
+                                <span class="page-link">{{ num }}</span>
+                            </li>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <li
+                                class="page-item">
+                                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
                                 </li>
                                 {% endif %}
-                                
-                                {% for num in page_obj.paginator.page_range %}
-                                    {% if page_obj.number == num %}
-                                    <li class="page-item active">
-                                        <span class="page-link">{{ num }}</span>
-                                    </li>
-                                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                                    <li class="page-item">
-                                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
-                                    </li>
-                                    {% endif %}
                                 {% endfor %}
-                                
+
                                 {% if page_obj.has_next %}
                                 <li class="page-item">
                                     <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next &raquo;</a>
                                 </li>
                                 {% endif %}
-                            </ul>
-                        </nav>
-                    </div>
+                        </ul>
+                    </nav>
                 </div>
             </div>
-            {% endif %}
-            <!-- Pagination End -->
-            
-            </div>
-        </section>
-        <!-- Related Products End -->
+        </div>
+        {% endif %}
+        <!-- Pagination End -->
+
+    </div>
+</section>
+<!-- Related Products End -->
 
 <script>
-// Add to Cart functionality for product details page
-document.addEventListener('DOMContentLoaded', function() {
-    const addToCartBtn = document.querySelector('.add-to-cart-btn');
-    
-    if (addToCartBtn) {
-        addToCartBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const productId = this.dataset.productId;
-            
-            fetch(`/api/user/${productId}/cart/add`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCookie('csrftoken')
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'added') {
-                    showNotification('Mahsulot cartga qo\'shildi', 'success');
-                    
-                    // "Add to Cart" tugmasini "Go to Cart" ga o'zgartirish
-                    const addToCartSection = document.querySelector('.product-details__buttons');
-                    if (addToCartSection) {
-                        addToCartSection.innerHTML = `
+    // Add to Cart functionality for product details page
+    document.addEventListener('DOMContentLoaded', function () {
+        const addToCartBtn = document.querySelector('.add-to-cart-btn');
+
+        if (addToCartBtn) {
+            addToCartBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const productId = this.dataset.productId;
+
+                fetch(`/api/user/${productId}/cart/add`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'added') {
+                            showNotification('Mahsulot cartga qo\'shildi', 'success');
+
+                            // "Add to Cart" tugmasini "Go to Cart" ga o'zgartirish
+                            const addToCartSection = document.querySelector('.product-details__buttons');
+                            if (addToCartSection) {
+                                addToCartSection.innerHTML = `
                             <a href="/cart/" class="grdeen-btn"><span>Go to Cart</span></a>
                             <a href="cart.html" class="product-details__buttons__wishlist like_product" data-id="${productId}"></a>
                         `;
-                    }
-                    
-                    // Quantity section qo'shish
-                    const quantitySection = document.getElementById(`quantity-section-${productId}`);
-                    if (!quantitySection && data.cart_item_id) {
-                        const qtyDiv = document.querySelector('.product-details__qty');
-                        if (qtyDiv) {
-                            const quantityHTML = `
+                            }
+
+                            // Quantity section qo'shish
+                            const quantitySection = document.getElementById(`quantity-section-${productId}`);
+                            if (!quantitySection && data.cart_item_id) {
+                                const qtyDiv = document.querySelector('.product-details__qty');
+                                if (qtyDiv) {
+                                    const quantityHTML = `
                                 <div class="product-details__quantity" id="quantity-section-${productId}">
                                     <h3 class="product-details__quantity__title">Quantity</h3>
                                     <div class="quantity-box">
@@ -268,108 +274,108 @@ document.addEventListener('DOMContentLoaded', function() {
                                     </div>
                                 </div>
                             `;
-                            qtyDiv.insertAdjacentHTML('afterbegin', quantityHTML);
-                            
-                            // Quantity button holatini yangilash
-                            setTimeout(() => {
-                                updateQuantityButtons(data.cart_item_id, 1);
-                            }, 100);
-                        }
-                    }
-                    
-                } else if (data.status === 'unauthenticated') {
-                    showNotification('Iltimos login qiling', 'warning');
-                } else {
-                    showNotification('Xatolik yuz berdi', 'error');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showNotification('Xatolik yuz berdi', 'error');
-            });
-        });
-    }
-});
+                                    qtyDiv.insertAdjacentHTML('afterbegin', quantityHTML);
 
-// Get CSRF token function
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
+                                    // Quantity button holatini yangilash
+                                    setTimeout(() => {
+                                        updateQuantityButtons(data.cart_item_id, 1);
+                                    }, 100);
+                                }
+                            }
+
+                        } else if (data.status === 'unauthenticated') {
+                            showNotification('Iltimos login qiling', 'warning');
+                        } else {
+                            showNotification('Xatolik yuz berdi', 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showNotification('Xatolik yuz berdi', 'error');
+                    });
+            });
+        }
+    });
+
+    // Get CSRF token function
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    // Quantity button holatini yangilash funksiyasi
+    function updateQuantityButtons(cartId, quantity) {
+        const decreaseBtn = document.querySelector(`button[onclick="decreaseQuantity(${cartId})"]`);
+
+        if (decreaseBtn) {
+            if (quantity <= 1) {
+                decreaseBtn.disabled = true;
+                decreaseBtn.style.opacity = '0.5';
+                decreaseBtn.style.cursor = 'not-allowed';
+            } else {
+                decreaseBtn.disabled = false;
+                decreaseBtn.style.opacity = '1';
+                decreaseBtn.style.cursor = 'pointer';
             }
         }
     }
-    return cookieValue;
-}
 
-// Quantity button holatini yangilash funksiyasi
-function updateQuantityButtons(cartId, quantity) {
-    const decreaseBtn = document.querySelector(`button[onclick="decreaseQuantity(${cartId})"]`);
-    
-    if (decreaseBtn) {
-        if (quantity <= 1) {
-            decreaseBtn.disabled = true;
-            decreaseBtn.style.opacity = '0.5';
-            decreaseBtn.style.cursor = 'not-allowed';
-        } else {
-            decreaseBtn.disabled = false;
-            decreaseBtn.style.opacity = '1';
-            decreaseBtn.style.cursor = 'pointer';
-        }
-    }
-}
+    // Product details sahifasi uchun decreaseQuantity funksiyasini override qilish
+    const originalDecreaseQuantity = window.decreaseQuantity;
+    const originalIncreaseQuantity = window.increaseQuantity;
 
-// Product details sahifasi uchun decreaseQuantity funksiyasini override qilish
-const originalDecreaseQuantity = window.decreaseQuantity;
-const originalIncreaseQuantity = window.increaseQuantity;
-
-window.decreaseQuantity = function(cartId) {
-    // Joriy miqdorni tekshirish
-    const qtyInput = document.getElementById(`qty-${cartId}`);
-    if (qtyInput) {
-        const currentQuantity = parseInt(qtyInput.value);
-        if (currentQuantity <= 1) {
-            showNotification('Miqdor kamida 1 bo\'lishi kerak', 'warning');
-            return;
-        }
-    }
-    
-    // Asl funksiyani chaqirish
-    if (originalDecreaseQuantity) {
-        originalDecreaseQuantity(cartId);
-    }
-};
-
-window.increaseQuantity = function(cartId) {
-    // Asl funksiyani chaqirish
-    if (originalIncreaseQuantity) {
-        originalIncreaseQuantity(cartId);
-    }
-    
-    // Quantity button holatini yangilash
-    setTimeout(() => {
+    window.decreaseQuantity = function (cartId) {
+        // Joriy miqdorni tekshirish
         const qtyInput = document.getElementById(`qty-${cartId}`);
         if (qtyInput) {
-            const quantity = parseInt(qtyInput.value);
-            updateQuantityButtons(cartId, quantity);
+            const currentQuantity = parseInt(qtyInput.value);
+            if (currentQuantity <= 1) {
+                showNotification('Miqdor kamida 1 bo\'lishi kerak', 'warning');
+                return;
+            }
         }
-    }, 100);
-};
 
-// Sahifa yuklanganda quantity button holatini tekshirish
-document.addEventListener('DOMContentLoaded', function() {
-    // Barcha quantity input'larni topish va tegishli button holatini o'rnatish
-    const qtyInputs = document.querySelectorAll('[id^="qty-"]');
-    qtyInputs.forEach(input => {
-        const cartId = input.id.replace('qty-', '');
-        const quantity = parseInt(input.value);
-        updateQuantityButtons(cartId, quantity);
+        // Asl funksiyani chaqirish
+        if (originalDecreaseQuantity) {
+            originalDecreaseQuantity(cartId);
+        }
+    };
+
+    window.increaseQuantity = function (cartId) {
+        // Asl funksiyani chaqirish
+        if (originalIncreaseQuantity) {
+            originalIncreaseQuantity(cartId);
+        }
+
+        // Quantity button holatini yangilash
+        setTimeout(() => {
+            const qtyInput = document.getElementById(`qty-${cartId}`);
+            if (qtyInput) {
+                const quantity = parseInt(qtyInput.value);
+                updateQuantityButtons(cartId, quantity);
+            }
+        }, 100);
+    };
+
+    // Sahifa yuklanganda quantity button holatini tekshirish
+    document.addEventListener('DOMContentLoaded', function () {
+        // Barcha quantity input'larni topish va tegishli button holatini o'rnatish
+        const qtyInputs = document.querySelectorAll('[id^="qty-"]');
+        qtyInputs.forEach(input => {
+            const cartId = input.id.replace('qty-', '');
+            const quantity = parseInt(input.value);
+            updateQuantityButtons(cartId, quantity);
+        });
     });
-});
 </script>
-{% endblock %}  
+{% endblock %}

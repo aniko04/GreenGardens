@@ -1,265 +1,326 @@
 {% extends "base.html" %} {% load static %}
 {% block content %}
-    <section class="page-header">
-        <div class="page-header__bg"></div>
-        <div class="page-header__shape wow fadeInUp" data-wow-delay="200ms"></div>
-        <div class="page-header__overlay"></div>
-        <!-- /.page-header__bg -->
-        <div class="container">
-            <h2 class="page-header__title">My Favorite Products</h2>
-            <ul class="grdeen-breadcrumb list-unstyled">
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><span>My Likes</span></li>
-            </ul><!-- /.thm-breadcrumb list-unstyled -->
-        </div><!-- /.container -->
-    </section><!-- /.page-header -->
+<section class="page-header">
+    <div class="page-header__bg"></div>
+    <div class="page-header__shape wow fadeInUp" data-wow-delay="200ms"></div>
+    <div class="page-header__overlay"></div>
+    <!-- /.page-header__bg -->
+    <div class="container">
+        <h2 class="page-header__title">My Favorite Products</h2>
+        <ul class="grdeen-breadcrumb list-unstyled">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><span>My Likes</span></li>
+        </ul><!-- /.thm-breadcrumb list-unstyled -->
+    </div><!-- /.container -->
+</section><!-- /.page-header -->
 
-    <section class="product-one">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-12">
-                    {% if user.is_authenticated %}
-                        {% if liked_products %}
-                            <div class="product__info-top">
-                                <div class="product__showing-text-box">
-                                    <p class="product__showing-text">
-                                        Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ likes_count }} liked products
-                                    </p>
-                                </div>
-                                <div class="product__showing-sort">
-                                    <div class="wishlist-counter">
-                                        <div class="wishlist-icon">
-                                            <i class="fas fa-heart"></i>
-                                        </div>
-                                        <div class="wishlist-text">
-                                            <h5 class="wishlist-title">My Wishlist</h5>
-                                            <span class="wishlist-count">{{ likes_count }} Product{{ likes_count|pluralize }}</span>
-                                        </div>
-                                    </div>
-                                </div>
+<section class="product-one">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                {% if user.is_authenticated %}
+                {% if liked_products %}
+                <div class="product__info-top">
+                    <div class="product__showing-text-box">
+                        <p class="product__showing-text">
+                            Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ likes_count }} liked
+                            products
+                        </p>
+                    </div>
+                    <div class="product__showing-sort">
+                        <div class="wishlist-counter">
+                            <div class="wishlist-icon">
+                                <i class="fas fa-heart"></i>
                             </div>
-                            <div class="row gutter-y-30">
-                                {% for product in liked_products %}
-                                 {% include 'includes/product_card.html' %}
-                                {% endfor %}
-                            </div><!-- /.row -->
-
-                            <!-- Pagination -->
-                            {% if page_obj.has_previous or page_obj.has_next %}
-                            <div class="pagination mt-5">
-                                {% if page_obj.has_previous %}
-                                <a href="?page={{ page_obj.previous_page_number }}">&laquo; Previous</a>
-                                {% endif %}
-
-                                {% for num in page_obj.paginator.page_range %}
-                                    {% if page_obj.number == num %}
-                                    <span class="active">{{ num }}</span>
-                                    {% else %}
-                                    <a href="?page={{ num }}">{{ num }}</a>
-                                    {% endif %}
-                                {% endfor %}
-
-                                {% if page_obj.has_next %}
-                                <a href="?page={{ page_obj.next_page_number }}">Next &raquo;</a>
-                                {% endif %}
-                            </div>
-                            {% endif %}
-                        {% else %}
-                            <!-- Bo'sh yoqtirgan mahsulotlar holati -->
-                            <div class="text-center py-5">
-                                <div class="empty-wishlist">
-                                    <i class="fas fa-heart-broken" style="font-size: 80px; color: #ddd; margin-bottom: 20px;"></i>
-                                    <h3>Your wishlist is empty</h3>
-                                    <p class="text-muted">You haven't liked any products yet. Browse our products and add your favorites to your wishlist!</p>
-                                    <a href="{% url 'products' %}" class="grdeen-btn mt-3">
-                                        <span>Browse Products</span>
-                                    </a>
-                                </div>
-                            </div>
-                        {% endif %}
-                    {% else %}
-                        <!-- Foydalanuvchi login qilmagan holati -->
-                        <div class="text-center py-5">
-                            <div class="login-required">
-                                <i class="fas fa-user-lock" style="font-size: 80px; color: #ddd; margin-bottom: 20px;"></i>
-                                <h3>Login Required</h3>
-                                <p class="text-muted">Please log in to view your favorite products and manage your wishlist.</p>
-                                <a href="/admin/login/" class="grdeen-btn mt-3">
-                                    <span>Login</span>
-                                </a>
+                            <div class="wishlist-text">
+                                <h5 class="wishlist-title">My Wishlist</h5>
+                                <span class="wishlist-count">{{ likes_count }} Product{{ likes_count|pluralize }}</span>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="row gutter-y-30">
+                    {% for product in liked_products %}
+                    {% include 'includes/product_card.html' %}
+                    {% endfor %}
+                </div><!-- /.row -->
+
+                <!-- Pagination -->
+                {% if page_obj.has_previous or page_obj.has_next %}
+                <div class="pagination mt-5">
+                    {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">&laquo; Previous</a>
                     {% endif %}
-                </div><!-- /.col-lg-12 -->
-            </div><!-- /.row -->
-        </div><!-- /.container -->
-    </section><!-- /.product-one product-one--page -->
 
-    <style>
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 40px 0;
+                    {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <span class="active">{{ num }}</span>
+                    {% else %}
+                    <a href="?page={{ num }}">{{ num }}</a>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">Next &raquo;</a>
+                    {% endif %}
+                </div>
+                {% endif %}
+                {% else %}
+                <!-- Bo'sh yoqtirgan mahsulotlar holati -->
+                <div class="text-center py-5">
+                    <div class="empty-wishlist">
+                        <i class="fas fa-heart-broken" style="font-size: 80px; color: #ddd; margin-bottom: 20px;"></i>
+                        <h3>Your wishlist is empty</h3>
+                        <p class="text-muted">You haven't liked any products yet. Browse our products and add your
+                            favorites to your wishlist!</p>
+                        <a href="{% url 'products' %}" class="grdeen-btn mt-3">
+                            <span>Browse Products</span>
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+                {% else %}
+                <!-- Foydalanuvchi login qilmagan holati -->
+                <!-- get liked products from session -->
+                {% if liked_products %}
+                <div class="product__info-top">
+                    <div class="product__showing-text-box">
+                        <p class="product__showing-text">
+                            Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ likes_count }} liked
+                            products
+                        </p>
+                    </div>
+                    <div class="product__showing-sort">
+                        <div class="wishlist-counter">
+                            <div class="wishlist-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="wishlist-text">
+                                <h5 class="wishlist-title">My Wishlist</h5>
+                                <span class="wishlist-count">{{ likes_count }} Product{{ likes_count|pluralize }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row gutter-y-30">
+                    {% for product in liked_products %}
+                    {% include 'includes/product_card.html' %}
+                    {% endfor %}
+                </div><!-- /.row -->
+
+                <!-- Pagination -->
+                {% if page_obj.has_previous or page_obj.has_next %}
+                <div class="pagination mt-5">
+                    {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">&laquo; Previous</a>
+                    {% endif %}
+
+                    {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <span class="active">{{ num }}</span>
+                    {% else %}
+                    <a href="?page={{ num }}">{{ num }}</a>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">Next &raquo;</a>
+                    {% endif %}
+                </div>
+                {% endif %}
+                {% else %}
+                <!-- Bo'sh yoqtirgan mahsulotlar holati -->
+                <div class="text-center py-5">
+                    <div class="empty-wishlist">
+                        <i class="fas fa-heart-broken" style="font-size: 80px; color: #ddd; margin-bottom: 20px;"></i>
+                        <h3>Your wishlist is empty</h3>
+                        <p class="text-muted">You haven't liked any products yet. Browse our products and add your
+                            favorites to your wishlist!</p>
+                        <a href="{% url 'products' %}" class="grdeen-btn mt-3">
+                            <span>Browse Products</span>
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+                {% endif %}
+            </div><!-- /.col-lg-12 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section><!-- /.product-one product-one--page -->
+
+<style>
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 40px 0;
+    }
+
+    .pagination a,
+    .pagination span {
+        display: inline-block;
+        padding: 8px 16px;
+        margin: 0 4px;
+        text-decoration: none;
+        border: 1px solid #ddd;
+        color: #007bff;
+        border-radius: 4px;
+    }
+
+    .pagination a:hover {
+        background-color: #e9ecef;
+    }
+
+    .pagination .active {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+
+    .empty-wishlist,
+    .login-required {
+        padding: 60px 20px;
+    }
+
+    .product__item__label2 a.like_product {
+        background: rgba(255, 255, 255, 0.9);
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-bottom: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .product__item__label2 a.like_product:hover {
+        background: #fff;
+        transform: scale(1.1);
+    }
+
+    .wishlist-counter {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 20px;
+        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(238, 90, 36, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .wishlist-counter::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+        pointer-events: none;
+    }
+
+    .wishlist-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .wishlist-icon i {
+        font-size: 28px;
+        color: white;
+        animation: heartbeat 2s infinite;
+    }
+
+    @keyframes heartbeat {
+
+        0%,
+        50%,
+        100% {
+            transform: scale(1);
         }
 
-        .pagination a, .pagination span {
-            display: inline-block;
-            padding: 8px 16px;
-            margin: 0 4px;
-            text-decoration: none;
-            border: 1px solid #ddd;
-            color: #007bff;
-            border-radius: 4px;
-        }
-
-        .pagination a:hover {
-            background-color: #e9ecef;
-        }
-
-        .pagination .active {
-            background-color: #007bff;
-            color: white;
-            border-color: #007bff;
-        }
-
-        .empty-wishlist, .login-required {
-            padding: 60px 20px;
-        }
-
-        .product__item__label2 a.like_product {
-            background: rgba(255, 255, 255, 0.9);
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            margin-bottom: 5px;
-            transition: all 0.3s ease;
-        }
-
-        .product__item__label2 a.like_product:hover {
-            background: #fff;
+        25%,
+        75% {
             transform: scale(1.1);
         }
+    }
 
-        .wishlist-counter {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 20px;
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(238, 90, 36, 0.2);
-            position: relative;
-            overflow: hidden;
+    .wishlist-text {
+        color: white;
+    }
+
+    .wishlist-title {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .wishlist-count {
+        font-size: 14px;
+        font-weight: 500;
+        opacity: 0.9;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .product-item-removing {
+        opacity: 0.3;
+        transform: scale(0.95);
+        transition: all 0.3s ease;
+    }
+
+    .product-item-fade-out {
+        animation: fadeOut 0.5s ease forwards;
+    }
+
+    @keyframes fadeOut {
+        0% {
+            opacity: 1;
+            transform: scale(1);
         }
 
-        .wishlist-counter::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
-            pointer-events: none;
-        }
-
-        .wishlist-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .wishlist-icon i {
-            font-size: 28px;
-            color: white;
-            animation: heartbeat 2s infinite;
-        }
-
-        @keyframes heartbeat {
-            0%, 50%, 100% {
-                transform: scale(1);
-            }
-            25%, 75% {
-                transform: scale(1.1);
-            }
-        }
-
-        .wishlist-text {
-            color: white;
-        }
-
-        .wishlist-title {
+        100% {
+            opacity: 0;
+            transform: scale(0.9);
+            height: 0;
             margin: 0;
-            font-size: 24px;
-            font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            padding: 0;
         }
+    }
+</style>
 
-        .wishlist-count {
-            font-size: 14px;
-            font-weight: 500;
-            opacity: 0.9;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Like/Unlike functionality
+        document.addEventListener('click', function (e) {
+            if (e.target.closest('.like_product')) {
+                e.preventDefault();
 
-        .product-item-removing {
-            opacity: 0.3;
-            transform: scale(0.95);
-            transition: all 0.3s ease;
-        }
+                const likeButton = e.target.closest('.like_product');
+                const productId = likeButton.getAttribute('data-id');
+                const productCard = likeButton.closest('.col-md-6, .col-lg-4');
 
-        .product-item-fade-out {
-            animation: fadeOut 0.5s ease forwards;
-        }
+                // Add removing class for visual feedback
+                productCard.classList.add('product-item-removing');
 
-        @keyframes fadeOut {
-            0% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: scale(0.9);
-                height: 0;
-                margin: 0;
-                padding: 0;
-            }
-        }
-    </style>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Like/Unlike functionality
-            document.addEventListener('click', function(e) {
-                if (e.target.closest('.like_product')) {
-                    e.preventDefault();
-                    
-                    const likeButton = e.target.closest('.like_product');
-                    const productId = likeButton.getAttribute('data-id');
-                    const productCard = likeButton.closest('.col-md-6, .col-lg-4');
-                    
-                    // Add removing class for visual feedback
-                    productCard.classList.add('product-item-removing');
-                    
-                    // Send AJAX request using your existing API
-                    fetch(`/api/user/${productId}/like/add`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': getCookie('csrftoken')
-                        }
-                    })
+                // Send AJAX request using your existing API
+                fetch(`/api/user/${productId}/like/add`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    }
+                })
                     .then(response => response.json())
                     .then(data => {
                         if (data.status === 'liked') {
@@ -268,7 +329,7 @@
                         } else if (data.status === 'unliked') {
                             // Product was unliked - remove from page
                             productCard.classList.add('product-item-fade-out');
-                            
+
                             // Remove the card after animation
                             setTimeout(() => {
                                 productCard.remove();
@@ -291,42 +352,42 @@
                         productCard.classList.remove('product-item-removing');
                         alert('An error occurred. Please try again.');
                     });
-                }
-            });
+            }
+        });
 
-            function updateWishlistCounter() {
-                const remainingProducts = document.querySelectorAll('.product__item').length;
-                const wishlistCount = document.querySelector('.wishlist-count');
-                const showingText = document.querySelector('.product__showing-text');
-                
-                if (wishlistCount) {
-                    wishlistCount.textContent = `${remainingProducts} Product${remainingProducts !== 1 ? 's' : ''}`;
-                }
-                
-                if (showingText) {
-                    showingText.textContent = `Showing 1-${remainingProducts} of ${remainingProducts} liked products`;
-                }
-                
-                // Header dagi likes counter'ni ham yangilash
-                if (typeof updateLikesCount === 'function') {
-                    updateLikesCount();
-                }
+        function updateWishlistCounter() {
+            const remainingProducts = document.querySelectorAll('.product__item').length;
+            const wishlistCount = document.querySelector('.wishlist-count');
+            const showingText = document.querySelector('.product__showing-text');
+
+            if (wishlistCount) {
+                wishlistCount.textContent = `${remainingProducts} Product${remainingProducts !== 1 ? 's' : ''}`;
             }
 
-            function checkIfWishlistEmpty() {
-                const remainingProducts = document.querySelectorAll('.product__item').length;
-                
-                if (remainingProducts === 0) {
-                    // Hide the product info top and show empty wishlist message
-                    const productInfoTop = document.querySelector('.product__info-top');
-                    const productRow = document.querySelector('.row.gutter-y-30');
-                    
-                    if (productInfoTop) {
-                        productInfoTop.style.display = 'none';
-                    }
-                    
-                    if (productRow) {
-                        productRow.innerHTML = `
+            if (showingText) {
+                showingText.textContent = `Showing 1-${remainingProducts} of ${remainingProducts} liked products`;
+            }
+
+            // Header dagi likes counter'ni ham yangilash
+            if (typeof updateLikesCount === 'function') {
+                updateLikesCount();
+            }
+        }
+
+        function checkIfWishlistEmpty() {
+            const remainingProducts = document.querySelectorAll('.product__item').length;
+
+            if (remainingProducts === 0) {
+                // Hide the product info top and show empty wishlist message
+                const productInfoTop = document.querySelector('.product__info-top');
+                const productRow = document.querySelector('.row.gutter-y-30');
+
+                if (productInfoTop) {
+                    productInfoTop.style.display = 'none';
+                }
+
+                if (productRow) {
+                    productRow.innerHTML = `
                             <div class="col-lg-12">
                                 <div class="text-center py-5">
                                     <div class="empty-wishlist">
@@ -340,25 +401,25 @@
                                 </div>
                             </div>
                         `;
-                    }
                 }
             }
+        }
 
-            // Helper function to get CSRF token
-            function getCookie(name) {
-                let cookieValue = null;
-                if (document.cookie && document.cookie !== '') {
-                    const cookies = document.cookie.split(';');
-                    for (let i = 0; i < cookies.length; i++) {
-                        const cookie = cookies[i].trim();
-                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                            break;
-                        }
+        // Helper function to get CSRF token
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
                     }
                 }
-                return cookieValue;
             }
-        });
-    </script>
+            return cookieValue;
+        }
+    });
+</script>
 {% endblock %}

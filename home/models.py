@@ -275,6 +275,14 @@ class Product(models.Model):
         from django.urls import reverse
         return reverse('product_details', kwargs={'id': self.id})
     
+    @property
+    def discount_percentage(self):
+        """Calculate discount percentage if old_price exists"""
+        if self.old_price and self.old_price > self.price:
+            discount = ((self.old_price - self.price) / self.old_price) * 100
+            return round(discount)
+        return 0
+    
 class ProductImage(models.Model):
     image = models.ImageField(upload_to='products/', null=True, blank=True)
 
