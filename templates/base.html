@@ -83,6 +83,49 @@
                 color: var(--grdeen-black, #172000) !important;
                 text-shadow: 0 0 0.5px var(--grdeen-black, #172000) !important;
             }
+
+            /*Translation CSS*/
+            /* Hide the outer container of the Google Translate toolbar */
+            .goog-te-banner-frame.skiptranslate {
+                display: none !important;
+                visibility: hidden !important;
+                height: 0 !important;
+            }
+
+            #custom_translate_buttons {
+                position: relative;
+                z-index: 1000;
+                padding: 10px 0;
+                text-align: center;
+                display: flex;
+                gap: 5px;
+                align-items: center;
+            }
+
+            #custom_translate_buttons button {
+                padding: 5px 15px;
+                margin: 0 5px;
+                border: none;
+                border-radius: 10px;
+                font-family: var(--montserrat);
+                background-color: #c69009;
+                color: #000;
+                cursor: pointer;
+                font-size: 12px;
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+
+            #custom_translate_buttons button:hover {
+                background-color: #45a049;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            }
+
+            /* Adjust the body top margin */
+            body {
+                top: 0px !important;
+            }
         </style>
 </head>
 
@@ -142,7 +185,14 @@
                             <li><a href="{% url 'team' %}">Career</a></li>
                             <li><a href="{% url 'about' %}">Office</a></li>
                         </ul>
-                        <div id="google_translate_element"></div>
+                        
+                        <!-- Custom Translate Buttons -->
+                        <div id="custom_translate_buttons">
+                            <button class="notranslate" onclick="translateTo('uz')">O'zbekcha</button>
+                            <button class="notranslate" onclick="translateTo('en')">English</button>
+                            <button class="notranslate" onclick="translateTo('ru')">Русский</button>
+                        </div>
+                        <div id="google_translate_element" style="display: none;"></div>
                         <div class="topbar-one__social">
                             {% for social in social_links %}
                             <a href="{{ social.url }}" target="_blank">{{ social.icon|safe }}
@@ -1098,29 +1148,56 @@
             });
         });
     </script>
+        <!-- Custom Google Translate Script -->
     <script type="text/javascript">
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement(
-    {
-      pageLanguage: 'en', // sahifangizning asosiy tili (masalan 'en', 'ru', 'uz')
-      includedLanguages: 'uz,en,ru', // foydalanuvchiga ko‘rsatiladigan tillar
-      layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
-    },
-    'google_translate_element'
-  );
-  const sel = document.querySelector('.goog-te-combo');
-if (sel) {
-  sel.style.padding = '8px';
-  sel.style.borderRadius = '5px';
-  sel.style.border = '1px solid #ccc';
-}
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+        }
+
+        // function hideGoogleTranslateBar() {
+        //     var element = document.querySelector("#\\:1\\.container");
+        //     if (element) {
+        //         element.style.visibility = "hidden";
+        //         element.style.opacity = "0";
+        //     }
+        // }
+
+        // hideGoogleTranslateBar();
+        function waitForElement(className, callback) {
+  const observer = new MutationObserver(() => {
+    const element = document.querySelector(`${className}`);
+    if (element) {
+        
+                element.style.visibility = "hidden";
+                element.style.opacity = "0";
+     
+      observer.disconnect(); // kuzatishni to‘xtatish
+      callback(element);
+    }
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
 }
 
-</script>
+// Misol:
+waitForElement('#\\:1\\.container', (el) => {
+  console.log('Div paydo bo‘ldi!', el);
+          el.style.visibility = "hidden";
+          el.style.opacity = "0";
+});
 
-<script type="text/javascript" 
-  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
-</script>
+        function translateTo(language) {
+            var selectField = document.querySelector("select.goog-te-combo");
+            if (selectField) {
+                selectField.value = language;
+                selectField.dispatchEvent(new Event('change'));
+                // setTimeout(hideGoogleTranslateBar, 100);
+            }
+        }
+    </script>
+
+    <script type="text/javascript"
+        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 
 </html>
