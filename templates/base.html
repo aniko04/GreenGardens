@@ -402,8 +402,7 @@
                                             <span class="footer-widget__post-date"><i class="far fa-calendar"></i>
                                                 <span> {{ post.publish_date|date:"d M Y" }}</span>
                                             </span>
-                                            <h6 class="footer-widget__post-heading"><a href="">{{
-                                                    post.minititle|truncatechars:50 }}</a></h6>
+                                            <h6 class="footer-widget__post-heading"><a href="">{{ post.minititle|truncatechars:50 }}</a></h6>
                                         </div>
                                     </div>
                                     {% endfor %}
@@ -419,8 +418,7 @@
             <div class="main-footer__bottom">
                 <div class="container">
                     <div class="main-footer__bottom__inner">
-                        <p class="main-footer__copyright"> &copy; <span class="dynamic-year"></span> {{ info.footer_text
-                            }}</p>
+                        <p class="main-footer__copyright"> &copy; <span class="dynamic-year"></span> {{ info.footer_text }}</p>
                         <div class="main-footer__social-row">
                             <p class="main-footer__social-row-text">Social</p>
                             <ul class="main-footer__social-list">
@@ -1220,7 +1218,7 @@
             observer.observe(document.body, { childList: true, subtree: true });
         }
       
-        // Misol:
+        // Misol:sour
         waitForElement('#\\:1\\.container', (el) => {
             console.log('Div paydo bo‘ldi!', el);
             el.style.visibility = "hidden";

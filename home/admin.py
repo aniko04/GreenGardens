@@ -35,7 +35,7 @@ class MainFeatureAdmin(admin.ModelAdmin):
 
 @admin.register(OurService)
 class OurServiceAdmin(admin.ModelAdmin):
-    list_display = ('title', 'subtitle', 'pagename', 'url', 'is_active', 'is_top')
+    list_display = ('title', 'subtitle', 'pagename', 'is_active', 'is_top')
     list_filter = ('is_active',)
     search_fields = ('title', 'subtitle', 'description', 'pagename')
     list_editable = ('is_active', 'is_top')

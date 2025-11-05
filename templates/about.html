@@ -82,9 +82,7 @@
                                 <li><i class="icon-check-solid"></i>{{ intro.list2|safe }}</li>
                                 <li><i class="icon-check-solid"></i>{{ intro.list3|safe }}</li>
                             </ul>
-                            <a href="{% url 'about' %}" class="grdeen-btn">
-                                <span>{{ intro.button_name }}</span>
-                            </a>
+                            
                         </div>
                     </div><!-- /.col-lg-6 -->
                 </div><!-- /.row -->
@@ -98,7 +96,10 @@
 
                     <div class="col-xl-3 col-md-6 wow fadeInUp" data-wow-delay="00ms">
                         <div class="feature-one__item">
-                            <div class="feature-one__item__bg" style="background-image: url('assets/images/shapes/feature-bg-2-1.png');"></div>
+                            
+                            <div class="feature-one__item__bg" style="background-image: url({% static 'assets/images/shapes/feature-bg-2-1.png' %});"></div>
+                            <div class="feature-one__item__bgshape" style="background-image: url({% static 'assets/images/shapes/feature-shape3-1.png' %});"></div>
+
                             <div class="feature-one__item__content">
                                 <h4 class="feature-one__item__title">{{ feature.title }}</h4>
                                 <p class="feature-one__item__text">{{ feature.description }}</p>
@@ -413,20 +414,20 @@
                        
                         <div class="form-one__group">
                             <div class="form-one__control">
-                                <label for="name">Your Name</label>
+          
                                 <input type="text" name="name" placeholder="Your Name" required>
                             </div>
                             <div class="form-one__control">
-                                <label for="email">Email</label>
+                           
                                 <input type="email" name="email" placeholder="Email Address" required>
                             </div>
                             <div class="form-one__control">
-                                <label for="tel">Phone</label>
+
                                 <input type="text" name="tel" placeholder="Phone">
                             </div>
                             <div class="form-one__control">
                             <div class="form-one__control__select">
-                                <label class="sr-only" for="language-select">Choose Services</label>
+             
                                 <select class="selectpicker" id="language-select" name="service">
                                     <option value="Choose Services">Choose Services</option>
                                     {% for service in ourservices %}

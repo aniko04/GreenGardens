@@ -117,7 +117,7 @@
                                 <li><i class="icon-check-solid"></i>{{ intro.list2|safe }}</li>
                                 <li><i class="icon-check-solid"></i>{{ intro.list3|safe }}</li>
                             </ul>
-                            <a href="{{ intro.button_url }}" class="grdeen-btn our-benefits-one__btn">
+                            <a href="{% url 'about' %}" class="grdeen-btn our-benefits-one__btn">
                                 <span>{{ intro.button_name }}</span>
                             </a>
                         </div>
@@ -679,20 +679,20 @@
                        
                         <div class="form-one__group">
                             <div class="form-one__control">
-                                <label for="name">Your Name</label>
+
                                 <input type="text" name="name" placeholder="Your Name" required>
                             </div>
                             <div class="form-one__control">
-                                <label for="email">Email</label>
+
                                 <input type="email" name="email" placeholder="Email Address" required>
                             </div>
                             <div class="form-one__control">
-                                <label for="tel">Phone</label>
+
                                 <input type="text" name="tel" placeholder="Phone">
                             </div>
                             <div class="form-one__control">
                             <div class="form-one__control__select">
-                                <label class="sr-only" for="language-select">Choose Services</label>
+
                                 <select class="selectpicker" id="language-select" name="service">
                                     <option value="Choose Services">Choose Services</option>
                                     {% for service in ourservices %}
@@ -782,7 +782,7 @@
                             <div class="blog-card__image">
                                 <div class="blog-card__image__inner">
                                     <img src="{{ blog.image.url }}" alt="{{ blog.minititle }}">
-                                    <a href="{{ blog.url }}" class="blog-card__image__link"></a>
+                                    <a href="{% url 'blog_details' blog.id %}" class="blog-card__image__link"></a>
                                 </div>
                                 <div class="blog-card__date">{{ blog.publish_date }}</div><!-- /.blog-card__date -->
                             </div><!-- /.blog-card__image -->
@@ -790,15 +790,15 @@
                                 <div class="blog-card--two__shape" style="background-image: url({% static 'assets/images/shapes/blog-post2-shape.png' %});"></div>
                                 <ul class="list-unstyled blog-card__meta">
                                     <li>
-                                        <a href="{{ blog.url }}">
+                                        
                                             <span><i class="fas fa-user"></i></span>
                                             By {{ blog.author }}
-                                        </a>
+                                      
                                     </li>
                                 </ul><!-- /.list-unstyled blog-card__meta -->
-                                <h3 class="blog-card__title"><a href="{{ blog.url }}">{{ blog.minititle }}</a></h3><!-- /.blog-card__title -->
+                                <h3 class="blog-card__title"><a href="{% url 'blog_details' blog.id %}">{{ blog.minititle }}</a></h3><!-- /.blog-card__title -->
                                 <p class="blog-card-two__text">
-                                    {{ blog.content|safe|truncatewords:20 }}
+                                    {{ blog.content|safe|truncatewords:15 }}
                                 </p><!-- /.blog-card-two__text -->
                             </div><!-- /.blog-card-two__content -->
                         </div><!-- /.blog-card -->
