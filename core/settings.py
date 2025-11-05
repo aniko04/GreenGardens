@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -236,3 +237,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'pulatovaniko@gmail.com'  # Bu yerga o'zingizning emailingizni yozing
 EMAIL_HOST_PASSWORD = 'rccw lpxd qtoi dprn'  # Bu yerga Gmail app password yozing
 DEFAULT_FROM_EMAIL = 'GreenGardens <pulatovaniko@gmail.com>'
+
+# Telegram Bot Settings
+TELEGRAM_BOT_TOKEN = config('TELEGRAM_BOT_TOKEN', default='')
+TELEGRAM_ADMIN_CHAT_ID = config('TELEGRAM_ADMIN_CHAT_ID', default='')

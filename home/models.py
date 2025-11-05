@@ -438,7 +438,50 @@ class EmailVerificationToken(models.Model):
 
     def __str__(self):
         return f"Email verification for {self.email}"
-    
+
     def is_expired(self):
         from django.utils import timezone
         return timezone.now() > self.expires_at
+
+
+class ChatSession(models.Model):
+    """Chat sessiyasi - har bir foydalanuvchi uchun alohida"""
+    session_token = models.CharField(max_length=100, unique=True, verbose_name="Sessiya tokeni")
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Foydalanuvchi")
+    email = models.EmailField(null=True, blank=True, verbose_name="Email")
+    name = models.CharField(max_length=200, null=True, blank=True, verbose_name="Ism")
+    is_online = models.BooleanField(default=False, verbose_name="Onlaynmi")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Yaratilgan vaqt")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Yangilangan vaqt")
+
+    class Meta:
+        verbose_name = "Chat Sessiyasi"
+        verbose_name_plural = "Chat Sessiyalari"
+        ordering = ['-updated_at']
+
+    def __str__(self):
+        return f"Chat #{self.id} - {self.name or self.email or 'Mehmon'}"
+
+
+class ChatMessage(models.Model):
+    """Chat xabarlari"""
+    SENDER_CHOICES = [
+        ('user', 'Foydalanuvchi'),
+        ('admin', 'Admin'),
+        ('bot', 'Bot'),
+    ]
+
+    session = models.ForeignKey(ChatSession, on_delete=models.CASCADE, related_name='messages', verbose_name="Sessiya")
+    sender = models.CharField(max_length=10, choices=SENDER_CHOICES, verbose_name="Yuboruvchi")
+    message = models.TextField(verbose_name="Xabar")
+    telegram_message_id = models.IntegerField(null=True, blank=True, verbose_name="Telegram xabar ID")
+    is_read = models.BooleanField(default=False, verbose_name="O'qilganmi")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Yaratilgan vaqt")
+
+    class Meta:
+        verbose_name = "Chat Xabari"
+        verbose_name_plural = "Chat Xabarlari"
+        ordering = ['created_at']
+
+    def __str__(self):
+        return f"{self.sender}: {self.message[:50]}"

@@ -46,5 +46,10 @@ urlpatterns = [
     path('api/cart/increase/<int:cart_id>/', increase_cart_quantity_api, name='increase_cart_quantity_api'),
     path('api/cart/decrease/<int:cart_id>/', decrease_cart_quantity_api, name='decrease_cart_quantity_api'),
     path('api/cart/clear/', clear_cart_api, name='clear_cart_api'),
-    
+
+    # CHAT API'LAR
+    path('api/chat/init/', chat_init, name='chat_init'),
+    path('api/chat/send/', chat_send_message, name='chat_send_message'),
+    path('api/chat/messages/<str:session_token>/', chat_get_messages, name='chat_get_messages'),
+    path('api/chat/admin/reply/', chat_admin_reply, name='chat_admin_reply'),
 ]

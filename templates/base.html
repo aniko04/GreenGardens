@@ -519,19 +519,6 @@
     <!-- Notification System JavaScript -->
     <script src="{% static 'assets/js/notifications.js' %}"></script>
 
-    <!--Start of Tawk.to Script-->
-    <script type="text/javascript">
-        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-        (function () {
-            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-            s1.async = true;
-            s1.src = 'https://embed.tawk.to/68fb1c7bd84f3b1958009630/1j8aeegsf';
-            s1.charset = 'UTF-8';
-            s1.setAttribute('crossorigin', '*');
-            s0.parentNode.insertBefore(s1, s0);
-        })();
-    </script>
-    <!--End of Tawk.to Script-->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const likeButtons = document.querySelectorAll('.like_product');
@@ -1238,6 +1225,413 @@
 
     <script type="text/javascript"
         src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- CHAT WIDGET -->
+    <style>
+        .chat-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10000;
+        }
+
+        .chat-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a4d007 0%, #8fc400 100%);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(164, 208, 7, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .chat-button:hover {
+            transform: scale(1.05);
+        }
+
+        .chat-button svg {
+            width: 30px;
+            height: 30px;
+            fill: white;
+        }
+
+        .chat-window {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 380px;
+            height: 550px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            display: none;
+            flex-direction: column;
+        }
+
+        .chat-window.active {
+            display: flex;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #a4d007 0%, #8fc400 100%);
+            color: white;
+            padding: 18px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h3 {
+            font-size: 16px;
+            margin: 0;
+        }
+
+        .close-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 20px;
+            overflow: hidden;
+            background: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #chatMessages {
+            flex: 1;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            padding-right: 5px;
+        }
+
+        #welcomeScreen {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 18px;
+            max-width: 75%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        .message.user .message-content {
+            background: #a4d007;
+            color: white;
+        }
+
+        .message.bot .message-content,
+        .message.admin .message-content {
+            background: white;
+            color: #495057;
+        }
+
+        .chat-input-area {
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .chat-input-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            border: 1px solid #dee2e6;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+
+        .send-button {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #a4d007;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .send-button svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        .welcome-form {
+            padding: 20px;
+        }
+
+        .welcome-form h3 {
+            margin-bottom: 15px;
+            color: #495057;
+        }
+
+        .welcome-form input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .welcome-form button {
+            width: 100%;
+            padding: 12px;
+            background: #a4d007;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+        }
+    </style>
+
+    <div class="chat-widget" id="chatWidget">
+        <button class="chat-button" id="chatButton" onclick="toggleChat()">
+            <svg viewBox="0 0 24 24">
+                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+            </svg>
+        </button>
+
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <h3>Chat Support</h3>
+                <button class="close-button" onclick="toggleChat()">&times;</button>
+            </div>
+
+            <div class="chat-body" id="chatBody">
+                <div id="welcomeScreen">
+                    <div class="welcome-form">
+                        <h3>Sizga qanday yordam bera olamiz?</h3>
+                        <input type="text" id="userName" placeholder="Ismingiz" required>
+                        <input type="email" id="userEmail" placeholder="Email" required>
+                        <button onclick="startChat()">Chatni boshlash</button>
+                    </div>
+                </div>
+                <div id="chatMessages" style="display: none;"></div>
+            </div>
+
+            <div class="chat-input-area" id="chatInputArea" style="display: none;">
+                <form class="chat-input-form" onsubmit="sendMessage(event)">
+                    <input type="text" class="chat-input" id="messageInput" placeholder="Xabar yozing..." required>
+                    <button type="submit" class="send-button">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let chatSessionToken = null;
+        let messagePollingInterval = null;
+
+        function toggleChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            chatWindow.classList.toggle('active');
+
+            if (chatWindow.classList.contains('active') && chatSessionToken) {
+                loadMessages().then(() => {
+                    setTimeout(scrollToBottom, 200);
+                });
+                startMessagePolling();
+            } else {
+                stopMessagePolling();
+            }
+        }
+
+        async function startChat() {
+            const name = document.getElementById('userName').value.trim();
+            const email = document.getElementById('userEmail').value.trim();
+
+            if (!name || !email) {
+                alert('Iltimos, ism va emailni kiriting');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/chat/init/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name, email })
+                });
+
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    chatSessionToken = data.session_token;
+                    localStorage.setItem('chatSessionToken', chatSessionToken);
+
+                    document.getElementById('welcomeScreen').style.display = 'none';
+                    document.getElementById('chatMessages').style.display = 'block';
+                    document.getElementById('chatInputArea').style.display = 'block';
+
+                    // Birinchi xabar foydalanuvchidan kutiladi
+                    startMessagePolling();
+                } else {
+                    alert('Xatolik yuz berdi. Qayta urinib ko\'ring.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Xatolik yuz berdi');
+            }
+        }
+
+        async function sendMessage(event) {
+            event.preventDefault();
+
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value.trim();
+
+            if (!message || !chatSessionToken) return;
+
+            // UI ga darhol qo'shish
+            addMessage('user', message);
+            messageInput.value = '';
+
+            try {
+                const response = await fetch('/api/chat/send/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        session_token: chatSessionToken,
+                        message: message
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.status === 'success' && data.auto_response) {
+                    setTimeout(() => {
+                        addMessage('bot', data.auto_response);
+                    }, 500);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function scrollToBottom() {
+            const chatMessages = document.getElementById('chatMessages');
+            if (chatMessages) {
+                setTimeout(() => {
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 100);
+            }
+        }
+
+        function addMessage(sender, text) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    <div class="message-text">${text}</div>
+                </div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        async function loadMessages() {
+            if (!chatSessionToken) return;
+
+            try {
+                const response = await fetch(`/api/chat/messages/${chatSessionToken}/`);
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    const chatMessages = document.getElementById('chatMessages');
+                    const currentScrollPosition = chatMessages.scrollTop;
+                    const isAtBottom = chatMessages.scrollHeight - chatMessages.scrollTop <= chatMessages.clientHeight + 100;
+
+                    chatMessages.innerHTML = '';
+
+                    data.messages.forEach(msg => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.className = `message ${msg.sender}`;
+                        messageDiv.innerHTML = `
+                            <div class="message-content">
+                                <div class="message-text">${msg.message}</div>
+                            </div>
+                        `;
+                        chatMessages.appendChild(messageDiv);
+                    });
+
+                    // Faqat foydalanuvchi pastda turgan bo'lsa scroll qilish
+                    // yoki yangi xabar kelgan bo'lsa
+                    if (isAtBottom || data.messages.length > 0) {
+                        scrollToBottom();
+                    }
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function startMessagePolling() {
+            stopMessagePolling();
+            messagePollingInterval = setInterval(loadMessages, 5000); // Har 5 sekundda yangilash
+        }
+
+        function stopMessagePolling() {
+            if (messagePollingInterval) {
+                clearInterval(messagePollingInterval);
+                messagePollingInterval = null;
+            }
+        }
+
+        // Sahifa yuklanganda eski sessiyani tekshirish
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedToken = localStorage.getItem('chatSessionToken');
+            if (savedToken) {
+                chatSessionToken = savedToken;
+                document.getElementById('welcomeScreen').style.display = 'none';
+                document.getElementById('chatMessages').style.display = 'block';
+                document.getElementById('chatInputArea').style.display = 'block';
+                loadMessages().then(() => {
+                    scrollToBottom();
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

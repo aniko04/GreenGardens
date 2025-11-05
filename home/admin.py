@@ -178,3 +178,38 @@ class CartAdmin(admin.ModelAdmin):
         percent = obj.get_discount_percent()
         return f"{percent:.1f}%" if percent > 0 else "—"
     discount_percent.short_description = "Chegirma foizi"
+
+
+@admin.register(ChatSession)
+class ChatSessionAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'email', 'user', 'is_online', 'created_at', 'message_count')
+    list_filter = ('is_online', 'created_at')
+    search_fields = ('name', 'email', 'session_token', 'user__username')
+    ordering = ('-updated_at',)
+    readonly_fields = ('session_token', 'created_at', 'updated_at')
+    list_per_page = 25
+
+    def message_count(self, obj):
+        return obj.messages.count()
+    message_count.short_description = "Xabarlar soni"
+
+
+class ChatMessageInline(admin.TabularInline):
+    model = ChatMessage
+    extra = 0
+    readonly_fields = ('sender', 'message', 'created_at', 'is_read')
+    can_delete = False
+
+
+@admin.register(ChatMessage)
+class ChatMessageAdmin(admin.ModelAdmin):
+    list_display = ('id', 'session', 'sender', 'message_preview', 'is_read', 'created_at')
+    list_filter = ('sender', 'is_read', 'created_at')
+    search_fields = ('message', 'session__name', 'session__email')
+    ordering = ('-created_at',)
+    readonly_fields = ('session', 'sender', 'message', 'created_at')
+    list_per_page = 50
+
+    def message_preview(self, obj):
+        return obj.message[:100] + "..." if len(obj.message) > 100 else obj.message
+    message_preview.short_description = "Xabar"

@@ -911,3 +911,188 @@ def password_reset_confirm(request, uidb64, token):
     else:
         messages.error(request, "The password reset link is invalid or has expired.")
         return redirect('password_reset')
+
+
+# ==================== CHAT VIEWS ====================
+import uuid
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def chat_init(request):
+    """Chat sessiyasini boshlash"""
+    try:
+        data = json.loads(request.body)
+        name = data.get('name', '')
+        email = data.get('email', '')
+
+        # Session token yaratish
+        session_token = str(uuid.uuid4())
+
+        # Chat sessiyasini yaratish
+        chat_session = ChatSession.objects.create(
+            session_token=session_token,
+            user=request.user if request.user.is_authenticated else None,
+            email=email,
+            name=name,
+            is_online=True
+        )
+
+        return JsonResponse({
+            'status': 'success',
+            'session_token': session_token,
+            'session_id': chat_session.id
+        })
+    except Exception as e:
+        return JsonResponse({
+            'status': 'error',
+            'message': str(e)
+        }, status=400)
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def chat_send_message(request):
+    """Foydalanuvchidan xabar qabul qilish"""
+    try:
+        data = json.loads(request.body)
+        session_token = data.get('session_token')
+        message_text = data.get('message')
+
+        if not session_token or not message_text:
+            return JsonResponse({
+                'status': 'error',
+                'message': 'Session token va xabar talab qilinadi'
+            }, status=400)
+
+        # Chat sessiyasini topish
+        try:
+            chat_session = ChatSession.objects.get(session_token=session_token)
+        except ChatSession.DoesNotExist:
+            return JsonResponse({
+                'status': 'error',
+                'message': 'Chat sessiyasi topilmadi'
+            }, status=404)
+
+        # Xabarni saqlash
+        chat_message = ChatMessage.objects.create(
+            session=chat_session,
+            sender='user',
+            message=message_text
+        )
+
+        # Auto-response faqat birinchi xabarda
+        auto_response = None
+        user_message_count = chat_session.messages.filter(sender='user').count()
+
+        if user_message_count == 1:  # Faqat birinchi xabar
+            auto_response = "Xabaringiz qabul qilindi! Tez orada admin javob beradi."
+            ChatMessage.objects.create(
+                session=chat_session,
+                sender='bot',
+                message=auto_response
+            )
+
+        # Telegram orqali admin'ga xabar yuborish
+        try:
+            from home.telegram_utils import send_message_to_admin, format_chat_message_for_admin
+
+            telegram_message = format_chat_message_for_admin(chat_session, message_text)
+            telegram_message_id = send_message_to_admin(telegram_message)
+
+            # Telegram message ID ni saqlash (reply uchun)
+            if telegram_message_id:
+                chat_message.telegram_message_id = telegram_message_id
+                chat_message.save()
+        except Exception as e:
+            # Telegram xatolik bo'lsa ham, asosiy funksiya ishlaydi
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.error(f"Telegram ga xabar yuborishda xatolik: {e}")
+
+        return JsonResponse({
+            'status': 'success',
+            'message_id': chat_message.id,
+            'auto_response': auto_response
+        })
+    except Exception as e:
+        return JsonResponse({
+            'status': 'error',
+            'message': str(e)
+        }, status=400)
+
+
+@require_http_methods(["GET"])
+def chat_get_messages(request, session_token):
+    """Chat xabarlarini olish"""
+    try:
+        chat_session = ChatSession.objects.get(session_token=session_token)
+        messages = chat_session.messages.all().values(
+            'id', 'sender', 'message', 'created_at', 'is_read'
+        )
+
+        return JsonResponse({
+            'status': 'success',
+            'messages': list(messages)
+        })
+    except ChatSession.DoesNotExist:
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Chat sessiyasi topilmadi'
+        }, status=404)
+    except Exception as e:
+        return JsonResponse({
+            'status': 'error',
+            'message': str(e)
+        }, status=400)
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def chat_admin_reply(request):
+    """Admin tomonidan javob yuborish (admin panel uchun)"""
+    if not request.user.is_staff:
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Ruxsat yo\'q'
+        }, status=403)
+
+    try:
+        data = json.loads(request.body)
+        session_id = data.get('session_id')
+        message_text = data.get('message')
+
+        if not session_id or not message_text:
+            return JsonResponse({
+                'status': 'error',
+                'message': 'Session ID va xabar talab qilinadi'
+            }, status=400)
+
+        # Chat sessiyasini topish
+        try:
+            chat_session = ChatSession.objects.get(id=session_id)
+        except ChatSession.DoesNotExist:
+            return JsonResponse({
+                'status': 'error',
+                'message': 'Chat sessiyasi topilmadi'
+            }, status=404)
+
+        # Admin javobini saqlash
+        chat_message = ChatMessage.objects.create(
+            session=chat_session,
+            sender='admin',
+            message=message_text
+        )
+
+        return JsonResponse({
+            'status': 'success',
+            'message_id': chat_message.id
+        })
+    except Exception as e:
+        return JsonResponse({
+            'status': 'error',
+            'message': str(e)
+        }, status=400)
