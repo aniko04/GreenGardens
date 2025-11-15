@@ -449,6 +449,7 @@ class ChatSession(models.Model):
     session_token = models.CharField(max_length=100, unique=True, verbose_name="Sessiya tokeni")
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Foydalanuvchi")
     email = models.EmailField(null=True, blank=True, verbose_name="Email")
+    phone = models.CharField(max_length=20, null=True, blank=True, verbose_name="Telefon")
     name = models.CharField(max_length=200, null=True, blank=True, verbose_name="Ism")
     is_online = models.BooleanField(default=False, verbose_name="Onlaynmi")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Yaratilgan vaqt")

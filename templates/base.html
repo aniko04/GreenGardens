@@ -293,7 +293,8 @@
                             </div>
                             <div class="main-header__helpline__phonewrap">
                                 <p class="main-header__helpline__text">Helpline</p>
-                                <a class="main-header__helpline__tel" href="tel:{{ info.phone_number }}">{{ info.phone_number }}</a>
+                                <a class="main-header__helpline__tel" href="tel:{{ info.phone_number }}">{{
+                                    info.phone_number }}</a>
                             </div>
                         </div>
                     </div><!-- /.main-header__right -->
@@ -402,7 +403,8 @@
                                             <span class="footer-widget__post-date"><i class="far fa-calendar"></i>
                                                 <span> {{ post.publish_date|date:"d M Y" }}</span>
                                             </span>
-                                            <h6 class="footer-widget__post-heading"><a href="">{{ post.minititle|truncatechars:50 }}</a></h6>
+                                            <h6 class="footer-widget__post-heading"><a href="">{{
+                                                    post.minititle|truncatechars:50 }}</a></h6>
                                         </div>
                                     </div>
                                     {% endfor %}
@@ -418,7 +420,8 @@
             <div class="main-footer__bottom">
                 <div class="container">
                     <div class="main-footer__bottom__inner">
-                        <p class="main-footer__copyright"> &copy; <span class="dynamic-year"></span> {{ info.footer_text }}</p>
+                        <p class="main-footer__copyright"> &copy; <span class="dynamic-year"></span> {{ info.footer_text
+                            }}</p>
                         <div class="main-footer__social-row">
                             <p class="main-footer__social-row-text">Social</p>
                             <ul class="main-footer__social-list">
@@ -1204,14 +1207,14 @@
 
             observer.observe(document.body, { childList: true, subtree: true });
         }
-      
+
         // Misol:sour
         waitForElement('#\\:1\\.container', (el) => {
             console.log('Div paydo bo‘ldi!', el);
             el.style.visibility = "hidden";
             el.style.opacity = "0";
         });
-        
+
 
         function translateTo(language) {
             var selectField = document.querySelector("select.goog-te-combo");
@@ -1415,12 +1418,47 @@
             font-size: 14px;
             font-weight: 600;
         }
+
+        .phone-input-container {
+            display: flex;
+            gap: 0;
+            margin-bottom: 10px;
+        }
+
+        .country-select {
+            padding: 12px 8px;
+            border: 1px solid #dee2e6;
+            border-right: none;
+            border-radius: 8px 0 0 8px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+            min-width: 100px;
+            outline: none;
+        }
+
+        .country-select:focus {
+            border-color: #a4d007;
+            box-shadow: 0 0 0 2px rgba(164, 208, 7, 0.2);
+        }
+
+        .phone-input-container #userPhone {
+            flex: 1;
+            margin-bottom: 0;
+            border-radius: 0 8px 8px 0;
+            border-left: none;
+        }
+
+        .phone-input-container #userPhone:focus {
+            border-color: #a4d007;
+            box-shadow: 0 0 0 2px rgba(164, 208, 7, 0.2);
+        }
     </style>
 
     <div class="chat-widget" id="chatWidget">
         <button class="chat-button" id="chatButton" onclick="toggleChat()">
             <svg viewBox="0 0 24 24">
-                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" />
             </svg>
         </button>
 
@@ -1435,7 +1473,26 @@
                     <div class="welcome-form">
                         <h3>Sizga qanday yordam bera olamiz?</h3>
                         <input type="text" id="userName" placeholder="Ismingiz" required>
-                        <input type="email" id="userEmail" placeholder="Email" required>
+                        <div class="phone-input-container">
+                            <select id="countryCode" class="country-select">
+                                <option value="+998" data-flag="🇺🇿">🇺🇿 +998</option>
+                                <option value="+1" data-flag="🇺🇸">🇺🇸 +1</option>
+                                <option value="+7" data-flag="🇷🇺">🇷🇺 +7</option>
+                                <option value="+44" data-flag="🇬🇧">🇬🇧 +44</option>
+                                <option value="+49" data-flag="🇩🇪">🇩🇪 +49</option>
+                                <option value="+33" data-flag="🇫🇷">🇫🇷 +33</option>
+                                <option value="+39" data-flag="🇮🇹">🇮🇹 +39</option>
+                                <option value="+34" data-flag="🇪🇸">🇪🇸 +34</option>
+                                <option value="+86" data-flag="🇨🇳">🇨🇳 +86</option>
+                                <option value="+81" data-flag="🇯🇵">🇯🇵 +81</option>
+                                <option value="+82" data-flag="🇰🇷">🇰🇷 +82</option>
+                                <option value="+91" data-flag="🇮🇳">🇮🇳 +91</option>
+                                <option value="+90" data-flag="🇹🇷">🇹🇷 +90</option>
+                                <option value="+971" data-flag="🇦🇪">🇦🇪 +971</option>
+                                <option value="+966" data-flag="🇸🇦">🇸🇦 +966</option>
+                            </select>
+                            <input type="tel" id="userPhone" placeholder="Telefon raqamingiz" required>
+                        </div>
                         <button onclick="startChat()">Chatni boshlash</button>
                     </div>
                 </div>
@@ -1447,7 +1504,7 @@
                     <input type="text" class="chat-input" id="messageInput" placeholder="Xabar yozing..." required>
                     <button type="submit" class="send-button">
                         <svg viewBox="0 0 24 24">
-                            <path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/>
+                            <path d="M2 21l21-9L2 3v7l15 2-15 2v7z" />
                         </svg>
                     </button>
                 </form>
@@ -1475,10 +1532,19 @@
 
         async function startChat() {
             const name = document.getElementById('userName').value.trim();
-            const email = document.getElementById('userEmail').value.trim();
+            const phone = document.getElementById('userPhone').value.trim();
+            const countryCode = document.getElementById('countryCode').value;
 
-            if (!name || !email) {
-                alert('Iltimos, ism va emailni kiriting');
+            if (!name || !phone) {
+                alert('Iltimos, ism va telefon raqamingizni kiriting');
+                return;
+            }
+
+            // Telefon raqamini formatlash
+            const formattedPhone = formatPhoneNumber(countryCode, phone);
+
+            if (!validatePhoneNumber(formattedPhone)) {
+                alert('Iltimos, to\'g\'ri telefon raqami kiriting');
                 return;
             }
 
@@ -1488,7 +1554,7 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ name, email })
+                    body: JSON.stringify({ name, phone: formattedPhone })
                 });
 
                 const data = await response.json();
@@ -1618,8 +1684,114 @@
             }
         }
 
+        // Telefon raqamini formatlash funksiyasi
+        function formatPhoneNumber(countryCode, phone) {
+            // Faqat raqamlarni qoldirish
+            let cleanPhone = phone.replace(/\D/g, '');
+
+            // Agar telefon raqami country code bilan boshlansa, uni olib tashlash
+            const codeWithoutPlus = countryCode.replace('+', '');
+            if (cleanPhone.startsWith(codeWithoutPlus)) {
+                cleanPhone = cleanPhone.substring(codeWithoutPlus.length);
+            }
+
+            return countryCode + cleanPhone;
+        }
+
+        // Telefon raqamini tekshirish funksiyasi
+        function validatePhoneNumber(phone) {
+            // Asosiy tekshiruv - kamida 7 ta raqam bo'lishi kerak
+            const phoneRegex = /^\+\d{1,4}\d{7,15}$/;
+            return phoneRegex.test(phone);
+        }
+
+        // Telefon input uchun formatlash
+        function setupPhoneInput() {
+            const phoneInput = document.getElementById('userPhone');
+            const countrySelect = document.getElementById('countryCode');
+
+            if (phoneInput) {
+                phoneInput.addEventListener('input', function (e) {
+                    let value = e.target.value;
+                    // Faqat raqamlarni qoldirish
+                    value = value.replace(/\D/g, '');
+
+                    // Formatni qo'llash - 3-2-2 yoki 2-3-2-2 format
+                    const countryCode = countrySelect.value;
+                    let formattedValue = '';
+
+                    if (countryCode === '+998') {
+                        // O'zbekiston formati: 12 345 67 89
+                        if (value.length <= 2) {
+                            formattedValue = value;
+                        } else if (value.length <= 5) {
+                            formattedValue = value.slice(0, 2) + ' ' + value.slice(2);
+                        } else if (value.length <= 7) {
+                            formattedValue = value.slice(0, 2) + ' ' + value.slice(2, 5) + ' ' + value.slice(5);
+                        } else if (value.length <= 9) {
+                            formattedValue = value.slice(0, 2) + ' ' + value.slice(2, 5) + ' ' + value.slice(5, 7) + ' ' + value.slice(7);
+                        } else {
+                            formattedValue = value.slice(0, 2) + ' ' + value.slice(2, 5) + ' ' + value.slice(5, 7) + ' ' + value.slice(7, 9);
+                        }
+                    } else if (countryCode === '+1') {
+                        // AQSH formati: 123 456 7890
+                        if (value.length <= 3) {
+                            formattedValue = value;
+                        } else if (value.length <= 6) {
+                            formattedValue = value.slice(0, 3) + ' ' + value.slice(3);
+                        } else {
+                            formattedValue = value.slice(0, 3) + ' ' + value.slice(3, 6) + ' ' + value.slice(6, 10);
+                        }
+                    } else if (countryCode === '+7') {
+                        // Rossiya formati: 123 456 78 90
+                        if (value.length <= 3) {
+                            formattedValue = value;
+                        } else if (value.length <= 6) {
+                            formattedValue = value.slice(0, 3) + ' ' + value.slice(3);
+                        } else if (value.length <= 8) {
+                            formattedValue = value.slice(0, 3) + ' ' + value.slice(3, 6) + ' ' + value.slice(6);
+                        } else {
+                            formattedValue = value.slice(0, 3) + ' ' + value.slice(3, 6) + ' ' + value.slice(6, 8) + ' ' + value.slice(8, 10);
+                        }
+                    } else {
+                        // Umumiy format: 123 456 789
+                        if (value.length <= 3) {
+                            formattedValue = value;
+                        } else if (value.length <= 6) {
+                            formattedValue = value.slice(0, 3) + ' ' + value.slice(3);
+                        } else {
+                            formattedValue = value.slice(0, 3) + ' ' + value.slice(3, 6) + ' ' + value.slice(6);
+                        }
+                    }
+
+                    e.target.value = formattedValue;
+                });
+
+                phoneInput.addEventListener('blur', function (e) {
+                    const countryCode = countrySelect.value;
+                    const phone = e.target.value.trim();
+                    if (phone) {
+                        const formatted = formatPhoneNumber(countryCode, phone);
+                        console.log('Formatted phone:', formatted);
+                    }
+                });
+
+                // Country code o'zgarganda formatni yangilash
+                countrySelect.addEventListener('change', function () {
+                    if (phoneInput.value) {
+                        // Joriy qiymatni tozalash va qayta formatlash
+                        const cleanValue = phoneInput.value.replace(/\D/g, '');
+                        phoneInput.value = cleanValue;
+                        // Input eventini trigger qilish
+                        phoneInput.dispatchEvent(new Event('input'));
+                    }
+                });
+            }
+        }
+
         // Sahifa yuklanganda eski sessiyani tekshirish
-        window.addEventListener('DOMContentLoaded', function() {
+        window.addEventListener('DOMContentLoaded', function () {
+            setupPhoneInput();
             const savedToken = localStorage.getItem('chatSessionToken');
             if (savedToken) {
                 chatSessionToken = savedToken;

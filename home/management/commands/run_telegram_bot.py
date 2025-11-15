@@ -151,7 +151,7 @@ class Command(BaseCommand):
             # User info olish
             @sync_to_async
             def get_user_info():
-                return original_message.session.name or original_message.session.email or "Mehmon"
+                return original_message.session.name or original_message.session.phone or original_message.session.email or "Mehmon"
             
             user_info = await get_user_info()
             

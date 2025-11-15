@@ -62,12 +62,15 @@ def send_message_to_admin(message_text):
 
 def format_chat_message_for_admin(session, message_text):
     """Chat xabarini admin uchun formatlash"""
-    user_info = session.name or session.email or "Mehmon"
+    user_info = session.name or session.phone or session.email or "Mehmon"
     
     formatted_message = (
         f"💬 *Yangi Chat Xabari*\n\n"
         f"👤 *Foydalanuvchi:* {user_info}\n"
     )
+    
+    if session.phone:
+        formatted_message += f"📞 *Telefon:* {session.phone}\n"
     
     if session.email:
         formatted_message += f"📧 *Email:* {session.email}\n"

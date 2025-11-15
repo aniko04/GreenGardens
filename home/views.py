@@ -927,7 +927,8 @@ def chat_init(request):
     try:
         data = json.loads(request.body)
         name = data.get('name', '')
-        email = data.get('email', '')
+        phone = data.get('phone', '')
+        email = data.get('email', '')  # Backward compatibility uchun
 
         # Session token yaratish
         session_token = str(uuid.uuid4())
@@ -936,6 +937,7 @@ def chat_init(request):
         chat_session = ChatSession.objects.create(
             session_token=session_token,
             user=request.user if request.user.is_authenticated else None,
+            phone=phone,
             email=email,
             name=name,
             is_online=True

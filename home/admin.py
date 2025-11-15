@@ -182,9 +182,9 @@ class CartAdmin(admin.ModelAdmin):
 
 @admin.register(ChatSession)
 class ChatSessionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'email', 'user', 'is_online', 'created_at', 'message_count')
+    list_display = ('id', 'name', 'phone', 'email', 'user', 'is_online', 'created_at', 'message_count')
     list_filter = ('is_online', 'created_at')
-    search_fields = ('name', 'email', 'session_token', 'user__username')
+    search_fields = ('name', 'phone', 'email', 'session_token', 'user__username')
     ordering = ('-updated_at',)
     readonly_fields = ('session_token', 'created_at', 'updated_at')
     list_per_page = 25
@@ -205,7 +205,7 @@ class ChatMessageInline(admin.TabularInline):
 class ChatMessageAdmin(admin.ModelAdmin):
     list_display = ('id', 'session', 'sender', 'message_preview', 'is_read', 'created_at')
     list_filter = ('sender', 'is_read', 'created_at')
-    search_fields = ('message', 'session__name', 'session__email')
+    search_fields = ('message', 'session__name', 'session__phone', 'session__email')
     ordering = ('-created_at',)
     readonly_fields = ('session', 'sender', 'message', 'created_at')
     list_per_page = 50
