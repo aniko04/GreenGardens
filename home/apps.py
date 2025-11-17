@@ -39,6 +39,12 @@ class HomeConfig(AppConfig):
     
     def _run_telegram_bot(self):
         """Telegram bot kodini ishga tushirish"""
+        import asyncio
+        
+        # Yangi event loop yaratish (thread uchun)
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        
         try:
             from django.conf import settings
             from telegram import Update
@@ -203,8 +209,8 @@ class HomeConfig(AppConfig):
                 async def error_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
                     logger.error(f"Telegram bot xatolik: {context.error}")
 
-                def start_bot(self):
-                    """Botni ishga tushirish"""
+                async def start_bot_async(self):
+                    """Botni async ravishda ishga tushirish (thread-safe)"""
                     application = Application.builder().token(self.bot_token).build()
 
                     # Handlerlarni qo'shish
@@ -224,15 +230,42 @@ class HomeConfig(AppConfig):
                     
                     application.add_error_handler(self.error_handler)
 
-                    # Botni polling rejimida ishga tushirish
+                    # Applicationni initialize qilish
+                    await application.initialize()
+                    await application.start()
+                    
+                    # Updaterni signal handlersiz ishga tushirish
                     logger.info("🤖 Telegram bot polling rejimida ishga tushmoqda...")
-                    application.run_polling(allowed_updates=Update.ALL_TYPES)
+                    await application.updater.start_polling(allowed_updates=Update.ALL_TYPES)
+                    
+                    # Bot ishlab turishini kutish
+                    try:
+                        # Bot to'xtatilgunga qadar kutish
+                        import asyncio
+                        while True:
+                            await asyncio.sleep(1)
+                    except (KeyboardInterrupt, SystemExit):
+                        logger.info("Bot to'xtatilmoqda...")
+                    finally:
+                        # Tozalash
+                        await application.updater.stop()
+                        await application.stop()
+                        await application.shutdown()
             
             # Bot instanceni yaratish va ishga tushirish
             bot_runner = TelegramBotRunner()
-            bot_runner.start_bot()
+            
+            # Asyncio loop da ishga tushirish
+            loop = asyncio.get_event_loop()
+            loop.run_until_complete(bot_runner.start_bot_async())
             
         except Exception as e:
             logger.error(f"Telegram bot ishga tushishda xatolik: {e}")
             import traceback
             logger.error(traceback.format_exc())
+        finally:
+            # Event loopni yopish
+            try:
+                loop.close()
+            except:
+                pass
