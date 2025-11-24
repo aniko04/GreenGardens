@@ -6,11 +6,11 @@
             <div class="page-header__overlay"></div>
             <!-- /.page-header__bg -->
             <div class="container">
-                <h2 class="page-header__title">{% if ourservices %}{{ ourservices.pagename }}{% else %}Service Details{% endif %}</h2>
+                <h2 class="page-header__title">{% if ourservices %}{{ ourservices.pagename }}{% else %}Servis Tafsilotlari{% endif %}</h2>
                 <ul class="grdeen-breadcrumb list-unstyled">
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="{% url 'services' %}">Services</a></li>
-                    <li><span>{% if ourservices %}{{ ourservices.pagename }}{% else %}Service Details{% endif %}</span></li>
+                    <li><a href="{% url 'home' %}">Bosh sahifa</a></li>
+                    <li><a href="{% url 'services' %}">Xizmatlar</a></li>
+                    <li><span>{% if ourservices %}{{ ourservices.pagename }}{% else %}Servis Tafsilotlari{% endif %}</span></li>
                 </ul><!-- /.thm-breadcrumb list-unstyled -->
             </div><!-- /.container -->
         </section><!-- /.page-header -->
@@ -21,7 +21,7 @@
                     <div class="col-md-12 col-lg-4">
                         <div class="service-sidebar">
                             <div class="service-sidebar__single">
-                                <h3 class="service-sidebar__title">Services list</h3><!-- /.service-sidebar__title -->
+                                <h3 class="service-sidebar__title">Xizmatlar ro'yxati</h3><!-- /.service-sidebar__title -->
                                 <ul class="list-unstyled service-sidebar__nav">
                                     <li>
                                         <a href="{% url 'service_details' ourservices.id %}" class="current" >
@@ -39,9 +39,9 @@
                             </div><!-- /.service-sidebar__single -->
                             <div class="service-sidebar__single">
                                 <div class="service-sidebar__contact" style="background-image: url({% static 'assets/images/shapes/service-contact-bg-1-1.jpg' %});">
-                                    <h3 class="service-sidebar__contact__title">Need help get in touch quickly</h3><!-- /.service-sidebar__contact__title -->
+                                    <h3 class="service-sidebar__contact__title">Yordam kerak bo'lsa, tezda bog'laning</h3><!-- /.service-sidebar__contact__title -->
                                     <a href="{% url 'contact' %}" class="grdeen-btn">
-                                        <span>Get A Quote</span>
+                                        <span>Taklif olish</span>
                                     </a>
                                 </div><!-- /.service-sidebar__contact -->
                             </div>
@@ -66,23 +66,23 @@
                             <!-- /.service-details__text -->
                             {% else %}
                             <div class="service-error">
-                                <h3 class="service-details__title">Service Not Found</h3><!-- /.service-details__title -->
+                                <h3 class="service-details__title">xizmat topilmadi</h3><!-- /.service-details__title -->
                                 <p class="service-details__text">
-                                    The requested service could not be found. Please select a service from the sidebar or go back to services page.
+                                    So'ralgan xizmat topilmadi. Iltimos, yon paneldan xizmatni tanlang yoki xizmatlar sahifasiga qayting.
                                 </p>
                                 <a href="{% url 'services' %}" class="grdeen-btn">
-                                    <span>Back to Services</span>
+                                    <span>Xizmatlarga qaytish</span>
                                 </a>
                             </div>
                             {% endif %}
-                            <h3 class="service-details__heading">What can you gain</h3><!-- /.service-details__heading -->
+                            <h3 class="service-details__heading">Nimalarga erishishingiz mumkin</h3><!-- /.service-details__heading -->
                             <p class="service-details__text">
 
                                 {% if ourservices and ourservices.content %}
                                     {{ ourservices.content|safe }}
                                 {% endif %}
                             </p><!-- /.service-details__text -->
-                            <h3 class="service-details__heading">Frequently asked questions</h3><!-- /.service-details__heading -->
+                            <h3 class="service-details__heading">Tez-tez so'raladigan savollar</h3><!-- /.service-details__heading -->
                             <div class="service-details__accordion grdeen-accrodion" data-grp-name="grdeen-accrodion">
                                 {% for faq in faqs %}
                                 <div class="accrodion">

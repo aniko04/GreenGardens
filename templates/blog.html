@@ -6,10 +6,10 @@
             <div class="page-header__overlay"></div>
             <!-- /.page-header__bg -->
             <div class="container">
-                <h2 class="page-header__title">Our blog</h2>
+                <h2 class="page-header__title">Bizning yangiliklarimiz</h2>
                 <ul class="grdeen-breadcrumb list-unstyled">
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><span>Blog grid</span></li>
+                    <li><a href="{% url 'home' %}">Bosh sahifa</a></li>
+                    <li><span>Blog </span></li>
                 </ul><!-- /.thm-breadcrumb list-unstyled -->
             </div><!-- /.container -->
         </section><!-- /.page-header -->
@@ -24,11 +24,11 @@
                             <div class="filter-group">
                                 <div class="filter-label" style="display: flex; align-items: center; margin-bottom: 10px;">
                                     <i class="fas fa-filter" style="color: #28a745; margin-right: 8px; font-size: 16px;"></i>
-                                    <span style="font-weight: 600; color: #2c3e50; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Filter by Category</span>
+                                    <span style="font-weight: 600; color: #2c3e50; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Kategoriya bo'yicha filtrlash</span>
                                 </div>
                                 <div class="custom-select-wrapper" style="position: relative;">
                                     <select id="category-select" class="custom-select" style="width: 100%; padding: 12px 40px 12px 15px; border: 2px solid #e9ecef; border-radius: 10px; background: white; font-size: 14px; color: #495057; cursor: pointer; transition: all 0.3s ease; appearance: none;">
-                                        <option value="">🌿 All Categories</option>
+                                        <option value="">🌿 Barcha kategoriyalar</option>
                                         {% for category in categories %}
                                             <option value="{{ category.id }}" {% if selected_category == category.id|stringformat:"s" %}selected{% endif %}>
                                                 {{ category.name }} ({{ category.events_count }})
@@ -47,20 +47,20 @@
                             <div class="sort-group">
                                 <div class="sort-label" style="display: flex; align-items: center; margin-bottom: 10px;">
                                     <i class="fas fa-sort-amount-down" style="color: #28a745; margin-right: 8px; font-size: 16px;"></i>
-                                    <span style="font-weight: 600; color: #2c3e50; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Sort by Date</span>
+                                    <span style="font-weight: 600; color: #2c3e50; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Saralash</span>
                                 </div>
                                 <div class="sort-buttons" style="display: flex; gap: 10px;">
                                     <button type="button" class="sort-btn {% if not selected_sort or selected_sort == 'newest' %}active{% endif %}" 
                                             data-sort="" 
                                             style="flex: 1; padding: 12px 20px; border: 2px solid #28a745; background: {% if not selected_sort or selected_sort == 'newest' %}#28a745{% else %}white{% endif %}; color: {% if not selected_sort or selected_sort == 'newest' %}white{% else %}#28a745{% endif %}; border-radius: 10px; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">
                                         <i class="fas fa-arrow-down" style="font-size: 12px;"></i>
-                                        <span>Newest First</span>
+                                        <span>Eng yangisi </span>
                                     </button>
                                     <button type="button" class="sort-btn {% if selected_sort == 'oldest' %}active{% endif %}" 
                                             data-sort="oldest" 
                                             style="flex: 1; padding: 12px 20px; border: 2px solid #28a745; background: {% if selected_sort == 'oldest' %}#28a745{% else %}white{% endif %}; color: {% if selected_sort == 'oldest' %}white{% else %}#28a745{% endif %}; border-radius: 10px; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">
                                         <i class="fas fa-arrow-up" style="font-size: 12px;"></i>
-                                        <span>Oldest First</span>
+                                        <span>Eng eski</span>
                                     </button>
                                 </div>
                             </div>
@@ -70,7 +70,7 @@
                     <!-- Active Filters Display -->
                     <div class="active-filters" style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #dee2e6;">
                         <div class="filter-tags" style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-                            <span style="font-size: 13px; color: #6c757d; font-weight: 500;">Active filters:</span>
+                            <span style="font-size: 13px; color: #6c757d; font-weight: 500;">Faol filtrlash:</span>
                             {% if selected_category %}
                                 {% for category in categories %}
                                     {% if category.id|stringformat:"s" == selected_category %}
@@ -89,12 +89,11 @@
                                 </span>
                             {% endif %}
                             {% if not selected_category and not selected_sort %}
-                                <span style="color: #6c757d; font-size: 12px; font-style: italic;">No filters applied</span>
+                                <span style="color: #6c757d; font-size: 12px; font-style: italic;">Filtrlar qo'llanilmadi</span>
                             {% endif %}
                         </div>
                     </div>
                 </div>
-
                 <!-- Results Info -->
                 <div class="row mb-3">
                     <div class="col-12">
@@ -105,7 +104,7 @@
                                     {% if category %}for category "{{ category.name }}"{% endif %}
                                     {% if selected_sort %}sorted by {{ selected_sort }}{% endif %}
                                 {% else %}
-                                    {{ ourblogs.paginator.count }} blog{{ ourblogs.paginator.count|pluralize }} found
+                                    {{ ourblogs.paginator.count }} blog{{ ourblogs.paginator.count|pluralize }}  topildi.
                                 {% endif %}
                             </p>
                         </div>

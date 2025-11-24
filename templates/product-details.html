@@ -6,10 +6,10 @@
     <div class="page-header__overlay"></div>
     <!-- /.page-header__bg -->
     <div class="container">
-        <h2 class="page-header__title">Shop details</h2>
+        <h2 class="page-header__title">Mahsulot tafsilotlari</h2>
         <ul class="grdeen-breadcrumb list-unstyled">
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li><span>Shop details</span></li>
+            <li><a href="{% url 'home' %}">Bosh sahifa</a></li>
+            <li><span>Mahsulot tafsilotlari</span></li>
         </ul><!-- /.thm-breadcrumb list-unstyled -->
     </div><!-- /.container -->
 </section><!-- /.page-header -->
@@ -36,9 +36,9 @@
                         <div class="item">
                             <div class="product-details__slider__image">
                                 {% if image.image %}
-                                <img src="{{ image.image.url }}" alt="grdeen">
+                                <img src="{{ image.image.url }}" alt="grdeen" style="width:100% !important; height:500px !important;">
                                 {% else %}
-                                <img src="{% static 'assets/images/image404.png' %}" alt="grdeen">
+                                <img src="{% static 'assets/images/image404.png' %}" alt="grdeen" style="width:100% !important; height:500px !important;">
                                 {% endif %}
                             </div>
                         </div><!-- /.item -->
@@ -94,7 +94,7 @@
 
                     <div class="product-details__views"
                         style="margin-top: 10px; margin-bottom: 15px; color: #666; font-size: 14px;">
-                        <i class="fa fa-eye" style="margin-right: 8px; color: #1a9120;"></i>{{ products.views }} views
+                        <i class="fa fa-eye" style="margin-right: 8px; color: #1a9120;"></i>{{ products.views }} ko'rishlar
                     </div>
 
                 </div><!-- /.review-ratings -->
@@ -104,7 +104,7 @@
                 <div class="product-details__qty">
                     {% if item %}
                     <div class="product-details__quantity" id="quantity-section-{{ products.id }}">
-                        <h3 class="product-details__quantity__title">Quantity</h3>
+                        <h3 class="product-details__quantity__title">Miqdor</h3>
                         <div class="quantity-box">
                             <button type="button" class="sub" onclick="decreaseQuantity({{ item.id }})">
                                 <i class="icon-down-arrow"></i>
@@ -119,10 +119,9 @@
                     {% endif %}
                     <div class="product-details__buttons">
                         {% if item %}
-                        <a href="{% url 'cart' %}" class="grdeen-btn"><span>Go to Cart</span></a>
+                        <a href="{% url 'cart' %}" class="grdeen-btn"><span>Savatchaga o'tish</span></a>
                         {% else %}
-                        <a href="#" class="grdeen-btn add-to-cart-btn" data-product-id="{{ products.id }}"><span>Add to
-                                Cart</span></a>
+                        <a href="#" class="grdeen-btn add-to-cart-btn" data-product-id="{{ products.id }}"><span>Savatchaga qo'shish</span></a>
                         {% endif %}
                         <a href="cart.html" class="product-details__buttons__wishlist like_product"
                             data-id="{{products.id}}"></a>
@@ -137,14 +136,14 @@
     <!-- /.product-description -->
     <div class="tabs-box product-details__tabs wow fadeInUp" data-wow-delay="300ms">
         <ul class="list-unstyled tab-buttons product-details__tabs__list">
-            <li data-tab="#description" class="tab-btn active-btn">Description</li>
-            <li data-tab="#specifications" class="tab-btn">Specifications</li>
+            <li data-tab="#description" class="tab-btn active-btn">Tavsif</li>
+            <li data-tab="#specifications" class="tab-btn">Texnik xususiyatlar</li>
         </ul>
         <div class="tabs-content">
             <div class="tab active-tab fadeInUp animated" id="description">
                 <div class="product-details__tabs__description">
                     <p class="product-details__tabs__description__text">
-                        {{ products.description }}
+                        {{ products.description|safe }}
                     </p>
                 </div>
             </div>
@@ -172,7 +171,7 @@
 <!-- Related Products Start -->
 <section class="related-product">
     <div class="container">
-        <h3 class="related-product__title">Related Products</h3>
+        <h3 class="related-product__title">O'xshash mahsulotlar</h3>
         <div class="row gutter-y-30">
             {% for product in allproducts %}
             {% include 'includes/product_card.html' %}
@@ -189,7 +188,7 @@
                             {% if page_obj.has_previous %}
                             <li class="page-item">
                                 <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;
-                                    Previous</a>
+                                    Oldingisi</a>
                             </li>
                             {% endif %}
 
@@ -207,7 +206,7 @@
 
                                 {% if page_obj.has_next %}
                                 <li class="page-item">
-                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next &raquo;</a>
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Keyingi &raquo;</a>
                                 </li>
                                 {% endif %}
                         </ul>

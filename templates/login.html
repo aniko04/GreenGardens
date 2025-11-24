@@ -6,10 +6,10 @@
     <div class="page-header__overlay"></div>
     <!-- /.page-header__bg -->
     <div class="container">
-        <h2 class="page-header__title">Login</h2>
+        <h2 class="page-header__title">Kirish</h2>
         <ul class="grdeen-breadcrumb list-unstyled">
-            <li><a href="index.html">Home</a></li>
-            <li><span>Login</span></li>
+            <li><a href="index.html">Bosh sahifa</a></li>
+            <li><span>Kirish</span></li>
         </ul><!-- /.thm-breadcrumb list-unstyled -->
     </div><!-- /.container -->
 </section><!-- /.page-header -->
@@ -21,23 +21,23 @@
             <!-- Login qismi -->
             <div class="col-lg-6 wow fadeInUp animated" data-wow-delay="300ms">
                 <div class="login-page__wrap">
-                    <h3 class="login-page__wrap__title">Login</h3>
+                    <h3 class="login-page__wrap__title">Kirish</h3>
                     <form class="login-page__form" method="post" action="{% url 'login' %}">
                         {% csrf_token %}
                         <div class="login-page__form-input-box">
-                            <input type="email" name="email" placeholder="Email *" required>
+                            <input type="email" name="email" placeholder="Elektron pochta *" required>
                         </div>
                         <div class="login-page__form-input-box">
-                            <input type="password" name="password" placeholder="Password *" required>
+                            <input type="password" name="password" placeholder="Parol *" required>
                         </div>
                         <div class="login-page__checked-box">
                             <input type="checkbox" name="remember" id="save-data">
-                            <label for="save-data"><span></span>Remember Me?</label>
+                            <label for="save-data"><span></span>Eslab qolish</label>
                         </div>
                         <div class="login-page__form-btn-box">
-                            <button type="submit" class="grdeen-btn"><span>Login</span></button>
+                            <button type="submit" class="grdeen-btn"><span>Kirish</span></button>
                             <div class="login-page__form-forgot-password">
-                                <a href="{% url 'password_reset' %}">Forgot your Password?</a>
+                                <a href="{% url 'password_reset' %}">Parolingizni unutdingizmi?</a>
                             </div>
                         </div>
                     </form>
@@ -47,28 +47,28 @@
             <!-- Register qismi -->
             <div class="col-lg-6 wow fadeInUp animated" data-wow-delay="400ms">
                 <div class="login-page__wrap">
-                    <h3 class="login-page__wrap__title">Register</h3>
+                    <h3 class="login-page__wrap__title">Ro'yxatdan o'tish</h3>
                     <form class="login-page__form" method="post" action="{% url 'register' %}">
                         {% csrf_token %}
                         <div class="login-page__form-input-box">
-                            <input type="email" name="email" placeholder="Email address" required>
+                            <input type="email" name="email" placeholder="Elektron pochta manzili" required>
                         </div>
                         <div class="login-page__form-input-box">
-                            <input type="text" name="phone" placeholder="Phone number" required>
+                            <input type="text" name="phone" placeholder="Telefon raqami" required>
                         </div>
                         <div class="login-page__form-input-box">
-                            <input type="password" name="password" placeholder="Password" required>
+                            <input type="password" name="password" placeholder="Parol" required>
                         </div>
                         <div class="login-page__form-input-box">
-                            <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                            <input type="password" name="confirm_password" placeholder="Parolni tasdiqlang" required>
                         </div>
                         <div class="login-page__checked-box">
                             <input type="checkbox" name="accept-policy" id="accept-policy" required>
-                            <label for="accept-policy">I accept company privacy policy.</label>
+                            <label for="accept-policy">Men kompaniya maxfiylik siyosatini qabul qilaman.</label>
                         </div>
                         <div class="login-page__form-btn-box">
                             <button type="submit" class="grdeen-btn">
-                                <span>Register</span>
+                                <span>Ro'yxatdan o'tish</span>
                             </button>
                         </div>
                     </form>

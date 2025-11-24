@@ -6,10 +6,10 @@
     <div class="page-header__overlay"></div>
     <!-- /.page-header__bg -->
     <div class="container">
-        <h2 class="page-header__title">Email Verification</h2>
+        <h2 class="page-header__title">Email Tasdiqlash</h2>
         <ul class="grdeen-breadcrumb list-unstyled">
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li><span>Email Verification</span></li>
+            <li><a href="{% url 'home' %}">Bosh sahifa</a></li>
+            <li><span>Email Tasdiqlash</span></li>
         </ul><!-- /.thm-breadcrumb list-unstyled -->
     </div><!-- /.container -->
 </section><!-- /.page-header -->
@@ -25,9 +25,8 @@
                             <i class="fas fa-envelope-open-text"
                                 style="font-size: 3rem; color: #17a2b8; margin-bottom: 1rem;"></i>
                         </div>
-                        <h3 class="login-page__wrap__title">Verify Your Email</h3>
-                        <p class="verify-subtitle">We've sent a 6-digit verification code to your email address. Please
-                            enter it below to complete your registration.</p>
+                        <h3 class="login-page__wrap__title">Emailingizni tasdiqlang</h3>
+                        <p class="verify-subtitle">Sizning elektron pochta manzilingizga 6 xonali tasdiqlash kodi yuborildi. Ro'yxatdan o'tishni yakunlash uchun uni quyida kiriting.</p>
                     </div>
 
                     {% if messages %}
@@ -45,40 +44,40 @@
                     <form class="login-page__form" method="post" action="{% url 'email_verification' %}">
                         {% csrf_token %}
                         <div class="login-page__form-input-box">
-                            <input type="email" name="email" placeholder="Enter your email address *" required
+                            <input type="email" name="email" placeholder="Elektron pochta manzilingizni kiriting *" required
                                 style="border-radius: 8px; padding: 15px;">
                         </div>
 
                         <div class="verification-code-section">
-                            <label class="verification-label">Email Verification Code</label>
+                            <label class="verification-label">Email tasdiqlash kodi</label>
                             <div class="verification-code-container">
                                 <input type="text" name="verification_code" id="email_verification_code"
                                     placeholder="000000" maxlength="6" pattern="[0-9]{6}"
                                     class="verification-code-input" required>
                             </div>
                             <small class="code-expiry-text">
-                                <i class="fas fa-clock me-1"></i>Code expires in 15 minutes
+                                <i class="fas fa-clock me-1"></i>Kod 15 daqiqa ichida amal qiladi
                             </small>
                         </div>
 
                         <div class="login-page__form-btn-box">
                             <button type="submit" class="grdeen-btn email-verify-btn">
                                 <i class="fas fa-envelope-check me-2"></i>
-                                <span>Verify Email</span>
+                                <span>Emailni tasdiqlash</span>
                             </button>
                         </div>
                     </form>
 
                     <div class="verify-footer-links">
                         <div class="resend-code-section">
-                            <p>Didn't receive the code?</p>
+                            <p>Kodni olmaganmisiz?</p>
                             <a href="{% url 'register' %}" class="resend-link">
-                                <i class="fas fa-user-plus me-1"></i>Register again
+                                <i class="fas fa-user-plus me-1"></i>Qayta ro'yxatdan o'ting
                             </a>
                         </div>
                         <div class="back-to-login">
                             <a href="{% url 'login' %}" class="back-link">
-                                <i class="fas fa-sign-in-alt me-1"></i>Already verified? Login here
+                                <i class="fas fa-sign-in-alt me-1"></i>Allaqachon tasdiqlanganmisiz? Bu yerda kiring
                             </a>
                         </div>
                     </div>

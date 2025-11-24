@@ -8,8 +8,8 @@
             <div class="container">
                 <h2 class="page-header__title">{{ ourservices.last.title }}</h2>
                 <ul class="grdeen-breadcrumb list-unstyled">
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><span>Services</span></li>
+                    <li><a href="{% url 'home' %}">Bosh sahifa</a></li>
+                    <li><span>Xizmatlar</span></li>
                 </ul><!-- /.thm-breadcrumb list-unstyled -->
             </div><!-- /.container -->
         </section><!-- /.page-header -->
@@ -27,7 +27,7 @@
                                         <a href="{% url 'service_details' service.id %}">{{ service.pagename }}</a>
                                     </h4>
                                     <p class="service-one__item__text">{{ service.description|truncatewords:15 }}</p>
-                                    <a class="service-one__item__link" href="{% url 'service_details' service.id %}">Discover More</a>
+                                    <a class="service-one__item__link" href="{% url 'service_details' service.id %}">Batafsil</a>
                                 </div>
                             </div>
                             <div class="service-one__item__image">

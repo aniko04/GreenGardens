@@ -6,10 +6,10 @@
     <div class="page-header__overlay"></div>
     <!-- /.page-header__bg -->
     <div class="container">
-        <h2 class="page-header__title">My Favorite Products</h2>
+        <h2 class="page-header__title">Mening yoqtirgan mahsulotlarim</h2>
         <ul class="grdeen-breadcrumb list-unstyled">
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li><span>My Likes</span></li>
+            <li><a href="{% url 'home' %}">Bosh sahifa</a></li>
+            <li><span>Mening yoqtirganlarim</span></li>
         </ul><!-- /.thm-breadcrumb list-unstyled -->
     </div><!-- /.container -->
 </section><!-- /.page-header -->
@@ -23,8 +23,8 @@
                 <div class="product__info-top">
                     <div class="product__showing-text-box">
                         <p class="product__showing-text">
-                            Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ likes_count }} liked
-                            products
+                            Ko'rsatilmoqda {{ page_obj.start_index }}-{{ page_obj.end_index }} dan {{ likes_count }} ta yoqtirilgan
+                            mahsulotlar
                         </p>
                     </div>
                     <div class="product__showing-sort">
@@ -33,8 +33,8 @@
                                 <i class="fas fa-heart"></i>
                             </div>
                             <div class="wishlist-text">
-                                <h5 class="wishlist-title">My Wishlist</h5>
-                                <span class="wishlist-count">{{ likes_count }} Product{{ likes_count|pluralize }}</span>
+                                <h5 class="wishlist-title">Mening Yoqtirganlarim</h5>
+                                <span class="wishlist-count">{{ likes_count }} Mahsulot{{ likes_count|pluralize }}</span>
                             </div>
                         </div>
                     </div>

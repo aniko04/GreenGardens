@@ -109,7 +109,7 @@
                                         <i class="icon-pot"></i>
                                     </div>
                                     <strong class="about-one__content__qualitwrap__price">{{ intro.experience_years }}+</strong>
-                                    <span class="about-one__content__qualitwrap__text">Years Of Experience</span>
+                                    <span class="about-one__content__qualitwrap__text">YILLIK TAJRIBA</span>
                                 </div>
                             </div>
                             <ul class="list-unstyled about-one__content__list">
@@ -225,7 +225,7 @@
                                 <div class="service-one__item__titlecol">
                                     <h4 class="service-one__item__title"><a href="{% url 'service_details' service.id %}">{{ service.pagename }}</a></h4>
                                     <p class="service-one__item__text">{{ service.description }}</p>
-                                    <a class="service-one__item__link" href="{% url 'service_details' service.id %}">Discover More</a>
+                                    <a class="service-one__item__link" href="{% url 'service_details' service.id %}">Batafsil</a>
                                 </div>
                             </div>
                             <div class="service-one__item__image">
@@ -306,98 +306,7 @@
         </section>
         <!-- work-process end -->
 
-        <section class="testimonials-one testimonials-one--two testimonials-one--three">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="sec-title">
-
-                            <div class="sec-title__img">
-                                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" direction="rtl" width="12.000000pt" height="10.000000pt" viewbox="0 0 12.000000 10.000000" preserveaspectratio="xMidYMid meet">
-                                    <g transform="translate(0.000000,10.000000) scale(0.100000,-0.100000)" stroke="none">
-                                        <path d="M58 84 c12 -8 22 -24 22 -34 0 -10 -10 -26 -22 -34 l-22 -16 27 0
-			c17 0 32 9 43 25 15 23 15 27 0 50 -11 16 -26 25 -43 25 l-27 0 22 -16z"></path>
-                                    </g>
-                                </svg>
-                            </div>
-
-
-                            <span class="sec-title__tagline">{{ ourtestimonials.last.title }}</span><!-- /.sec-title__tagline -->
-
-                            <h2 class="sec-title__title">{{ ourtestimonials.last.subtitle }}</h2><!-- /.sec-title__title -->
-                        </div><!-- /.sec-title -->
-                    </div>
-                </div>
-                <div class="testimonials-one__carousel grdeen-owl__carousel grdeen-owl__carousel--with-shadow grdeen-owl__carousel--basic-nav owl-carousel" data-owl-options='{
-			"items": 1,
-			"margin": 0,
-			"loop": false,
-			"smartSpeed": 700,
-			"nav": false,
-			"navText": "",
-			"dots": true,
-			"autoplay": false,
-			"responsive": {
-				"0": {
-					"items": 1
-				},
-				"767": {
-					"items": 2,
-					"margin": 30
-				},
-				"992": {
-					"items": 3,
-					"margin": 30
-				}
-			}
-		}'>
-        {% for testimonial in ourtestimonials %}
-                    <div class="item">
-                        <div class="testimonials-card testimonials-dark-card  wow fadeInUp" data-wow-duration='1500ms' data-wow-delay='00ms'>
-                            <div class="testimonials-card__inner">
-                                <div class="testimonials-card__ratingwrap d-flex align-items-center justify-content-between">
-                                    <div class="testimonials-card__rating">
-                                        <span class="testimonials-card__rating__start"><i class="fa fa-star"></i></span>
-                                        <span class="testimonials-card__rating__start"><i class="fa fa-star"></i></span>
-                                        <span class="testimonials-card__rating__start"><i class="fa fa-star"></i></span>
-                                        <span class="testimonials-card__rating__start"><i class="fa fa-star"></i></span>
-                                        <span class="testimonials-card__rating__start"><i class="fa fa-star"></i></span>
-                                    </div><!-- /.testimonials-card__rating -->
-                                    <div class="testimonials-card__icon">
-                                        <img src="{% static 'assets/images/shapes/funfact-icon2-1.png' %}" alt="">
-                                    </div>
-                                </div>
-
-                                <div class="testimonials-card__content">
-                                    {{ testimonial.feedback }}
-                                </div><!-- /.testimonials-card__content -->
-                                <div class="testimonials-card__top">
-                                    <div class="testimonials-card__image">
-                                        <img src="{{ testimonial.image.url }}" alt="{{ testimonial.name }}">
-                                    </div><!-- /.testimonials-card__image -->
-
-                                    <div class="testimonials-card__top__left">
-                                        <h3 class="testimonials-card__name">
-                                            {{ testimonial.name }}
-                                        </h3><!-- /.testimonials-card__name -->
-                                        <p class="testimonials-card__designation">{{ testimonial.position }}</p><!-- /.testimonials-card__designation -->
-
-                                        <div class="testimonials-card__quote">
-                                            <i class="icon-quote"></i>
-                                        </div>
-                                    </div><!-- /.testimonials-card__top__left -->
-                                </div><!-- /.testimonials-card__top -->
-                                <div class="testimonials-card__shape2">
-                                    <img src="{% static 'assets/images/shapes/testimonial-shape2-1.png' %}" alt="">
-                                </div>
-                            </div><!-- /.testimonials-card__inner -->
-                        </div><!-- /.testimonials-card -->
-                    </div><!-- /.item -->
-{% endfor %}
-        
-                </div><!-- /.testimonials-one__carousel -->
-            </div><!-- /.container -->
-        </section><!-- /.testimonials-one -->
+       
 
         <section class="project-one project-one--two project-one--three">
             <div class="container-fluid">
@@ -528,12 +437,12 @@
                                             <div class="work-process-one__col__icon">
                                                 <div class="funfact-one__countwrap">
                                                     <strong class="funfact-one__count count-text" data-stop="{{ ourfacts.last.project_number }}" data-speed="1500"></strong>
-                                                    <span class="funfact-one__count">K</span>
+                                                    <span class="funfact-one__count">+</span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="work-process-one__col__info text-center">
-                                            <h3 class="work-process-one__col__title">Projects Completed</h3>
+                                            <h3 class="work-process-one__col__title">YAKUNLANGAN LOYIHALAR</h3>
                                             <p class="work-process-one__col__text">{{ ourfacts.last.project_content }}</p>
                                         </div>
                                         <div class="work-process-one__col__shapebg"></div>
@@ -553,7 +462,7 @@
                                             </div>
                                         </div>
                                         <div class="work-process-one__col__info text-center">
-                                            <h3 class="work-process-one__col__title">Satisfied Customers</h3>
+                                            <h3 class="work-process-one__col__title">MAMNUN MIJOZLAR</h3>
                                             <p class="work-process-one__col__text">{{ ourfacts.last.customer_content }}</p>
                                         </div>
                                         <div class="work-process-one__col__shapebg"></div>
@@ -669,9 +578,9 @@
                                     </div>
 
 
-                                    <span class="sec-title__tagline">Free Book Now</span><!-- /.sec-title__tagline -->
+                                    <span class="sec-title__tagline">BEPUL KONSULTATSIYA</span><!-- /.sec-title__tagline -->
 
-                                    <h2 class="sec-title__title">Book a FREE <br> professional gardening <br> consultation!</h2><!-- /.sec-title__title -->
+                                    <h2 class="sec-title__title">BEPUL PROFESSIONAL<br> BOG'DORCHILIK KONSULTATSIYASINI <br> OLING!</h2><!-- /.sec-title__title -->
                                 </div><!-- /.sec-title -->
                             </div>
                             <form class="form-one contact-one__form " method="POST">
@@ -680,21 +589,21 @@
                         <div class="form-one__group">
                             <div class="form-one__control">
 
-                                <input type="text" name="name" placeholder="Your Name" required>
+                                <input type="text" name="name" placeholder="Ismingiz" required>
                             </div>
                             <div class="form-one__control">
 
-                                <input type="email" name="email" placeholder="Email Address" required>
+                                <input type="email" name="email" placeholder="Email manzilingiz" required>
                             </div>
                             <div class="form-one__control">
 
-                                <input type="text" name="tel" placeholder="Phone">
+                                <input type="text" name="tel" placeholder="Telefon raqamingiz" required>
                             </div>
                             <div class="form-one__control">
                             <div class="form-one__control__select">
 
                                 <select class="selectpicker" id="language-select" name="service">
-                                    <option value="Choose Services">Choose Services</option>
+                                    <option value="Choose Services">Xizmat turini tanlang</option>
                                     {% for service in ourservices %}
                                         <option value="{{ service.pagename }}">{{ service.pagename }}</option>
                                     {% endfor %}
@@ -703,11 +612,11 @@
                             </div>
 
                             <div class="form-one__control form-one__control--full">
-                                <textarea name="message" placeholder="Your Message here" required></textarea>
+                                <textarea name="message" placeholder="Xabaringizni kiriting" required></textarea>
                             </div>
                            
                             <div class="form-one__control form-one__control--full text-center">
-                                <button type="submit" class="grdeen-btn"><span>Send a message</span></button>
+                                <button type="submit" class="grdeen-btn"><span>Ariza yuborish</span></button>
                             </div>
                         </div>
                         </form>
@@ -725,7 +634,7 @@
                 </div>
             </div><!-- /.container -->
             <div class="free-booking-one__shadow">
-                <h1 class="free-booking-one__shadow__title">Gardening</h1>
+                <h1 class="free-booking-one__shadow__title">Green Gardens</h1>
             </div>
             <div class="free-booking-one__shape3"><img src="{% static 'assets/images/shapes/booking-shape3-3.png' %}" alt="grdeen"></div>
         </section><!-- /.free-booking-two -->

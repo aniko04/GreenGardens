@@ -203,10 +203,10 @@
             <div class="page-header__overlay"></div>
             <!-- /.page-header__bg -->
             <div class="container">
-                <h2 class="page-header__title">Our shop</h2>
+                <h2 class="page-header__title">Bizning do'konimiz</h2>
                 <ul class="grdeen-breadcrumb list-unstyled">
-                    <li><a href="index.html">Home</a></li>
-                    <li><span>Shop</span></li>
+                    <li><a href="index.html">Bosh sahifa</a></li>
+                    <li><span>Do'kon</span></li>
                 </ul><!-- /.thm-breadcrumb list-unstyled -->
             </div><!-- /.container -->
         </section><!-- /.page-header -->
@@ -217,18 +217,18 @@
                     <div class="col-lg-12">
                         <div class="product__info-top">
                             <div class="product__showing-text-box">
-                                <p class="product__showing-text">Showing page {{ products.number }} of {{ products.paginator.num_pages }} 
-                                ({{ products.paginator.count }} total products)</p>
+                                <p class="product__showing-text">Sahifa {{ products.number }} dan {{ products.paginator.num_pages }} ni ko'rsatmoqda 
+                                (Jami mahsulotlar soni: {{ products.paginator.count }})</p>
                             </div>
                             <div class="product__showing-sort">
                                 <select class="selectpicker" aria-label="Default sorting" id="sortProducts" onchange="sortProducts()">
-                                    <option value="" {% if not selected_sort %}selected{% endif %}>Default sorting</option>
-                                    <option value="name" {% if selected_sort == 'name' %}selected{% endif %}>Sort by name (A-Z)</option>
-                                    <option value="price_low" {% if selected_sort == 'price_low' %}selected{% endif %}>Sort by price (Low to High)</option>
-                                    <option value="price_high" {% if selected_sort == 'price_high' %}selected{% endif %}>Sort by price (High to Low)</option>
-                                    <option value="views_high" {% if selected_sort == 'views_high' %}selected{% endif %}>Sort by views (Most viewed)</option>
-                                    <option value="views_low" {% if selected_sort == 'views_low' %}selected{% endif %}>Sort by views (Least viewed)</option>
-                                    <option value="newest" {% if selected_sort == 'newest' %}selected{% endif %}>Sort by newest</option>
+                                    <option value="" {% if not selected_sort %}selected{% endif %}>Standart tartib</option>
+                                    <option value="name" {% if selected_sort == 'name' %}selected{% endif %}>Nomi bo'yicha tartiblash (A-Z)</option>
+                                    <option value="price_low" {% if selected_sort == 'price_low' %}selected{% endif %}>Narxi bo'yicha tartiblash (Kamdan ko'pga)</option>
+                                    <option value="price_high" {% if selected_sort == 'price_high' %}selected{% endif %}>Narxi bo'yicha tartiblash (Ko'pdan kamga)</option>
+                                    <option value="views_high" {% if selected_sort == 'views_high' %}selected{% endif %}>Ko'rishlar bo'yicha tartiblash (Eng ko'p ko'rilgan)</option>
+                                    <option value="views_low" {% if selected_sort == 'views_low' %}selected{% endif %}>Ko'rishlar bo'yicha tartiblash (Eng kam ko'rilgan)</option>
+                                    <option value="newest" {% if selected_sort == 'newest' %}selected{% endif %}>Eng yangi bo'yicha tartiblash</option>
                                 </select>
                             </div>
                         </div>
@@ -245,7 +245,7 @@
                             {% if products.has_previous %}
                                 <a href="?{% if selected_sort %}sort={{ selected_sort }}&{% endif %}page={{ products.previous_page_number }}" 
                                    class="next" title="Previous Page">
-                                    <i class="fa fa-arrow-left"></i> Previous
+                                    <i class="fa fa-arrow-left"></i> Oldingi
                                 </a>
                             {% endif %}
 
@@ -278,7 +278,7 @@
                             {% if products.has_next %}
                                 <a href="?{% if selected_sort %}sort={{ selected_sort }}&{% endif %}page={{ products.next_page_number }}" 
                                    class="next" title="Next Page">
-                                    Next <i class="fa fa-arrow-right"></i>
+                                    Keyingi <i class="fa fa-arrow-right"></i>
                                 </a>
                             {% endif %}
                         </div>
@@ -286,8 +286,8 @@
                         <!-- Pagination Info -->
                         <div class="pagination-info text-center mt-3" style="margin-top: 25px;">
                             <p style="color: #666; font-size: 14px; margin: 0;">
-                                Showing page {{ products.number }} of {{ products.paginator.num_pages }} 
-                                ({{ products.paginator.count }} total products)
+                                Sahifa {{ products.number }} dan {{ products.paginator.num_pages }} 
+                                (Jami mahsulotlar soni: {{ products.paginator.count }})
                             </p>
                         </div>
                         {% endif %}

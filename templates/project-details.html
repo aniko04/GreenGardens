@@ -8,8 +8,8 @@
             <div class="container">
                 <h2 class="page-header__title">{{ ourprojects.project_name }}</h2>
                 <ul class="grdeen-breadcrumb list-unstyled">
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><span>Project details</span></li>
+                    <li><a href="{% url 'home' %}">Bosh sahifa</a></li>
+                    <li><span>Loyiha tafsilotlari</span></li>
                 </ul><!-- /.thm-breadcrumb list-unstyled -->
             </div><!-- /.container -->
         </section><!-- /.page-header -->
@@ -41,29 +41,10 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="project-details__sidebar wow fadeInUp" data-wow-delay="300ms">
-                            <div class="project-details__info" style="background-image: url(assets/images/resources/project-d-info-bg.jpg);">
-                                <ul class="project-details__info__list">
-                                    <li>
-                                        <span class="project-details__info__list__title">Clients:</span>
-                                        <h5 class="project-details__info__list__text">Adam Kabin</h5>
-                                    </li>
-                                    <li>
-                                        <span class="project-details__info__list__title">Category:</span>
-                                        <h5 class="project-details__info__list__text">Garden maintenace</h5>
-                                    </li>
-                                    <li>
-                                        <span class="project-details__info__list__title">Date:</span>
-                                        <h5 class="project-details__info__list__text">October 25, 2023</h5>
-                                    </li>
-                                    <li>
-                                        <span class="project-details__info__list__title">Project Value:</span>
-                                        <h5 class="project-details__info__list__text">$1200.00</h5>
-                                    </li>
-                                </ul>
-                            </div>
+                            
                             <div class="project-details__info-two" style="background-image: url({% static 'assets/images/resources/project-d-info-bg2.jpg' %});">
-                                <h3 class="project-details__info-two__title">Book a FREE professional gardening consultation!</h3>
-                                <a href="{% url 'contact' %}" class="grdeen-btn"><span>Get it now</span></a><!-- slider-btn -->
+                                <h3 class="project-details__info-two__title">Bepul professional bog'dorchilik bo'yicha maslahat oling!</h3>
+                                <a href="{% url 'contact' %}" class="grdeen-btn"><span>hoziroq buyurtma qiling</span></a><!-- slider-btn -->
                             </div>
                         </div>
                     </div>
@@ -74,7 +55,7 @@
 
         <section class="related-project">
             <div class="container">
-                <h3 class="related-project__title">Our similar completed <br>projects</h3>
+                <h3 class="related-project__title">Bizning o'xshash yakunlangan <br>loyihalarimiz</h3>
                 <div class="project-one__carousel grdeen-owl__carousel grdeen-owl__carousel--basic-nav owl-carousel owl-theme" data-owl-options='{
 			"items": 1,
 			"margin": 30,

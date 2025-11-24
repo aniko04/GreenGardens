@@ -7,10 +7,10 @@
             <div class="page-header__overlay"></div>
             <!-- /.page-header__bg -->
             <div class="container">
-                <h2 class="page-header__title">Blog details</h2>
+                <h2 class="page-header__title">Blog tafsilotlari</h2>
                 <ul class="grdeen-breadcrumb list-unstyled">
-                    <li><a href="index.html">Home</a></li>
-                    <li><span>Blog details</span></li>
+                    <li><a href="index.html">Bosh sahifa</a></li>
+                    <li><span>Blog tafsilotlari</span></li>
                 </ul><!-- /.thm-breadcrumb list-unstyled -->
             </div><!-- /.container -->
         </section><!-- /.page-header -->
@@ -31,7 +31,7 @@
                                {{ ourblogs.content|safe }}
                                 <div class="blog-details__meta">
                                     <div class="blog-details__cats">
-                                        <h4 class="blog-details__cats__title">Category:</h4><!-- /.blog-details__tags__title -->
+                                        <h4 class="blog-details__cats__title">Kategoriya:</h4><!-- /.blog-details__tags__title -->
                                         <a href="{% url 'category_events' ourblogs.category.id %}">{{ ourblogs.category.name }}</a>
                                     </div><!-- /.blog-details__tags -->
                                 </div>
@@ -43,7 +43,7 @@
                         <div class="sidebar">
                             <aside class="widget-area">
                                 <div class="sidebar__single">
-                                    <h4 class="sidebar__title">Blog Categories</h4><!-- /.sidebar__title -->
+                                    <h4 class="sidebar__title">Blog Kategoriyalari</h4><!-- /.sidebar__title -->
                                     <ul class="sidebar__categories list-unstyled">
                                         {% for category in categories %}
                                             <li><a href="{% url 'category_events' category.id %}">{{ category.name }}<span>({{ category.ourblog_set.count }})</span></a></li>
@@ -51,7 +51,7 @@
                                     </ul><!-- /.sidebar__categories list-unstyled -->
                                 </div><!-- /.sidebar__single -->
                                 <div class="sidebar__single">
-                                    <h4 class="sidebar__title">Recent News</h4><!-- /.sidebar__title -->
+                                    <h4 class="sidebar__title">So'nggi Yangiliklar</h4><!-- /.sidebar__title -->
                                     <ul class="sidebar__posts list-unstyled">
                                         {% for post in populars %}
                                         <li class="sidebar__posts__item">

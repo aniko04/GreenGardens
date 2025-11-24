@@ -4005,7 +4005,7 @@ h6 {
   align-items: center;
   justify-content: center;
   background-color: var(--grdeen-white, #fff);
-  padding: 10px 30px;
+  
   margin-bottom: -8px;
   margin-top: -11px;
   border-radius: 0 0 4px 0;
@@ -4033,7 +4033,7 @@ h6 {
   }
 }
 .main-header__logo img {
-  width: 100%;
+  width: 100% !important;
 }
 @media (max-width: 767px) {
   .main-header__logo img {

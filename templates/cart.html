@@ -7,10 +7,10 @@
     <div class="page-header__shape wow fadeInUp" data-wow-delay="200ms"></div>
     <div class="page-header__overlay"></div>
     <div class="container">
-        <h2 class="page-header__title">Cart</h2>
+        <h2 class="page-header__title">Savatcha</h2>
         <ul class="grdeen-breadcrumb list-unstyled">
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li><span>Cart</span></li>
+            <li><a href="{% url 'home' %}">Bosh sahifa</a></li>
+            <li><span>Savatcha</span></li>
         </ul>
     </div>
 </section>
@@ -144,8 +144,7 @@
                                                 {% endif %}
                                             </div>
                                             <h3 class="cart-page__table__meta__title">
-                                                <a href="{% url 'product_details' item.product.id %}">{{
-                                                    item.product.name }}</a>
+                                                <a href="{% url 'product_details' item.product.id %}">{{  item.product.name }}</a>
                                             </h3>
                                         </div>
                                     </td>

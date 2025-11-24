@@ -21,7 +21,7 @@ from home.models import *
 # Create your views here.
 def home(request):
     # Test messages
-    messages.success(request, "Xush kelibsiz! Bu muvaffaqiyat xabari.")
+    # messages.success(request, "Xush kelibsiz! Bu muvaffaqiyat xabari.")
     if request.method == "POST":
         name = request.POST.get('name')
         email = request.POST.get('email')

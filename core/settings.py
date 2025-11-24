@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-5!($88gqlvn07s)-q^n-$43slwf1rax75j5qqav76qvo&%#3o6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.222.103.138', 'localhost','127.0.0.1','najo.uz']
+ALLOWED_HOSTS = ['10.222.103.138', 'localhost','127.0.0.1','najo.uz','aniko.uz','192.168.16.196']
 
 # CSRF Trusted Origins - required for Django 4.0+
 CSRF_TRUSTED_ORIGINS = [
@@ -38,6 +38,9 @@ CSRF_TRUSTED_ORIGINS = [
     'http://10.222.103.138',
     'http://localhost',
     'http://127.0.0.1',
+    'http://192.168.16.196',
+    'https://aniko.uz',
+    'http://aniko.uz',
 ]
 
 # Application definition

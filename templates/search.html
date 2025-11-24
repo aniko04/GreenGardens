@@ -7,10 +7,10 @@
         style="background-image: url('{% static 'assets/images/backgrounds/page-header-bg1-1.jpg' %}')"></div>
     <div class="page-header__overlay"></div>
     <div class="container">
-        <h2 class="page-header__title">Search Results</h2>
+        <h2 class="page-header__title">Qidiruv natijalari</h2>
         <ul class="grdeen-breadcrumb list-unstyled">
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li><span>Search</span></li>
+            <li><a href="{% url 'home' %}">Bosh sahifa</a></li>
+            <li><span>Qidiruv</span></li>
         </ul>
     </div>
 </section>
@@ -19,9 +19,9 @@
     <div class="container">
         {% if query %}
         <div class="search-info mb-5">
-            <h3>Search Results for "{{ query }}"</h3>
-            <p class="text-muted">Found {{ total_results }} result{{ total_results|pluralize }} ({{ products_count }}
-                product{{ products_count|pluralize }}, {{ services_count }} service{{ services_count|pluralize }})</p>
+            <h3>Qidiruv natijalari uchun "{{ query }}"</h3>
+            <p class="text-muted">Topilgan {{ total_results }} natija{{ total_results|pluralize }} ({{ products_count }}
+                mahsulot{{ products_count|pluralize }}, {{ services_count }} xizmat{{ services_count|pluralize }})</p>
         </div>
         {% endif %}
 
@@ -30,19 +30,18 @@
             <div class="search-icon mb-4">
                 <i class="icon-search" style="font-size: 64px; color: #ccc;"></i>
             </div>
-            <h3>Enter a search term</h3>
-            <p class="text-muted">Please enter a keyword to search for products and services.</p>
+            <h3>Qidiruv so'zini kiriting</h3>
+            <p class="text-muted">Iltimos, mahsulotlar va xizmatlarni qidirish uchun kalit so'z kiriting.</p>
         </div>
         {% elif total_results == 0 %}
         <div class="text-center">
             <div class="search-icon mb-4">
                 <i class="fas fa-search" style="font-size: 64px; color: #ccc;"></i>
             </div>
-            <h3>No results found</h3>
-            <p class="text-muted">Sorry, we couldn't find any products or services matching "{{ query }}". Try different
-                keywords.</p>
+            <h3>Natija topilmadi</h3>
+            <p class="text-muted">Kechirasiz, "{{ query }}" ga mos keladigan mahsulotlar yoki xizmatlar topilmadi. Iltimos, boshqa kalit so'zlarni sinab ko'ring.</p>
             <a href="{% url 'products' %}" class="grdeen-btn mt-3">
-                <span>Browse All Products</span>
+                <span>Barcha mahsulotlarni ko'rish</span>
             </a>
         </div>
         {% else %}
@@ -52,7 +51,7 @@
         <div class="services-results mb-5 service-one service-one--three">
             <div class="row">
                 <div class="col-12">
-                    <h4 class="mb-4">Services ({{ services_count }} found)</h4>
+                    <h4 class="mb-4">Xizmatlar ({{ services_count }} topildi)</h4>
                 </div>
             </div>
             <div class="row gutter-y-30">
@@ -66,7 +65,7 @@
                                         <a href="{% url 'service_details' service.id %}">{{ service.pagename }}</a>
                                     </h4>
                                     <p class="service-one__item__text">{{ service.description|truncatewords:15 }}</p>
-                                    <a class="service-one__item__link" href="{% url 'service_details' service.id %}">Discover More</a>
+                                    <a class="service-one__item__link" href="{% url 'service_details' service.id %}">Batafsil</a>
                                 </div>
                             </div>
                             <div class="service-one__item__image">
@@ -132,7 +131,7 @@
         <div class="products-results">
             <div class="row">
                 <div class="col-12">
-                    <h4 class="mb-4">Products ({{ products_count }} found)</h4>
+                    <h4 class="mb-4">mahsulotlar ({{ products_count }} topildi)</h4>
                 </div>
             </div>
             <div class="row gutter-y-30">
@@ -190,22 +189,22 @@
 <section class="search-suggestions section-space-bottom">
     <div class="container">
         <div class="text-center">
-            <h4>Didn't find what you're looking for?</h4>
-            <p class="text-muted mb-4">Try browsing our categories or contact us for assistance.</p>
+            <h4>Izlashda topa olmadingizmi?</h4>
+            <p class="text-muted mb-4">Iltimos, kategoriyalarimizni ko'rib chiqing yoki yordam uchun biz bilan bog'laning.</p>
             <div class="row justify-content-center">
                 <div class="col-md-3">
                     <a href="{% url 'products' %}" class="grdeen-btn w-100">
-                        <span>All Products</span>
+                        <span>Barcha mahsulotlar</span>
                     </a>
                 </div>
                 <div class="col-md-3">
                     <a href="{% url 'services' %}" class="grdeen-btn w-100">
-                        <span>All Services</span>
+                        <span>Barcha xizmatlar</span>
                     </a>
                 </div>
                 <div class="col-md-3">
                     <a href="{% url 'contact' %}" class="grdeen-btn w-100">
-                        <span>Contact Us</span>
+                        <span>Biz bilan bog'laning</span>
                     </a>
                 </div>
             </div>

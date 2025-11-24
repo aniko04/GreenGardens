@@ -7,10 +7,10 @@
             <div class="page-header__overlay"></div>
             <!-- /.page-header__bg -->
             <div class="container">
-                <h2 class="page-header__title">Contact</h2>
+                <h2 class="page-header__title">Kontakt</h2>
                 <ul class="grdeen-breadcrumb list-unstyled">
-                    <li><a href="index.html">Home</a></li>
-                    <li><span>Contact</span></li>
+                    <li><a href="index.html">Bosh sahifa</a></li>
+                    <li><span>Kontakt</span></li>
                 </ul><!-- /.thm-breadcrumb list-unstyled -->
             </div><!-- /.container -->
         </section><!-- /.page-header -->
@@ -18,9 +18,9 @@
         <section class="contact-one">
             <div class="container">
                 <h3 class="contact-one__title">
-                    Do you have questions? Speak<br> with them through message
+                    Savollaringiz bormi? <br>Ular bilan xabar orqali gaplashing
                 </h3>
-                <p class="contact-one__text">You can also reach out to us by phone or email are many variations</p><!-- /.contact-one__text -->
+                <p class="contact-one__text">Siz shuningdek telefon yoki elektron pochta orqali biz bilan bog'lanishingiz mumkin</p><!-- /.contact-one__text -->
                 <div class="contact-one__info-wrapper" style="background-image: url(assets/images/shapes/contact-bg-1.png);">
                     <div class="row gutter-y-30">
                         <div class="col-lg-4 col-md-6">
@@ -28,7 +28,7 @@
                                 <div class="contact-one__info__icon">
                                     <i class="icon-location"></i>
                                 </div><!-- /.contact-one__info__icon -->
-                                <h4 class="contact-one__info__title">Our office</h4><!-- /.contact-one__info__title -->
+                                <h4 class="contact-one__info__title">Bizning manzil</h4><!-- /.contact-one__info__title -->
                                 <p class="contact-one__info__text">{{ info.address }}</p><!-- /.contact-one__info__text -->
                             </div>
                         </div>
@@ -37,7 +37,7 @@
                                 <div class="contact-one__info__icon">
                                     <i class="icon-telephone-call"></i>
                                 </div><!-- /.contact-one__info__icon -->
-                                <h4 class="contact-one__info__title">Make a call</h4><!-- /.contact-one__info__title -->
+                                <h4 class="contact-one__info__title">Telefon qilish</h4><!-- /.contact-one__info__title -->
                                 <p class="contact-one__info__text">
                                     <a href="tel:{{ info.phone_number}}">{{ info.phone_number }}</a>
                                 </p><!-- /.contact-one__info__text -->
@@ -48,7 +48,7 @@
                                 <div class="contact-one__info__icon">
                                     <i class="icon-help"></i>
                                 </div><!-- /.contact-one__info__icon -->
-                                <h4 class="contact-one__info__title">Support</h4><!-- /.contact-one__info__title -->
+                                <h4 class="contact-one__info__title">Qo'llab-quvvatlash</h4><!-- /.contact-one__info__title -->
                                 <p class="contact-one__info__text">
                                     <a href="mailto:{{ info.contact_email }}">{{ info.contact_email }}</a>
                                 </p><!-- /.contact-one__info__text -->
@@ -64,22 +64,22 @@
                        
                         <div class="form-one__group">
                             <div class="form-one__control">
-                                <label for="name">Your Name</label>
-                                <input type="text" name="name" placeholder="Your Name" required>
+                                <label for="name">Ismingiz</label>
+                                <input type="text" name="name" placeholder="Ismingiz" required>
                             </div>
                             <div class="form-one__control">
                                 <label for="email">Email</label>
-                                <input type="email" name="email" placeholder="Email Address" required>
+                                <input type="email" name="email" placeholder="Email manzilingiz" required>
                             </div>
                             <div class="form-one__control">
-                                <label for="tel">Phone</label>
-                                <input type="text" name="tel" placeholder="Phone">
+                                <label for="tel">Telefon</label>
+                                <input type="text" name="tel" placeholder="Telefon raqamingiz" required>
                             </div>
                             <div class="form-one__control">
                             <div class="form-one__control__select">
                                 <label class="sr-only" for="language-select">Choose Services</label>
                                 <select class="selectpicker" id="language-select" name="service">
-                                    <option value="Choose Services">Choose Services</option>
+                                    <option value="Choose Services">Xizmatlarni tanlang</option>
                                     {% for service in ourservices %}
                                         <option value="{{ service.pagename }}">{{ service.pagename }}</option>
                                     {% endfor %}
@@ -88,11 +88,11 @@
                             </div>
 
                             <div class="form-one__control form-one__control--full">
-                                <textarea name="message" placeholder="Your Message here" required></textarea>
+                                <textarea name="message" placeholder="Xabaringizni kiriting" required></textarea>
                             </div>
                            
                             <div class="form-one__control form-one__control--full text-center">
-                                <button type="submit" class="grdeen-btn"><span>Send a message</span></button>
+                                <button type="submit" class="grdeen-btn"><span>Xabar yuborish</span></button>
                             </div>
                         </div>
                         </form>

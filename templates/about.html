@@ -7,10 +7,10 @@
             <div class="page-header__overlay"></div>
             <!-- /.page-header__bg -->
             <div class="container">
-                <h2 class="page-header__title">About</h2>
+                <h2 class="page-header__title">Biz haqimizda</h2>
                 <ul class="grdeen-breadcrumb list-unstyled">
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><span>About</span></li>
+                    <li><a href="{% url 'home' %}">Bosh sahifa</a></li>
+                    <li><span>Biz haqimizda</span></li>
                 </ul><!-- /.thm-breadcrumb list-unstyled -->
             </div><!-- /.container -->
         </section><!-- /.page-header -->
@@ -74,7 +74,7 @@
                                         <i class="icon-pot"></i>
                                     </div>
                                     <strong class="about-one__content__qualitwrap__price">{{ intro.experience_years }}+</strong>
-                                    <span class="about-one__content__qualitwrap__text">Years Of Experience</span>
+                                    <span class="about-one__content__qualitwrap__text">YILLIK TAJRIBA</span>
                                 </div>
                             </div>
                             <ul class="list-unstyled about-one__content__list">
@@ -89,34 +89,7 @@
             </div><!-- /.container -->
         </section><!-- /.about-one -->
 
-        <section class="feature-one feature-one--two">
-            <div class="container">
-                <div class="row gutter-y-30 feature-one__row">
-                    {% for feature in features %}
-
-                    <div class="col-xl-3 col-md-6 wow fadeInUp" data-wow-delay="00ms">
-                        <div class="feature-one__item">
-                            
-                            <div class="feature-one__item__bg" style="background-image: url({% static 'assets/images/shapes/feature-bg-2-1.png' %});"></div>
-                            <div class="feature-one__item__bgshape" style="background-image: url({% static 'assets/images/shapes/feature-shape3-1.png' %});"></div>
-
-                            <div class="feature-one__item__content">
-                                <h4 class="feature-one__item__title">{{ feature.title }}</h4>
-                                <p class="feature-one__item__text">{{ feature.description }}</p>
-                            </div>
-
-                            <div class="feature-one__item__iconwrap">
-                                <div class="feature-one__item__icon">
-                                    {{ feature.icon|safe}}
-                                </div>
-                            </div>
-                        </div><!-- feature-item -->
-                    </div>
-                    {% endfor %}
-                   
-                </div>
-            </div>
-        </section>
+        <!-- Feature Start -->
         <!-- Feature End -->
 
         <section class="funfact-one funfact-one--about">
@@ -404,9 +377,9 @@
                                     </div>
 
 
-                                    <span class="sec-title__tagline">Free Book Now</span><!-- /.sec-title__tagline -->
+                                    <span class="sec-title__tagline">BEPUL KONSULTATSIYA</span><!-- /.sec-title__tagline -->
 
-                                    <h2 class="sec-title__title">Book a FREE <br> professional gardening <br> consultation!</h2><!-- /.sec-title__title -->
+                                    <h2 class="sec-title__title">BEPUL <br> professional gardening <br> konsultatsiya!</h2><!-- /.sec-title__title -->
                                 </div><!-- /.sec-title -->
                             </div>
                             <form class="form-one contact-one__form " method="POST">
@@ -415,21 +388,21 @@
                         <div class="form-one__group">
                             <div class="form-one__control">
           
-                                <input type="text" name="name" placeholder="Your Name" required>
+                                <input type="text" name="name" placeholder="Ismingiz" required>
                             </div>
                             <div class="form-one__control">
                            
-                                <input type="email" name="email" placeholder="Email Address" required>
+                                <input type="email" name="email" placeholder="Email manzilingiz" required>
                             </div>
                             <div class="form-one__control">
 
-                                <input type="text" name="tel" placeholder="Phone">
+                                <input type="text" name="tel" placeholder="Telefon raqamingiz">
                             </div>
                             <div class="form-one__control">
                             <div class="form-one__control__select">
              
                                 <select class="selectpicker" id="language-select" name="service">
-                                    <option value="Choose Services">Choose Services</option>
+                                    <option value="Choose Services">Xizmat turini tanlang</option>
                                     {% for service in ourservices %}
                                         <option value="{{ service.pagename }}">{{ service.pagename }}</option>
                                     {% endfor %}
@@ -438,11 +411,11 @@
                             </div>
 
                             <div class="form-one__control form-one__control--full">
-                                <textarea name="message" placeholder="Your Message here" required></textarea>
+                                <textarea name="message" placeholder="Xabaringizni kiriting" required></textarea>
                             </div>
                            
                             <div class="form-one__control form-one__control--full text-center">
-                                <button type="submit" class="grdeen-btn"><span>Send a message</span></button>
+                                <button type="submit" class="grdeen-btn"><span>Xabar yuborish</span></button>
                             </div>
                         </div>
                         </form>
@@ -463,7 +436,7 @@
                 </div>
             </div><!-- /.container -->
             <div class="free-booking-one__shadow">
-                <h1 class="free-booking-one__shadow__title">Gardening</h1>
+                <h1 class="free-booking-one__shadow__title">Green Gardens</h1>
             </div>
         </section><!-- /.free-booking-one -->
 
