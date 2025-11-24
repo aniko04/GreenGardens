@@ -13825,6 +13825,7 @@ body.megamenu-popup-active .mobile-nav__content {
   z-index: 3;
   overflow: hidden;
   padding-top: 12px;
+  margin-top: -80px;
 }
 
 @media (min-width: 1300px) {
@@ -14038,6 +14039,7 @@ body.megamenu-popup-active .mobile-nav__content {
 }
 
 .main-slider-three .active .main-slider-three__sub-title {
+  margin-top: -10px;
   opacity: 1;
   transform: translateY(0);
   transition-delay: 1100ms;
