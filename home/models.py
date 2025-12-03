@@ -2,6 +2,47 @@ from xmlrpc import client
 from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils.text import slugify
+import re
+
+
+def uzbek_slugify(text):
+    """O'zbek harflarini qo'llab-quvvatlovchi slugify funksiyasi"""
+    if not text:
+        return ''
+    
+    # O'zbek lotin harflarini almashtirish (o' -> o, g' -> g)
+    text = text.replace("o'", "o").replace("O'", "o")
+    text = text.replace("g'", "g").replace("G'", "g")
+    text = text.replace("'", "")  # Qolgan apostroflarni olib tashlash
+    
+    # Kirill harflarini transliteratsiya qilish
+    uzbek_map = {
+        'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'yo',
+        'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm',
+        'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u',
+        'ф': 'f', 'х': 'x', 'ц': 'ts', 'ч': 'ch', 'ш': 'sh', 'щ': 'shch',
+        'ъ': '', 'ы': 'y', 'ь': '', 'э': 'e', 'ю': 'yu', 'я': 'ya',
+        'ў': 'o', 'қ': 'q', 'ғ': 'g', 'ҳ': 'h',
+    }
+    
+    # Matnni kichik harflarga o'tkazish
+    text = text.lower()
+    
+    # Kirill harflarini transliteratsiya qilish
+    for cyrillic, latin in uzbek_map.items():
+        text = text.replace(cyrillic, latin)
+    
+    # Standart slugify qo'llash
+    slug = slugify(text, allow_unicode=False)
+    
+    # Agar slug bo'sh bo'lsa, lotin harflar va raqamlarni saqlab qolish
+    if not slug or slug.strip() == '':
+        slug = re.sub(r'[^a-z0-9\s-]', '', text)
+        slug = re.sub(r'[\s-]+', '-', slug)
+        slug = slug.strip('-').lower()
+    
+    return slug
 
 # Create your models here.
 class MainInfo(models.Model):
@@ -91,6 +132,7 @@ class MainFeature(models.Model):
 
 class OurService(models.Model):
     title = models.CharField(max_length=200, verbose_name="Sarlavha")
+    slug = models.SlugField(max_length=200, unique=True, null=True, blank=True, verbose_name="Slug")
     pagename = models.CharField(max_length=100, null=True, blank=True, verbose_name="Sahifa nomi")
     is_top = models.BooleanField(default=False, verbose_name="TOP xizmatmi")
     is_active = models.BooleanField(default=True, verbose_name="Faol")
@@ -100,26 +142,53 @@ class OurService(models.Model):
         verbose_name = "Bizning Xizmat"
         verbose_name_plural = "Bizning Xizmatlar"
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = uzbek_slugify(self.title)
+            # Uniqueness tekshirish
+            base_slug = self.slug
+            counter = 1
+            while OurService.objects.filter(slug=self.slug).exclude(id=self.id).exists():
+                self.slug = f"{base_slug}-{counter}"
+                counter += 1
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.title
     
     def get_absolute_url(self):
         from django.urls import reverse
-        return reverse('service_details', kwargs={'id': self.id})
+        return reverse('service_details', kwargs={'slug': self.slug})
 
 class ServiceCategory(models.Model):
     name = models.CharField(max_length=100, verbose_name="Nomi")
+    slug = models.SlugField(max_length=100, unique=True, null=True, blank=True, verbose_name="Slug")
     description = RichTextField(null=True, blank=True, verbose_name="Tavsif")
 
     class Meta:
         verbose_name = "Xizmat Kategoriyasi"
         verbose_name_plural = "Xizmat Kategoriyalari"
     
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = uzbek_slugify(self.name)
+            # Uniqueness tekshirish
+            base_slug = self.slug
+            counter = 1
+            while ServiceCategory.objects.filter(slug=self.slug).exclude(id=self.id).exists():
+                self.slug = f"{base_slug}-{counter}"
+                counter += 1
+        super().save(*args, **kwargs)
+    
     def services_count(self):
         return self.ourservice_set.count()
 
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('category_services', kwargs={'slug': self.slug})
 
 class OurWorkProcess(models.Model):
     title = models.CharField(max_length=200, verbose_name="Sarlavha")

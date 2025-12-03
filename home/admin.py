@@ -35,16 +35,18 @@ class MainFeatureAdmin(admin.ModelAdmin):
 
 @admin.register(OurService)
 class OurServiceAdmin(admin.ModelAdmin):
-    list_display = ('title','is_active', 'is_top')
+    list_display = ('title', 'slug', 'is_active', 'is_top')
     list_filter = ('is_active',)
-    search_fields = ('title',)
+    search_fields = ('title', 'slug')
     list_editable = ('is_active', 'is_top')
+    prepopulated_fields = {'slug': ('title',)}
     ordering = ('-id',)
 
 @admin.register(ServiceCategory)
 class ServiceCategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description')
-    search_fields = ('name',)
+    list_display = ('name', 'slug', 'description')
+    search_fields = ('name', 'slug')
+    prepopulated_fields = {'slug': ('name',)}
 
 @admin.register(OurWorkProcess)
 class OurWorkProcessAdmin(admin.ModelAdmin):

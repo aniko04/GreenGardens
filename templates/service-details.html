@@ -25,7 +25,7 @@
                                 <ul class="list-unstyled service-sidebar__nav">
                                     {% for category_item in categories %}
                                     <li>
-                                        <a href="{% url 'category_services' category_item.id %}" {% if category_item.id == category.id %}class="current"{% endif %} >
+                                        <a href="{% url 'service_details' category_item.slug %}" {% if category and category_item.slug == category.slug %}class="current"{% endif %} >
                                             {{ category_item.name }}
                                         </a>
                                     </li>
@@ -44,13 +44,62 @@
                     </div><!-- /.col-md-12 col-lg-4 -->
                     <div class="col-md-12 col-lg-8">
                         <div class="service-details__content">
+                            {% if category %}
                             <h1>{{ category.name }}</h1>
-                             <p class="service-details__text">
-
-                       
-                                    {{ category.description|safe }}
-
+                            <p class="service-details__text">
+                                {{ category.description|safe }}
                             </p><!-- /.service-details__text -->
+                            
+                            {% if category_services %}
+                            <div class="category-services mt-4">
+                                <h3 class="mb-4">Kategoriyaga tegishli xizmatlar</h3>
+                                <div class="row gutter-y-30">
+                                    {% for cat_service in category_services %}
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="service-one__item">
+                                            <div class="service-one__item__bgeffect" style="background-image: url('{% static 'assets/images/shapes/service-shape3-1.png' %}');"></div>
+                                            <div class="service-one__item__titlewrap">
+                                                <div class="service-one__item__titlecol">
+                                                    <h4 class="service-one__item__title">
+                                                        <a href="{% url 'service_details' cat_service.slug %}">{{ cat_service.pagename|default:cat_service.title }}</a>
+                                                    </h4>
+                                                    {% if cat_service.description %}
+                                                    <p class="service-one__item__text">{{ cat_service.description|truncatewords:15 }}</p>
+                                                    {% endif %}
+                                                    <a class="service-one__item__link" href="{% url 'service_details' cat_service.slug %}">Batafsil</a>
+                                                </div>
+                                            </div>
+                                            {% if cat_service.image %}
+                                            <div class="service-one__item__image">
+                                                <img src="{{ cat_service.image.url }}" alt="{{ cat_service.pagename|default:cat_service.title }}">
+                                                <div class="service-one__item__iconwrap">
+                                                    {% if cat_service.icon %}
+                                                    <div class="service-one__item__icon">
+                                                        {{ cat_service.icon|safe }}
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="service-one__item__btmwrap">
+                                                    <a class="service-one__item__iconlink" href="{% url 'service_details' cat_service.slug %}">
+                                                        <i class="icon-right-up"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                        </div><!-- /.service-card-one -->
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% else %}
+                            <h1>{{ service.title }}</h1>
+                            {% if service.description %}
+                            <p class="service-details__text">
+                                {{ service.description|safe }}
+                            </p><!-- /.service-details__text -->
+                            {% endif %}
+                            {% endif %}
                             
                         </div><!-- /.service-details__content -->
                     </div><!-- /.col-md-12 col-lg-8 -->

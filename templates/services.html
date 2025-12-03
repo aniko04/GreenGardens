@@ -24,10 +24,10 @@
                             <div class="service-one__item__titlewrap">
                                 <div class="service-one__item__titlecol">
                                     <h4 class="service-one__item__title">
-                                        <a href="{% url 'service_details' service.id %}">{{ service.pagename }}</a>
+                                        <a href="{% url 'service_details' service.slug %}">{{ service.pagename }}</a>
                                     </h4>
                                     <p class="service-one__item__text">{{ service.description|truncatewords:15 }}</p>
-                                    <a class="service-one__item__link" href="{% url 'service_details' service.id %}">Batafsil</a>
+                                    <a class="service-one__item__link" href="{% url 'service_details' service.slug %}">Batafsil</a>
                                 </div>
                             </div>
                             <div class="service-one__item__image">
@@ -38,7 +38,7 @@
                                     </div><!-- /.service-icon -->
                                 </div>
                                 <div class="service-one__item__btmwrap">
-                                    <a class="service-one__item__iconlink" href="{% url 'service_details' service.id %}">
+                                    <a class="service-one__item__iconlink" href="{% url 'service_details' service.slug %}">
                                         <i class="icon-right-up"></i>
                                     </a>
                                 </div>

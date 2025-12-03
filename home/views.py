@@ -119,15 +119,74 @@ def contact(request):
 def services(request):
     return render(request, 'services.html')
 
-def service_details(request, id):
-    service = get_object_or_404(OurService, id=id, is_active=True)
-    # Ochilgan servicega tegishli categoriyalarni olish
-    service_categories = service.category.all()
-    # Agar servicega category bog'langan bo'lsa, birinchi categoryni olish
-    if service_categories.exists():
-        current_category = service_categories.first()
+def service_details(request, slug):
+    # Slug bo'sh bo'lsa yoki None bo'lsa, xatolik qaytarish
+    if not slug or slug.strip() == '':
+        from django.http import Http404
+        raise Http404("Service topilmadi")
+    
+    # Slug'ni tozalash (tire va underscore'ni almashtirish)
+    slug = slug.strip().lower()
+    service = None
+    category = None
+    services_in_category = None
+    
+    # 1. Avval kategoriya slug bo'yicha qidirish (kategoriya slug'i orqali kirilganda)
+    category = ServiceCategory.objects.filter(slug=slug).first()
+    if category:
+        # Kategoriyaga tegishli barcha servislarni olish
+        services_in_category = OurService.objects.filter(category=category, is_active=True)
+        if services_in_category.exists():
+            # Birinchi servisni asosiy servis sifatida ko'rsatish
+            service = services_in_category.first()
+        else:
+            from django.http import Http404
+            raise Http404(f"Kategoriya topildi, lekin xizmatlar mavjud emas: '{category.name}'")
+    
+    # 2. Agar kategoriya topilmasa, service slug bo'yicha qidirish
+    if not service:
+        service = OurService.objects.filter(slug=slug, is_active=True).first()
+    
+    # 3. Agar topilmasa, case-insensitive qidirish
+    if not service:
+        service = OurService.objects.filter(slug__iexact=slug, is_active=True).first()
+    
+    # 4. Agar topilmasa, title bo'yicha qidirish
+    if not service:
+        service = OurService.objects.filter(title__icontains=slug.replace('-', ' '), is_active=True).first()
+    
+    # 5. Agar slug raqam bo'lsa, ID sifatida qidirish (backward compatibility)
+    if not service and slug.isdigit():
+        try:
+            service = OurService.objects.get(id=int(slug), is_active=True)
+        except (OurService.DoesNotExist, ValueError):
+            pass
+    
+    # 6. Agar hali ham service topilmasa, xatolik qaytarish
+    if not service:
+        from django.http import Http404
+        all_service_slugs = OurService.objects.filter(is_active=True).values_list('slug', flat=True)
+        all_category_slugs = ServiceCategory.objects.all().values_list('slug', flat=True)
+        raise Http404(f"Service topilmadi. Slug: '{slug}'. Service sluglar: {list(all_service_slugs)}. Category sluglar: {list(all_category_slugs)}")
+    
+    # Agar kategoriya orqali kirilgan bo'lsa, kategoriyaga bog'langan barcha servislarni olish
+    if category and services_in_category:
+        # Kategoriya ma'lumotlari allaqachon olingan
+        current_category = category
+        # Kategoriyaga bog'langan barcha servislarni olish
+        category_services = services_in_category
     else:
-        current_category = None
+        # Service orqali kirilgan bo'lsa
+        # Ochilgan servicega tegishli categoriyalarni olish
+        service_categories = service.category.all()
+        # Agar servicega category bog'langan bo'lsa, birinchi categoryni olish
+        if service_categories.exists():
+            current_category = service_categories.first()
+            # Joriy kategoriyaga bog'langan barcha servislarni olish
+            category_services = OurService.objects.filter(category=current_category, is_active=True)
+        else:
+            current_category = None
+            category_services = None
     
     # Faqat joriy service bilan bog'langan kategoriyalarni sidebar uchun
     categories = service.category.all()
@@ -136,15 +195,39 @@ def service_details(request, id):
         'service': service,
         'categories': categories,
         'category': current_category,
+        'category_services': category_services,  # Kategoriyaga bog'langan barcha servislar
     })
 
-def category_services(request, id):
-    category = ServiceCategory.objects.get(id=id)
+def category_services(request, slug):
+    # Slug bo'sh bo'lsa yoki None bo'lsa, xatolik qaytarish
+    if not slug or slug.strip() == '':
+        from django.http import Http404
+        raise Http404("Kategoriya topilmadi")
+    
+    try:
+        category = ServiceCategory.objects.get(slug=slug)
+    except ServiceCategory.DoesNotExist:
+        # Agar slug bo'yicha topilmasa, ID orqali qidirish (backward compatibility)
+        try:
+            # Slug raqam bo'lsa, ID sifatida qidirish
+            if slug.isdigit():
+                category = ServiceCategory.objects.get(id=int(slug))
+            else:
+                raise ServiceCategory.DoesNotExist
+        except (ServiceCategory.DoesNotExist, ValueError):
+            from django.http import Http404
+            raise Http404("Kategoriya topilmadi")
+    
     # Kategoriyaga tegishli xizmatlardan birinchisini olish
     services_in_category = OurService.objects.filter(category=category, is_active=True)
     if services_in_category.exists():
         first_service = services_in_category.first()
-        return redirect('service_details', id=first_service.id)
+        # Agar service'ning slug'i bo'sh bo'lsa, ID ishlatish
+        if first_service.slug:
+            return redirect('service_details', slug=first_service.slug)
+        else:
+            # Agar slug bo'sh bo'lsa, ID orqali redirect qilish (eski usul)
+            return redirect('service_details', slug=str(first_service.id))
     else:
         messages.error(request, "Bu kategoriyada xizmat topilmadi!")
         return redirect('services')
