@@ -6,11 +6,11 @@
             <div class="page-header__overlay"></div>
             <!-- /.page-header__bg -->
             <div class="container">
-                <h2 class="page-header__title">{% if ourservices %}{{ ourservices.pagename }}{% else %}Servis Tafsilotlari{% endif %}</h2>
+                <h2 class="page-header__title">{% if category %}{{ category.name }}{% else %}Servis Tafsilotlari{% endif %}</h2>
                 <ul class="grdeen-breadcrumb list-unstyled">
                     <li><a href="{% url 'home' %}">Bosh sahifa</a></li>
                     <li><a href="{% url 'services' %}">Xizmatlar</a></li>
-                    <li><span>{% if ourservices %}{{ ourservices.pagename }}{% else %}Servis Tafsilotlari{% endif %}</span></li>
+                    <li><span>{% if category %}{{ category.name }}{% else %}Servis Tafsilotlari{% endif %}</span></li>
                 </ul><!-- /.thm-breadcrumb list-unstyled -->
             </div><!-- /.container -->
         </section><!-- /.page-header -->
@@ -21,17 +21,12 @@
                     <div class="col-md-12 col-lg-4">
                         <div class="service-sidebar">
                             <div class="service-sidebar__single">
-                                <h3 class="service-sidebar__title">Xizmatlar ro'yxati</h3><!-- /.service-sidebar__title -->
+                                <h3 class="service-sidebar__title">Kategoriyalar ro'yxati</h3><!-- /.service-sidebar__title -->
                                 <ul class="list-unstyled service-sidebar__nav">
+                                    {% for category_item in categories %}
                                     <li>
-                                        <a href="{% url 'service_details' ourservices.id %}" class="current" >
-                                            {{ ourservices.pagename }}
-                                        </a>
-                                    </li>
-                                    {% for service in allservices %}
-                                    <li>
-                                        <a href="{% url 'service_details' service.id %}" >
-                                            {{ service.pagename }}
+                                        <a href="{% url 'service_details' category_item.id %}" {% if category_item.id == category.id %}class="current"{% endif %} >
+                                            {{ category_item.name }}
                                         </a>
                                     </li>
                                     {% endfor %}
@@ -49,58 +44,14 @@
                     </div><!-- /.col-md-12 col-lg-4 -->
                     <div class="col-md-12 col-lg-8">
                         <div class="service-details__content">
-                            {% if ourservices %}
-                            <div class="service-details__thumbnail">
-                                {% if ourservices.image %}
-                                <img src="{{ ourservices.image.url }}" alt="{{ ourservices.pagename }}">
-                                {% else %}
-                                <img src="{% static 'assets/images/resources/service-d-1.jpg' %}" alt="{{ ourservices.pagename }}">
-                                {% endif %}
-                            </div><!-- /.service-details__thumbnail -->
-                            <h3 class="service-details__title">{{ ourservices.title }}</h3><!-- /.service-details__title -->
-                            <p class="service-details__text">
-                                {% if ourservices.description %}
-                                    {{ ourservices.description|linebreaksbr }}
-                                {% endif %}
-                            </p>
-                            <!-- /.service-details__text -->
-                            {% else %}
-                            <div class="service-error">
-                                <h3 class="service-details__title">xizmat topilmadi</h3><!-- /.service-details__title -->
-                                <p class="service-details__text">
-                                    So'ralgan xizmat topilmadi. Iltimos, yon paneldan xizmatni tanlang yoki xizmatlar sahifasiga qayting.
-                                </p>
-                                <a href="{% url 'services' %}" class="grdeen-btn">
-                                    <span>Xizmatlarga qaytish</span>
-                                </a>
-                            </div>
-                            {% endif %}
-                            <h3 class="service-details__heading">Nimalarga erishishingiz mumkin</h3><!-- /.service-details__heading -->
-                            <p class="service-details__text">
+                            <h1>{{ category.name }}</h1>
+                             <p class="service-details__text">
 
-                                {% if ourservices and ourservices.content %}
-                                    {{ ourservices.content|safe }}
-                                {% endif %}
+                       
+                                    {{ category.description|safe }}
+
                             </p><!-- /.service-details__text -->
-                            <h3 class="service-details__heading">Tez-tez so'raladigan savollar</h3><!-- /.service-details__heading -->
-                            <div class="service-details__accordion grdeen-accrodion" data-grp-name="grdeen-accrodion">
-                                {% for faq in faqs %}
-                                <div class="accrodion">
-                                    <div class="accrodion-title">
-                                        <h4><span class="accrodion-title__number"></span> {{ faq.question }}   <span class="accrodion-title__icon"></span><!-- /.accrodion-title__icon -->
-                                            <span class="accrodion-title__icon"></span><!-- /.accrodion-title__icon -->
-                                        </h4>
-                                    </div><!-- /.accordian-title -->
-                                    <div class="accrodion-content">
-                                        <div class="inner">
-                                            <p>
-                                                {{ faq.answer|linebreaksbr }}
-                                            </p>
-                                        </div><!-- /.accordian-content -->
-                                    </div>
-                                </div><!-- /.accordian-item -->
-                               {% endfor %}
-                            </div>
+                            
                         </div><!-- /.service-details__content -->
                     </div><!-- /.col-md-12 col-lg-8 -->
                 </div><!-- /.row -->

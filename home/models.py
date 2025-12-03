@@ -91,6 +91,7 @@ class MainFeature(models.Model):
 
 class OurService(models.Model):
     title = models.CharField(max_length=200, verbose_name="Sarlavha")
+    pagename = models.CharField(max_length=100, null=True, blank=True, verbose_name="Sahifa nomi")
     is_top = models.BooleanField(default=False, verbose_name="TOP xizmatmi")
     is_active = models.BooleanField(default=True, verbose_name="Faol")
     category = models.ManyToManyField('ServiceCategory', verbose_name="Kategoriyasi", blank=True)

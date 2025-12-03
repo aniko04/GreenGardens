@@ -127,25 +127,37 @@ def services(request):
     context = {'ourservices': ourservices}
     return render(request, 'services.html', context)
 
-def service_details(request, pk):
-    service = OurService.objects.get(pk=pk)
-    ourservices = OurService.objects.all()  # For the menu
-    faqs = FAQ.objects.filter(is_active=True)
-
-
-    if not service:
-        messages.error(request, "Requested service not found!")
+def service_details(request, id):
+    service = get_object_or_404(OurService, id=id, is_active=True)
+    ourservices = OurService.objects.filter(is_active=True)
+    # Ochilgan servicega tegishli categoriyalarni olish
+    service_categories = service.category.all()
+    # Agar servicega category bog'langan bo'lsa, birinchi categoryni olish
+    if service_categories.exists():
+        current_category = service_categories.first()
+    else:
+        current_category = None
     
-    context = {
-        'allservices': allservices,
-        'service': service,
-        'faqs': faqs
-    }
+    # Faqat joriy service bilan bog'langan kategoriyalarni sidebar uchun
+    categories = service.category.all()
+    
     return render(request, 'service-details.html', {
         'service': service,
-        'ourservices': ourservices,
-        'faqs': faqs
+        'categories': categories,
+        'category': current_category,
+        'ourservices': ourservices
     })
+
+def category_services(request, id):
+    category = ServiceCategory.objects.get(id=id)
+    # Kategoriyaga tegishli xizmatlardan birinchisini olish
+    services_in_category = OurService.objects.filter(category=category, is_active=True)
+    if services_in_category.exists():
+        first_service = services_in_category.first()
+        return redirect('service_details', id=first_service.id)
+    else:
+        messages.error(request, "Bu kategoriyada xizmat topilmadi!")
+        return redirect('services')
 
 def projects(request):
     ourprojects = OurProject.objects.filter(is_active=True)
