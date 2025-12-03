@@ -10,6 +10,11 @@ def social_links(request):
     social_links = SocialLink.objects.filter(is_active=True)
     return {'social_links': social_links}
 
+def services(request):
+    from .models import OurService
+    ourservices = OurService.objects.filter(is_active=True)
+    return {'ourservices': ourservices}
+
 def populars(request):
     from .models import OurBlog
     populars = OurBlog.objects.filter(is_active=True).order_by('-publish_date')[:3]

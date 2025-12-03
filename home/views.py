@@ -42,7 +42,6 @@ def home(request):
     sliders = Mainslider.objects.filter(is_active=True)
     intro = IntroOurCompany.objects.filter(is_active=True).first()
     features = MainFeature.objects.filter(is_active=True)
-    ourservices = OurService.objects.filter(is_active=True)
 
     ourworkprocess = OurWorkProcess.objects.filter(is_active=True)
     ourtestimonials = OurTestimonial.objects.filter(is_active=True)
@@ -53,7 +52,6 @@ def home(request):
     context = {'sliders': sliders, 
                'intro': intro, 
                'features': features, 
-               'ourservices': ourservices, 
                'ourworkprocess': ourworkprocess,
                'ourtestimonials': ourtestimonials,
                'ourprojects': ourprojects,
@@ -84,7 +82,6 @@ def about(request):
     features = MainFeature.objects.filter(is_active=True)
     ourfacts = OurFact.objects.filter(is_active=True)
     ourbenefits = OurBenefit.objects.filter(is_active=True)
-    ourservices = OurService.objects.filter(is_active=True)
     ourtestimonials = OurTestimonial.objects.filter(is_active=True)
     ourexperts = OurExpert.objects.filter(is_active=True)
     context = {'intro': intro,
@@ -92,7 +89,6 @@ def about(request):
                'ourfacts': ourfacts,
                 'ourbenefits': ourbenefits,
                 'ourtestimonials': ourtestimonials,
-                'ourservices': ourservices,
                 'ourexperts': ourexperts
                }
     return render(request, 'about.html', context)
@@ -117,19 +113,14 @@ def contact(request):
         messages.success(request, "Your message has been sent successfully!")
         #return redirect('contact')  # contact url nomi bilan qayta yo‘naltirish
         return render(request, 'contact.html')
-    ourservices = OurService.objects.filter(is_active=True)
-    context = {'ourservices': ourservices}
-
-    return render(request, 'contact.html', context)
+    
+    return render(request, 'contact.html')
 
 def services(request):
-    ourservices = OurService.objects.filter(is_active=True)
-    context = {'ourservices': ourservices}
-    return render(request, 'services.html', context)
+    return render(request, 'services.html')
 
 def service_details(request, id):
     service = get_object_or_404(OurService, id=id, is_active=True)
-    ourservices = OurService.objects.filter(is_active=True)
     # Ochilgan servicega tegishli categoriyalarni olish
     service_categories = service.category.all()
     # Agar servicega category bog'langan bo'lsa, birinchi categoryni olish
@@ -145,7 +136,6 @@ def service_details(request, id):
         'service': service,
         'categories': categories,
         'category': current_category,
-        'ourservices': ourservices
     })
 
 def category_services(request, id):

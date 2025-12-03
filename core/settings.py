@@ -84,6 +84,7 @@ TEMPLATES = [
                 'home.context_processors.populars',
                 'home.context_processors.cart_context',
                 'home.context_processors.likes_context',
+                'home.context_processors.services',
             ],
             'libraries': {
                 # 'tags': 'home.tags',

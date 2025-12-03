@@ -222,14 +222,16 @@
                                 <a href="#">Xizmatlar</a>
                                 <ul>
                                     {% for service in ourservices %}
-                                    <li><a href="#">{{ service.title }}</a>
+                                    <li><a href="{% url 'service_details' service.id %}">{{ service.title }}</a>
+                                    {% if service.category.all %}
                                     <ul>
                                         {% for category in service.category.all %}
                                         <li>
-                                            <a href="{% url 'service_details' category.id %}">{{ category.name }}</a>
+                                            <a href="{% url 'category_services' category.id %}">{{ category.name }}</a>
                                         </li>
                                         {% endfor %}
                                     </ul>
+                                    {% endif %}
                                     </li>
                                     {% endfor %}
                                    

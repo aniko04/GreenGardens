@@ -25,7 +25,7 @@
                                 <ul class="list-unstyled service-sidebar__nav">
                                     {% for category_item in categories %}
                                     <li>
-                                        <a href="{% url 'service_details' category_item.id %}" {% if category_item.id == category.id %}class="current"{% endif %} >
+                                        <a href="{% url 'category_services' category_item.id %}" {% if category_item.id == category.id %}class="current"{% endif %} >
                                             {{ category_item.name }}
                                         </a>
                                     </li>
