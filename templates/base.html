@@ -219,7 +219,21 @@
                     <nav class="main-header__nav main-menu">
                         <ul class="main-menu__list">
                             <li {% if request.resolver_match.url_name == 'services' or request.resolver_match.url_name == 'service_details' %}class="current" {% endif %}>
-                                <a href="{% url 'services' %}">Xizmatlar</a>
+                                <a href="#">Xizmatlar</a>
+                                <ul>
+                                    {% for service in ourservices %}
+                                    <li><a href="#">{{ service.title }}</a>
+                                    <ul>
+                                        {% for category in service.category.all %}
+                                        <li>
+                                            <a href="{% url 'service_details' category.id %}">{{ category.name }}</a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                    </li>
+                                    {% endfor %}
+                                   
+                                </ul>
                             </li>
                             <li {% if request.resolver_match.url_name == 'about' %}class="current" {% endif %}>
                                 <a href="{% url 'about' %}">Biz haqimizda</a>

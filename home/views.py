@@ -42,7 +42,8 @@ def home(request):
     sliders = Mainslider.objects.filter(is_active=True)
     intro = IntroOurCompany.objects.filter(is_active=True).first()
     features = MainFeature.objects.filter(is_active=True)
-    ourservices = OurService.objects.filter(is_active=True, is_top=True)
+    ourservices = OurService.objects.filter(is_active=True)
+
     ourworkprocess = OurWorkProcess.objects.filter(is_active=True)
     ourtestimonials = OurTestimonial.objects.filter(is_active=True)
     ourprojects = OurProject.objects.filter(is_active=True, is_top=True)
@@ -126,21 +127,25 @@ def services(request):
     context = {'ourservices': ourservices}
     return render(request, 'services.html', context)
 
-def service_details(request, id):
-    ourservices = get_object_or_404(OurService, id=id, is_active=True)
-    allservices = OurService.objects.filter(is_active=True).exclude(id=ourservices.id)
+def service_details(request, pk):
+    service = OurService.objects.get(pk=pk)
+    ourservices = OurService.objects.all()  # For the menu
     faqs = FAQ.objects.filter(is_active=True)
 
 
-    if not ourservices:
+    if not service:
         messages.error(request, "Requested service not found!")
     
     context = {
         'allservices': allservices,
-        'ourservices': ourservices,
+        'service': service,
         'faqs': faqs
     }
-    return render(request, 'service-details.html', context)
+    return render(request, 'service-details.html', {
+        'service': service,
+        'ourservices': ourservices,
+        'faqs': faqs
+    })
 
 def projects(request):
     ourprojects = OurProject.objects.filter(is_active=True)

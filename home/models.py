@@ -91,14 +91,9 @@ class MainFeature(models.Model):
 
 class OurService(models.Model):
     title = models.CharField(max_length=200, verbose_name="Sarlavha")
-    subtitle = models.CharField(max_length=200, null=True, blank=True, verbose_name="Kichik sarlavha")
-    pagename = models.CharField(max_length=100, null=True, blank=True, verbose_name="Sahifa nomi")
-    description = models.TextField(null=True, blank=True, verbose_name="Tavsif")
-    content = RichTextField(null=True, blank=True, verbose_name="Mazmun")
-    icon = models.CharField(max_length=100,null=True, blank=True, verbose_name="Ikonka")
-    image = models.ImageField(upload_to='', null=True, blank=True, verbose_name="Rasm") 
     is_top = models.BooleanField(default=False, verbose_name="TOP xizmatmi")
     is_active = models.BooleanField(default=True, verbose_name="Faol")
+    category = models.ManyToManyField('ServiceCategory', verbose_name="Kategoriyasi", blank=True)
 
     class Meta:
         verbose_name = "Bizning Xizmat"
@@ -110,7 +105,21 @@ class OurService(models.Model):
     def get_absolute_url(self):
         from django.urls import reverse
         return reverse('service_details', kwargs={'id': self.id})
+
+class ServiceCategory(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Nomi")
+    description = RichTextField(null=True, blank=True, verbose_name="Tavsif")
+
+    class Meta:
+        verbose_name = "Xizmat Kategoriyasi"
+        verbose_name_plural = "Xizmat Kategoriyalari"
     
+    def services_count(self):
+        return self.ourservice_set.count()
+
+    def __str__(self):
+        return self.name
+
 class OurWorkProcess(models.Model):
     title = models.CharField(max_length=200, verbose_name="Sarlavha")
     subtitle = models.CharField(max_length=200, null=True, blank=True, verbose_name="Kichik sarlavha")
