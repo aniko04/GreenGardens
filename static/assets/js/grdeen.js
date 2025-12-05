@@ -253,9 +253,9 @@
   }
 
   if ($(".service-sidebar__nav").length) {
-    // dynamic current class
-    let mainNavUL = $(".service-sidebar__nav");
-    dynamicCurrentMenuClass(mainNavUL);
+    // dynamic current class disabled for service sidebar
+    // let mainNavUL = $(".service-sidebar__nav");
+    // dynamicCurrentMenuClass(mainNavUL);
   }
 
   if ($(".main-menu").length && $(".mobile-nav__container").length) {
