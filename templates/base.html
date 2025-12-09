@@ -251,7 +251,9 @@
                                     <li><a href="{% url 'faq' %}">FAQs</a></li>
                                 </ul>
                             </li>
-                            <li
+                            {% if user.is_staff %}
+                            <li 
+                            
                                 class="dropdown {% if request.resolver_match.url_name == 'products' or request.resolver_match.url_name == 'product_details' or request.resolver_match.url_name == 'cart' or request.resolver_match.url_name == 'my_likes' or request.resolver_match.url_name == 'checkout' %}current{% endif %}">
                                 <a href="#" style="pointer-events: none;">Do'kon</a>
                                 <ul class="sub-menu">
@@ -263,6 +265,7 @@
                                     <li><a href="{% url 'checkout' %}">To'lov</a></li>
                                 </ul>
                             </li>
+                            {% endif %}
                             <li {% if request.resolver_match.url_name == 'blog' or request.resolver_match.url_name == 'blog_details' %}class="current" {% endif %}>
                                 <a href="{% url 'blog' %}">Blog</a>
 
@@ -285,6 +288,7 @@
                             </div>
                             <span class="sr-only">Search</span>
                         </a><!-- /.search-toggler -->
+                        {% if user.is_staff %}
                         <a href="{% url 'cart' %}" class="main-header__cart">
                             <div class="main-header__cart__icon">
                                 <i class="icon-shop-bag" aria-hidden="true"></i>
@@ -299,7 +303,7 @@
                             <span class="main-header__likes__count" id="likes_count">{{ likes_count }}</span>
                             <span class="sr-only">likes</span>
                         </a><!-- /.likes-toggler -->
-
+                        {% endif %}
                         <div class="main-header__helpline">
                             <div class="main-header__helpline__bg"
                                 style="background-image: url('{% static 'assets/images/shapes/nav-phone-icon3-1.png' %}')">
