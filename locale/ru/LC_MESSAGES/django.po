@@ -1,0 +1,328 @@
+# GreenGardens Русский перевод
+# Copyright (C) 2025 GreenGardens
+# This file is distributed under the same license as the GreenGardens package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GreenGardens 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-10 19:22+0500\n"
+"PO-Revision-Date: 2025-12-10 19:30+0500\n"
+"Last-Translator: GreenGardens Team\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: core/settings.py:149
+msgid "O'zbekcha"
+msgstr "Узбекский"
+
+#: core/settings.py:150
+msgid "Русский"
+msgstr "Русский"
+
+#: core/settings.py:151
+msgid "English"
+msgstr "Английский"
+
+#: home/views.py:41 home/views.py:80 home/views.py:114
+msgid "Your message has been sent successfully!"
+msgstr "Ваше сообщение успешно отправлено!"
+
+#: home/views.py:127 home/views.py:169
+msgid "Service not found"
+msgstr "Услуга не найдена"
+
+#: home/views.py:145
+msgid "Category found, but no services available"
+msgstr "Категория найдена, но услуги недоступны"
+
+#: home/views.py:204 home/views.py:218
+msgid "Category not found"
+msgstr "Категория не найдена"
+
+#: home/views.py:231
+msgid "No services found in this category!"
+msgstr "В этой категории услуги не найдены!"
+
+#: home/views.py:244
+msgid "Requested project not found!"
+msgstr "Запрошенный проект не найден!"
+
+#: home/views.py:321
+msgid "Requested product not found!"
+msgstr "Запрошенный продукт не найден!"
+
+#: home/views.py:357 home/views.py:361
+msgid "Your job application has been submitted successfully!"
+msgstr "Ваша заявка на работу успешно отправлена!"
+
+#: home/views.py:369 home/views.py:372
+msgid "An error occurred while submitting your application. Please try again."
+msgstr "Произошла ошибка при отправке заявки. Пожалуйста, попробуйте снова."
+
+#: home/views.py:379
+msgid "Requested team member not found!"
+msgstr "Запрошенный член команды не найден!"
+
+#: home/views.py:427
+msgid "Requested blog not found!"
+msgstr "Запрошенный блог не найден!"
+
+#: home/views.py:661 home/views.py:719
+msgid "Invalid email or password."
+msgstr "Неверный email или пароль."
+
+#: home/views.py:716
+msgid "Welcome back!"
+msgstr "С возвращением!"
+
+#: home/views.py:735
+msgid "Passwords do not match!"
+msgstr "Пароли не совпадают!"
+
+#: home/views.py:743
+msgid "This email is already registered!"
+msgstr "Этот email уже зарегистрирован!"
+
+#: home/views.py:778
+msgid "Email Verification Code - GreenGardens"
+msgstr "Код подтверждения email - GreenGardens"
+
+#: home/views.py:779
+#, python-format
+msgid ""
+"\n"
+"        Hi there!\n"
+"\n"
+"        Welcome to GreenGardens! Please verify your email address to "
+"complete your registration.\n"
+"\n"
+"        Your verification code is: %(code)s\n"
+"\n"
+"        This code will expire in 15 minutes.\n"
+"\n"
+"        If you didn't request this, please ignore this email.\n"
+"\n"
+"        Best regards,\n"
+"        GreenGardens Team\n"
+"        "
+msgstr ""
+"\n"
+"        Здравствуйте!\n"
+"\n"
+"        Добро пожаловать в GreenGardens! Пожалуйста, подтвердите ваш email "
+"для завершения регистрации.\n"
+"\n"
+"        Ваш код подтверждения: %(code)s\n"
+"\n"
+"        Этот код действителен 15 минут.\n"
+"\n"
+"        Если вы не запрашивали это, проигнорируйте это письмо.\n"
+"\n"
+"        С уважением,\n"
+"        Команда GreenGardens\n"
+"        "
+
+#: home/views.py:802
+msgid ""
+"Verification code has been sent. Please check your email and enter the code "
+"to complete registration."
+msgstr ""
+"Код подтверждения отправлен. Пожалуйста, проверьте вашу почту и введите код "
+"для завершения регистрации."
+
+#: home/views.py:805 home/views.py:927
+msgid "Error sending email. Please try again."
+msgstr "Ошибка отправки email. Пожалуйста, попробуйте снова."
+
+#: home/views.py:832
+msgid "Verification code has expired. Please register again."
+msgstr "Срок действия кода подтверждения истек. Пожалуйста, зарегистрируйтесь снова."
+
+#: home/views.py:850
+msgid ""
+"Email verification successful! Your account has been created. You can now "
+"log in."
+msgstr ""
+"Email успешно подтвержден! Ваш аккаунт создан. Теперь вы можете войти."
+
+#: home/views.py:854 home/views.py:972
+msgid "Invalid verification code or email address."
+msgstr "Неверный код подтверждения или email адрес."
+
+#: home/views.py:856 home/views.py:974
+msgid "Please provide both email and verification code."
+msgstr "Пожалуйста, введите email и код подтверждения."
+
+#: home/views.py:864
+msgid "You have been logged out successfully."
+msgstr "Вы успешно вышли из системы."
+
+#: home/views.py:900
+msgid "Password Reset Verification Code - GreenGardens"
+msgstr "Код сброса пароля - GreenGardens"
+
+#: home/views.py:901
+#, python-format
+msgid ""
+"\n"
+"                Hi,\n"
+"\n"
+"                You have requested to reset your password for GreenGardens.\n"
+"\n"
+"                Your verification code is: %(code)s\n"
+"\n"
+"                This code will expire in 15 minutes.\n"
+"\n"
+"                If you didn't request this, please ignore this email.\n"
+"\n"
+"                Best regards,\n"
+"                GreenGardens Team\n"
+"                "
+msgstr ""
+"\n"
+"                Здравствуйте,\n"
+"\n"
+"                Вы запросили сброс пароля для GreenGardens.\n"
+"\n"
+"                Ваш код подтверждения: %(code)s\n"
+"\n"
+"                Этот код действителен 15 минут.\n"
+"\n"
+"                Если вы не запрашивали это, проигнорируйте это письмо.\n"
+"\n"
+"                С уважением,\n"
+"                Команда GreenGardens\n"
+"                "
+
+#: home/views.py:924
+msgid ""
+"Verification code has been sent. Please check your email and enter the code."
+msgstr ""
+"Код подтверждения отправлен. Пожалуйста, проверьте вашу почту и введите код."
+
+#: home/views.py:933
+msgid "No user found with this email address."
+msgstr "Пользователь с таким email не найден."
+
+#: home/views.py:935
+msgid "Please provide a valid email address."
+msgstr "Пожалуйста, введите действительный email адрес."
+
+#: home/views.py:957
+msgid "Verification code has expired. Please request a new one."
+msgstr "Срок действия кода подтверждения истек. Пожалуйста, запросите новый."
+
+#: home/views.py:994
+msgid "Your password has been reset successfully! You can now log in."
+msgstr "Ваш пароль успешно сброшен! Теперь вы можете войти."
+
+#: home/views.py:997
+msgid "Passwords do not match."
+msgstr "Пароли не совпадают."
+
+#: home/views.py:1001
+msgid "The password reset link is invalid or has expired."
+msgstr "Ссылка для сброса пароля недействительна или истекла."
+
+#: home/views.py:1059
+msgid "Session token and message are required"
+msgstr "Требуется токен сессии и сообщение"
+
+#: home/views.py:1068 home/views.py:1135 home/views.py:1171
+msgid "Chat session not found"
+msgstr "Сессия чата не найдена"
+
+#: home/views.py:1083
+msgid "Your message has been received! Admin will respond soon."
+msgstr "Ваше сообщение получено! Администратор скоро ответит."
+
+#: home/views.py:1151
+msgid "Permission denied"
+msgstr "Доступ запрещен"
+
+#: home/views.py:1162
+msgid "Session ID and message are required"
+msgstr "Требуется ID сессии и сообщение"
+
+#: templates/base.html:177
+msgid "Logout"
+msgstr "Выход"
+
+#: templates/base.html:182
+msgid "Login"
+msgstr "Вход"
+
+#: templates/base.html:189
+msgid "Working hours"
+msgstr "Рабочие часы"
+
+#: templates/base.html:192
+msgid "Help"
+msgstr "Помощь"
+
+#: templates/base.html:193
+msgid "Career"
+msgstr "Карьера"
+
+#: templates/base.html:194
+msgid "Office"
+msgstr "Офис"
+
+#: templates/base.html:233
+msgid "Services"
+msgstr "Услуги"
+
+#: templates/base.html:252
+msgid "About Us"
+msgstr "О нас"
+
+#: templates/base.html:255
+msgid "Projects"
+msgstr "Проекты"
+
+#: templates/base.html:259
+msgid "Pages"
+msgstr "Страницы"
+
+#: templates/base.html:261
+msgid "Team"
+msgstr "Команда"
+
+#: templates/base.html:269
+msgid "Shop"
+msgstr "Магазин"
+
+#: templates/base.html:272
+msgid "Products"
+msgstr "Продукты"
+
+#: templates/base.html:274
+msgid "Cart"
+msgstr "Корзина"
+
+#: templates/base.html:275
+msgid "My Likes"
+msgstr "Избранное"
+
+#: templates/base.html:276
+msgid "Checkout"
+msgstr "Оплата"
+
+#: templates/base.html:281
+msgid "Blog"
+msgstr "Блог"
+
+#: templates/base.html:285
+msgid "Contact"
+msgstr "Контакты"
+
+#: templates/base.html:326
+msgid "Contact us"
+msgstr "Связаться с нами"

@@ -1,5 +1,6 @@
-<!DOCTYPE html>{% load static %}
-<html lang="en">
+<!DOCTYPE html>{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
 
 <head>
     <meta charset="UTF-8">
@@ -117,10 +118,16 @@
             transition: all 0.3s ease;
         }
 
-        #custom_translate_buttons button:hover {
+        #custom_translate_buttons button:hover,
+        #custom_translate_buttons button.active {
             background-color: #45a049;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #custom_translate_buttons button.active {
+            background-color: #2d7a32;
+            color: #fff;
         }
 
         /* Adjust the body top margin */
@@ -167,33 +174,37 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="{% url 'logout' %}"><i
-                                            class="fas fa-sign-out-alt me-2"></i>Chiqish</a></li>
+                                            class="fas fa-sign-out-alt me-2"></i>{% trans "Logout" %}</a></li>
                             </ul>
                         </div>
                         {% else %}
                         <a href="{% url 'login' %}" class="grdeen-btn main-header__btn">
-                            <span>Kirish</span>
+                            <span>{% trans "Login" %}</span>
                         </a><!-- /.thm-btn main-header__btn -->
                         {% endif %}
                         <div class="topbar-one__right__openitme d-flex align-items-center">
                             <div class="topbar-one__right__iconwrap">
                                 <i class="fas fa-phone-square-alt"></i>
                             </div>
-                            <p class="topbar-one__text">ish vaqti: {{ info.opening_hours }}</p><!-- /.topbar-one__text -->
+                            <p class="topbar-one__text">{% trans "Working hours" %}: {{ info.opening_hours }}</p><!-- /.topbar-one__text -->
                         </div>
                         <ul class="list-unstyled topbar-one__right__list">
-                            <li><a href="{% url 'contact' %}">Yordam</a></li>
-                            <li><a href="{% url 'team' %}">Karyera</a></li>
-                            <li><a href="{% url 'about' %}">Ofis</a></li>
+                            <li><a href="{% url 'contact' %}">{% trans "Help" %}</a></li>
+                            <li><a href="{% url 'team' %}">{% trans "Career" %}</a></li>
+                            <li><a href="{% url 'about' %}">{% trans "Office" %}</a></li>
                         </ul>
 
                         <!-- Custom Translate Buttons -->
                         <div id="custom_translate_buttons">
-                            <button class="notranslate" onclick="translateTo('uz')">O'zbekcha</button>
-                            <button class="notranslate" onclick="translateTo('en')">English</button>
-                            <button class="notranslate" onclick="translateTo('ru')">Русский</button>
+                            <form action="{% url 'set_language' %}" method="post" id="lang-form" style="display: none;">
+                                {% csrf_token %}
+                                <input type="hidden" name="language" id="lang-input">
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                            </form>
+                            <button class="notranslate {% if LANGUAGE_CODE == 'uz' %}active{% endif %}" onclick="setLang('uz')">O'zbekcha</button>
+                            <button class="notranslate {% if LANGUAGE_CODE == 'en' %}active{% endif %}" onclick="setLang('en')">English</button>
+                            <button class="notranslate {% if LANGUAGE_CODE == 'ru' %}active{% endif %}" onclick="setLang('ru')">Русский</button>
                         </div>
-                        <div id="google_translate_element" style="display: none;"></div>
                         <div class="topbar-one__social">
                             {% for social in social_links %}
                             <a href="{{ social.url }}" target="_blank">{{ social.icon|safe }}
@@ -219,7 +230,7 @@
                     <nav class="main-header__nav main-menu">
                         <ul class="main-menu__list">
                             <li {% if request.resolver_match.url_name == 'services' or request.resolver_match.url_name == 'service_details' %}class="current" {% endif %}>
-                                <a href="#">Xizmatlar</a>
+                                <a href="#">{% trans "Services" %}</a>
                                 <ul>
                                     {% for service in ourservices %}
                                     <li><a href="{% url 'service_details' service.slug %}">{{ service.title }}</a>
@@ -238,16 +249,16 @@
                                 </ul>
                             </li>
                             <li {% if request.resolver_match.url_name == 'about' %}class="current" {% endif %}>
-                                <a href="{% url 'about' %}">Biz haqimizda</a>
+                                <a href="{% url 'about' %}">{% trans "About Us" %}</a>
                             </li>
                             <li {% if request.resolver_match.url_name == 'projects' or request.resolver_match.url_name == 'project_details' %}class="current" {% endif %}>
-                                <a href="{% url 'projects' %}">Loyihalar</a>
+                                <a href="{% url 'projects' %}">{% trans "Projects" %}</a>
                             </li>
                             <li
                                 class="dropdown {% if request.resolver_match.url_name == 'team' or request.resolver_match.url_name == 'team_details' or request.resolver_match.url_name == 'faq' %}current{% endif %}">
-                                <a href="#" style="pointer-events: none;">Sahifalar</a>
+                                <a href="#" style="pointer-events: none;">{% trans "Pages" %}</a>
                                 <ul>
-                                    <li><a href="{% url 'team' %}">Jamoa</a></li>
+                                    <li><a href="{% url 'team' %}">{% trans "Team" %}</a></li>
                                     <li><a href="{% url 'faq' %}">FAQs</a></li>
                                 </ul>
                             </li>
@@ -255,23 +266,23 @@
                             <li 
                             
                                 class="dropdown {% if request.resolver_match.url_name == 'products' or request.resolver_match.url_name == 'product_details' or request.resolver_match.url_name == 'cart' or request.resolver_match.url_name == 'my_likes' or request.resolver_match.url_name == 'checkout' %}current{% endif %}">
-                                <a href="#" style="pointer-events: none;">Do'kon</a>
+                                <a href="#" style="pointer-events: none;">{% trans "Shop" %}</a>
                                 <ul class="sub-menu">
                                     <li class="dropdown">
-                                        <a href="{% url 'products' %}">Mahsulotlar</a>
+                                        <a href="{% url 'products' %}">{% trans "Products" %}</a>
                                     </li>
-                                    <li><a href="{% url 'cart' %}">Savatcha</a></li>
-                                    <li><a href="{% url 'my_likes' %}">Mening yoqtirishlarim</a></li>
-                                    <li><a href="{% url 'checkout' %}">To'lov</a></li>
+                                    <li><a href="{% url 'cart' %}">{% trans "Cart" %}</a></li>
+                                    <li><a href="{% url 'my_likes' %}">{% trans "My Likes" %}</a></li>
+                                    <li><a href="{% url 'checkout' %}">{% trans "Checkout" %}</a></li>
                                 </ul>
                             </li>
                             {% endif %}
                             <li {% if request.resolver_match.url_name == 'blog' or request.resolver_match.url_name == 'blog_details' %}class="current" {% endif %}>
-                                <a href="{% url 'blog' %}">Blog</a>
+                                <a href="{% url 'blog' %}">{% trans "Blog" %}</a>
 
                             </li>
                             <li {% if request.resolver_match.url_name == 'contact' %}class="current" {% endif %}>
-                                <a href="{% url 'contact' %}">Kontakt</a>
+                                <a href="{% url 'contact' %}">{% trans "Contact" %}</a>
                             </li>
                         </ul>
                     </nav><!-- /.main-header__nav -->
@@ -312,7 +323,7 @@
                                 <i class="icon-phone-receiver-silhouette"></i>
                             </div>
                             <div class="main-header__helpline__phonewrap">
-                                <p class="main-header__helpline__text">Murojaat uchun</p>
+                                <p class="main-header__helpline__text">{% trans "Contact us" %}</p>
                                 <a class="main-header__helpline__tel" href="tel:{{ info.phone_number }}">{{ info.phone_number }}</a>
                             </div>
                         </div>
@@ -1820,6 +1831,12 @@
                 });
             }
         });
+
+        // Til almashtirish funksiyasi
+        function setLang(lang) {
+            document.getElementById('lang-input').value = lang;
+            document.getElementById('lang-form').submit();
+        }
     </script>
 </body>
 

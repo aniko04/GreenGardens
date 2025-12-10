@@ -1,0 +1,327 @@
+# GreenGardens O'zbek tili tarjimasi
+# Copyright (C) 2025 GreenGardens
+# This file is distributed under the same license as the GreenGardens package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GreenGardens 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-10 19:22+0500\n"
+"PO-Revision-Date: 2025-12-10 19:30+0500\n"
+"Last-Translator: GreenGardens Team\n"
+"Language-Team: Uzbek\n"
+"Language: uz\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: core/settings.py:149
+msgid "O'zbekcha"
+msgstr "O'zbekcha"
+
+#: core/settings.py:150
+msgid "Русский"
+msgstr "Ruscha"
+
+#: core/settings.py:151
+msgid "English"
+msgstr "Inglizcha"
+
+#: home/views.py:41 home/views.py:80 home/views.py:114
+msgid "Your message has been sent successfully!"
+msgstr "Xabaringiz muvaffaqiyatli yuborildi!"
+
+#: home/views.py:127 home/views.py:169
+msgid "Service not found"
+msgstr "Xizmat topilmadi"
+
+#: home/views.py:145
+msgid "Category found, but no services available"
+msgstr "Kategoriya topildi, lekin xizmatlar mavjud emas"
+
+#: home/views.py:204 home/views.py:218
+msgid "Category not found"
+msgstr "Kategoriya topilmadi"
+
+#: home/views.py:231
+msgid "No services found in this category!"
+msgstr "Bu kategoriyada xizmat topilmadi!"
+
+#: home/views.py:244
+msgid "Requested project not found!"
+msgstr "So'ralgan loyiha topilmadi!"
+
+#: home/views.py:321
+msgid "Requested product not found!"
+msgstr "So'ralgan mahsulot topilmadi!"
+
+#: home/views.py:357 home/views.py:361
+msgid "Your job application has been submitted successfully!"
+msgstr "Ish arizangiz muvaffaqiyatli yuborildi!"
+
+#: home/views.py:369 home/views.py:372
+msgid "An error occurred while submitting your application. Please try again."
+msgstr "Arizangizni yuborishda xatolik yuz berdi. Iltimos, qayta urinib ko'ring."
+
+#: home/views.py:379
+msgid "Requested team member not found!"
+msgstr "So'ralgan jamoa a'zosi topilmadi!"
+
+#: home/views.py:427
+msgid "Requested blog not found!"
+msgstr "So'ralgan blog topilmadi!"
+
+#: home/views.py:661 home/views.py:719
+msgid "Invalid email or password."
+msgstr "Noto'g'ri email yoki parol."
+
+#: home/views.py:716
+msgid "Welcome back!"
+msgstr "Xush kelibsiz!"
+
+#: home/views.py:735
+msgid "Passwords do not match!"
+msgstr "Parollar mos kelmaydi!"
+
+#: home/views.py:743
+msgid "This email is already registered!"
+msgstr "Bu email allaqachon ro'yxatdan o'tgan!"
+
+#: home/views.py:778
+msgid "Email Verification Code - GreenGardens"
+msgstr "Email tasdiqlash kodi - GreenGardens"
+
+#: home/views.py:779
+#, python-format
+msgid ""
+"\n"
+"        Hi there!\n"
+"\n"
+"        Welcome to GreenGardens! Please verify your email address to "
+"complete your registration.\n"
+"\n"
+"        Your verification code is: %(code)s\n"
+"\n"
+"        This code will expire in 15 minutes.\n"
+"\n"
+"        If you didn't request this, please ignore this email.\n"
+"\n"
+"        Best regards,\n"
+"        GreenGardens Team\n"
+"        "
+msgstr ""
+"\n"
+"        Salom!\n"
+"\n"
+"        GreenGardens'ga xush kelibsiz! Ro'yxatdan o'tishni yakunlash uchun "
+"email manzilingizni tasdiqlang.\n"
+"\n"
+"        Sizning tasdiqlash kodingiz: %(code)s\n"
+"\n"
+"        Bu kod 15 daqiqada amal qiladi.\n"
+"\n"
+"        Agar siz buni so'ramagan bo'lsangiz, iltimos, bu emailni e'tiborsiz qoldiring.\n"
+"\n"
+"        Hurmat bilan,\n"
+"        GreenGardens jamoasi\n"
+"        "
+
+#: home/views.py:802
+msgid ""
+"Verification code has been sent. Please check your email and enter the code "
+"to complete registration."
+msgstr ""
+"Tasdiqlash kodi yuborildi. Ro'yxatdan o'tishni yakunlash uchun emailingizni "
+"tekshiring va kodni kiriting."
+
+#: home/views.py:805 home/views.py:927
+msgid "Error sending email. Please try again."
+msgstr "Email yuborishda xatolik. Iltimos, qayta urinib ko'ring."
+
+#: home/views.py:832
+msgid "Verification code has expired. Please register again."
+msgstr "Tasdiqlash kodi muddati tugagan. Iltimos, qayta ro'yxatdan o'ting."
+
+#: home/views.py:850
+msgid ""
+"Email verification successful! Your account has been created. You can now "
+"log in."
+msgstr ""
+"Email tasdiqlash muvaffaqiyatli! Hisobingiz yaratildi. Endi tizimga "
+"kirishingiz mumkin."
+
+#: home/views.py:854 home/views.py:972
+msgid "Invalid verification code or email address."
+msgstr "Noto'g'ri tasdiqlash kodi yoki email manzil."
+
+#: home/views.py:856 home/views.py:974
+msgid "Please provide both email and verification code."
+msgstr "Iltimos, email va tasdiqlash kodini kiriting."
+
+#: home/views.py:864
+msgid "You have been logged out successfully."
+msgstr "Siz muvaffaqiyatli chiqdingiz."
+
+#: home/views.py:900
+msgid "Password Reset Verification Code - GreenGardens"
+msgstr "Parolni tiklash tasdiqlash kodi - GreenGardens"
+
+#: home/views.py:901
+#, python-format
+msgid ""
+"\n"
+"                Hi,\n"
+"\n"
+"                You have requested to reset your password for GreenGardens.\n"
+"\n"
+"                Your verification code is: %(code)s\n"
+"\n"
+"                This code will expire in 15 minutes.\n"
+"\n"
+"                If you didn't request this, please ignore this email.\n"
+"\n"
+"                Best regards,\n"
+"                GreenGardens Team\n"
+"                "
+msgstr ""
+"\n"
+"                Salom,\n"
+"\n"
+"                Siz GreenGardens uchun parolingizni tiklashni so'radingiz.\n"
+"\n"
+"                Sizning tasdiqlash kodingiz: %(code)s\n"
+"\n"
+"                Bu kod 15 daqiqada amal qiladi.\n"
+"\n"
+"                Agar siz buni so'ramagan bo'lsangiz, iltimos, bu emailni e'tiborsiz qoldiring.\n"
+"\n"
+"                Hurmat bilan,\n"
+"                GreenGardens jamoasi\n"
+"                "
+
+#: home/views.py:924
+msgid ""
+"Verification code has been sent. Please check your email and enter the code."
+msgstr ""
+"Tasdiqlash kodi yuborildi. Iltimos, emailingizni tekshiring va kodni kiriting."
+
+#: home/views.py:933
+msgid "No user found with this email address."
+msgstr "Bu email manzil bilan foydalanuvchi topilmadi."
+
+#: home/views.py:935
+msgid "Please provide a valid email address."
+msgstr "Iltimos, to'g'ri email manzilini kiriting."
+
+#: home/views.py:957
+msgid "Verification code has expired. Please request a new one."
+msgstr "Tasdiqlash kodi muddati tugagan. Iltimos, yangisini so'rang."
+
+#: home/views.py:994
+msgid "Your password has been reset successfully! You can now log in."
+msgstr "Parolingiz muvaffaqiyatli tiklandi! Endi tizimga kirishingiz mumkin."
+
+#: home/views.py:997
+msgid "Passwords do not match."
+msgstr "Parollar mos kelmaydi."
+
+#: home/views.py:1001
+msgid "The password reset link is invalid or has expired."
+msgstr "Parolni tiklash havolasi noto'g'ri yoki muddati tugagan."
+
+#: home/views.py:1059
+msgid "Session token and message are required"
+msgstr "Sessiya tokeni va xabar talab qilinadi"
+
+#: home/views.py:1068 home/views.py:1135 home/views.py:1171
+msgid "Chat session not found"
+msgstr "Chat sessiyasi topilmadi"
+
+#: home/views.py:1083
+msgid "Your message has been received! Admin will respond soon."
+msgstr "Xabaringiz qabul qilindi! Tez orada admin javob beradi."
+
+#: home/views.py:1151
+msgid "Permission denied"
+msgstr "Ruxsat berilmagan"
+
+#: home/views.py:1162
+msgid "Session ID and message are required"
+msgstr "Sessiya ID va xabar talab qilinadi"
+
+#: templates/base.html:177
+msgid "Logout"
+msgstr "Chiqish"
+
+#: templates/base.html:182
+msgid "Login"
+msgstr "Kirish"
+
+#: templates/base.html:189
+msgid "Working hours"
+msgstr "Ish vaqti"
+
+#: templates/base.html:192
+msgid "Help"
+msgstr "Yordam"
+
+#: templates/base.html:193
+msgid "Career"
+msgstr "Karyera"
+
+#: templates/base.html:194
+msgid "Office"
+msgstr "Ofis"
+
+#: templates/base.html:233
+msgid "Services"
+msgstr "Xizmatlar"
+
+#: templates/base.html:252
+msgid "About Us"
+msgstr "Biz haqimizda"
+
+#: templates/base.html:255
+msgid "Projects"
+msgstr "Loyihalar"
+
+#: templates/base.html:259
+msgid "Pages"
+msgstr "Sahifalar"
+
+#: templates/base.html:261
+msgid "Team"
+msgstr "Jamoa"
+
+#: templates/base.html:269
+msgid "Shop"
+msgstr "Do'kon"
+
+#: templates/base.html:272
+msgid "Products"
+msgstr "Mahsulotlar"
+
+#: templates/base.html:274
+msgid "Cart"
+msgstr "Savatcha"
+
+#: templates/base.html:275
+msgid "My Likes"
+msgstr "Yoqtirishlarim"
+
+#: templates/base.html:276
+msgid "Checkout"
+msgstr "To'lov"
+
+#: templates/base.html:281
+msgid "Blog"
+msgstr "Blog"
+
+#: templates/base.html:285
+msgid "Contact"
+msgstr "Aloqa"
+
+#: templates/base.html:326
+msgid "Contact us"
+msgstr "Biz bilan bog'lanish"

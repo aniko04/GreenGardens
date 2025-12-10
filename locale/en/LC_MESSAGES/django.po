@@ -1,0 +1,327 @@
+# GreenGardens English translation
+# Copyright (C) 2025 GreenGardens
+# This file is distributed under the same license as the GreenGardens package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GreenGardens 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-10 19:22+0500\n"
+"PO-Revision-Date: 2025-12-10 19:30+0500\n"
+"Last-Translator: GreenGardens Team\n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: core/settings.py:149
+msgid "O'zbekcha"
+msgstr "Uzbek"
+
+#: core/settings.py:150
+msgid "Русский"
+msgstr "Russian"
+
+#: core/settings.py:151
+msgid "English"
+msgstr "English"
+
+#: home/views.py:41 home/views.py:80 home/views.py:114
+msgid "Your message has been sent successfully!"
+msgstr "Your message has been sent successfully!"
+
+#: home/views.py:127 home/views.py:169
+msgid "Service not found"
+msgstr "Service not found"
+
+#: home/views.py:145
+msgid "Category found, but no services available"
+msgstr "Category found, but no services available"
+
+#: home/views.py:204 home/views.py:218
+msgid "Category not found"
+msgstr "Category not found"
+
+#: home/views.py:231
+msgid "No services found in this category!"
+msgstr "No services found in this category!"
+
+#: home/views.py:244
+msgid "Requested project not found!"
+msgstr "Requested project not found!"
+
+#: home/views.py:321
+msgid "Requested product not found!"
+msgstr "Requested product not found!"
+
+#: home/views.py:357 home/views.py:361
+msgid "Your job application has been submitted successfully!"
+msgstr "Your job application has been submitted successfully!"
+
+#: home/views.py:369 home/views.py:372
+msgid "An error occurred while submitting your application. Please try again."
+msgstr "An error occurred while submitting your application. Please try again."
+
+#: home/views.py:379
+msgid "Requested team member not found!"
+msgstr "Requested team member not found!"
+
+#: home/views.py:427
+msgid "Requested blog not found!"
+msgstr "Requested blog not found!"
+
+#: home/views.py:661 home/views.py:719
+msgid "Invalid email or password."
+msgstr "Invalid email or password."
+
+#: home/views.py:716
+msgid "Welcome back!"
+msgstr "Welcome back!"
+
+#: home/views.py:735
+msgid "Passwords do not match!"
+msgstr "Passwords do not match!"
+
+#: home/views.py:743
+msgid "This email is already registered!"
+msgstr "This email is already registered!"
+
+#: home/views.py:778
+msgid "Email Verification Code - GreenGardens"
+msgstr "Email Verification Code - GreenGardens"
+
+#: home/views.py:779
+#, python-format
+msgid ""
+"\n"
+"        Hi there!\n"
+"\n"
+"        Welcome to GreenGardens! Please verify your email address to "
+"complete your registration.\n"
+"\n"
+"        Your verification code is: %(code)s\n"
+"\n"
+"        This code will expire in 15 minutes.\n"
+"\n"
+"        If you didn't request this, please ignore this email.\n"
+"\n"
+"        Best regards,\n"
+"        GreenGardens Team\n"
+"        "
+msgstr ""
+"\n"
+"        Hi there!\n"
+"\n"
+"        Welcome to GreenGardens! Please verify your email address to "
+"complete your registration.\n"
+"\n"
+"        Your verification code is: %(code)s\n"
+"\n"
+"        This code will expire in 15 minutes.\n"
+"\n"
+"        If you didn't request this, please ignore this email.\n"
+"\n"
+"        Best regards,\n"
+"        GreenGardens Team\n"
+"        "
+
+#: home/views.py:802
+msgid ""
+"Verification code has been sent. Please check your email and enter the code "
+"to complete registration."
+msgstr ""
+"Verification code has been sent. Please check your email and enter the code "
+"to complete registration."
+
+#: home/views.py:805 home/views.py:927
+msgid "Error sending email. Please try again."
+msgstr "Error sending email. Please try again."
+
+#: home/views.py:832
+msgid "Verification code has expired. Please register again."
+msgstr "Verification code has expired. Please register again."
+
+#: home/views.py:850
+msgid ""
+"Email verification successful! Your account has been created. You can now "
+"log in."
+msgstr ""
+"Email verification successful! Your account has been created. You can now "
+"log in."
+
+#: home/views.py:854 home/views.py:972
+msgid "Invalid verification code or email address."
+msgstr "Invalid verification code or email address."
+
+#: home/views.py:856 home/views.py:974
+msgid "Please provide both email and verification code."
+msgstr "Please provide both email and verification code."
+
+#: home/views.py:864
+msgid "You have been logged out successfully."
+msgstr "You have been logged out successfully."
+
+#: home/views.py:900
+msgid "Password Reset Verification Code - GreenGardens"
+msgstr "Password Reset Verification Code - GreenGardens"
+
+#: home/views.py:901
+#, python-format
+msgid ""
+"\n"
+"                Hi,\n"
+"\n"
+"                You have requested to reset your password for GreenGardens.\n"
+"\n"
+"                Your verification code is: %(code)s\n"
+"\n"
+"                This code will expire in 15 minutes.\n"
+"\n"
+"                If you didn't request this, please ignore this email.\n"
+"\n"
+"                Best regards,\n"
+"                GreenGardens Team\n"
+"                "
+msgstr ""
+"\n"
+"                Hi,\n"
+"\n"
+"                You have requested to reset your password for GreenGardens.\n"
+"\n"
+"                Your verification code is: %(code)s\n"
+"\n"
+"                This code will expire in 15 minutes.\n"
+"\n"
+"                If you didn't request this, please ignore this email.\n"
+"\n"
+"                Best regards,\n"
+"                GreenGardens Team\n"
+"                "
+
+#: home/views.py:924
+msgid ""
+"Verification code has been sent. Please check your email and enter the code."
+msgstr ""
+"Verification code has been sent. Please check your email and enter the code."
+
+#: home/views.py:933
+msgid "No user found with this email address."
+msgstr "No user found with this email address."
+
+#: home/views.py:935
+msgid "Please provide a valid email address."
+msgstr "Please provide a valid email address."
+
+#: home/views.py:957
+msgid "Verification code has expired. Please request a new one."
+msgstr "Verification code has expired. Please request a new one."
+
+#: home/views.py:994
+msgid "Your password has been reset successfully! You can now log in."
+msgstr "Your password has been reset successfully! You can now log in."
+
+#: home/views.py:997
+msgid "Passwords do not match."
+msgstr "Passwords do not match."
+
+#: home/views.py:1001
+msgid "The password reset link is invalid or has expired."
+msgstr "The password reset link is invalid or has expired."
+
+#: home/views.py:1059
+msgid "Session token and message are required"
+msgstr "Session token and message are required"
+
+#: home/views.py:1068 home/views.py:1135 home/views.py:1171
+msgid "Chat session not found"
+msgstr "Chat session not found"
+
+#: home/views.py:1083
+msgid "Your message has been received! Admin will respond soon."
+msgstr "Your message has been received! Admin will respond soon."
+
+#: home/views.py:1151
+msgid "Permission denied"
+msgstr "Permission denied"
+
+#: home/views.py:1162
+msgid "Session ID and message are required"
+msgstr "Session ID and message are required"
+
+#: templates/base.html:177
+msgid "Logout"
+msgstr "Logout"
+
+#: templates/base.html:182
+msgid "Login"
+msgstr "Login"
+
+#: templates/base.html:189
+msgid "Working hours"
+msgstr "Working hours"
+
+#: templates/base.html:192
+msgid "Help"
+msgstr "Help"
+
+#: templates/base.html:193
+msgid "Career"
+msgstr "Career"
+
+#: templates/base.html:194
+msgid "Office"
+msgstr "Office"
+
+#: templates/base.html:233
+msgid "Services"
+msgstr "Services"
+
+#: templates/base.html:252
+msgid "About Us"
+msgstr "About Us"
+
+#: templates/base.html:255
+msgid "Projects"
+msgstr "Projects"
+
+#: templates/base.html:259
+msgid "Pages"
+msgstr "Pages"
+
+#: templates/base.html:261
+msgid "Team"
+msgstr "Team"
+
+#: templates/base.html:269
+msgid "Shop"
+msgstr "Shop"
+
+#: templates/base.html:272
+msgid "Products"
+msgstr "Products"
+
+#: templates/base.html:274
+msgid "Cart"
+msgstr "Cart"
+
+#: templates/base.html:275
+msgid "My Likes"
+msgstr "My Likes"
+
+#: templates/base.html:276
+msgid "Checkout"
+msgstr "Checkout"
+
+#: templates/base.html:281
+msgid "Blog"
+msgstr "Blog"
+
+#: templates/base.html:285
+msgid "Contact"
+msgstr "Contact"
+
+#: templates/base.html:326
+msgid "Contact us"
+msgstr "Contact us"

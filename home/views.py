@@ -16,6 +16,7 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_protect
 from django.utils.decorators import method_decorator
 from django.db.models import Q
+from django.utils.translation import gettext as _
 from home.models import *
 
 # Create your views here.
@@ -37,8 +38,8 @@ def home(request):
             message=message
         )
 
-        messages.success(request, "Your message has been sent successfully!")   
-    
+        messages.success(request, _("Your message has been sent successfully!"))
+
     sliders = Mainslider.objects.filter(is_active=True)
     intro = IntroOurCompany.objects.filter(is_active=True).first()
     features = MainFeature.objects.filter(is_active=True)
@@ -76,8 +77,8 @@ def about(request):
             message=message
         )
 
-        messages.success(request, "Your message has been sent successfully!")   
-    
+        messages.success(request, _("Your message has been sent successfully!"))
+
     intro = IntroOurCompany.objects.filter(is_active=True).first()
     features = MainFeature.objects.filter(is_active=True)
     ourfacts = OurFact.objects.filter(is_active=True)
@@ -110,8 +111,8 @@ def contact(request):
             message=message
         )
 
-        messages.success(request, "Your message has been sent successfully!")
-        #return redirect('contact')  # contact url nomi bilan qayta yo‘naltirish
+        messages.success(request, _("Your message has been sent successfully!"))
+        #return redirect('contact')  # contact url nomi bilan qayta yo'naltirish
         return render(request, 'contact.html')
     
     return render(request, 'contact.html')
@@ -123,7 +124,7 @@ def service_details(request, slug):
     # Slug bo'sh bo'lsa yoki None bo'lsa, xatolik qaytarish
     if not slug or slug.strip() == '':
         from django.http import Http404
-        raise Http404("Service topilmadi")
+        raise Http404(_("Service not found"))
     
     # Slug'ni tozalash (tire va underscore'ni almashtirish)
     slug = slug.strip().lower()
@@ -141,7 +142,7 @@ def service_details(request, slug):
             service = services_in_category.first()
         else:
             from django.http import Http404
-            raise Http404(f"Kategoriya topildi, lekin xizmatlar mavjud emas: '{category.name}'")
+            raise Http404(_("Category found, but no services available"))
     
     # 2. Agar kategoriya topilmasa, service slug bo'yicha qidirish
     if not service:
@@ -165,9 +166,7 @@ def service_details(request, slug):
     # 6. Agar hali ham service topilmasa, xatolik qaytarish
     if not service:
         from django.http import Http404
-        all_service_slugs = OurService.objects.filter(is_active=True).values_list('slug', flat=True)
-        all_category_slugs = ServiceCategory.objects.all().values_list('slug', flat=True)
-        raise Http404(f"Service topilmadi. Slug: '{slug}'. Service sluglar: {list(all_service_slugs)}. Category sluglar: {list(all_category_slugs)}")
+        raise Http404(_("Service not found"))
     
     # Agar kategoriya orqali kirilgan bo'lsa, kategoriyaga bog'langan barcha servislarni olish
     if category and services_in_category:
@@ -202,7 +201,7 @@ def category_services(request, slug):
     # Slug bo'sh bo'lsa yoki None bo'lsa, xatolik qaytarish
     if not slug or slug.strip() == '':
         from django.http import Http404
-        raise Http404("Kategoriya topilmadi")
+        raise Http404(_("Category not found"))
     
     try:
         category = ServiceCategory.objects.get(slug=slug)
@@ -216,7 +215,7 @@ def category_services(request, slug):
                 raise ServiceCategory.DoesNotExist
         except (ServiceCategory.DoesNotExist, ValueError):
             from django.http import Http404
-            raise Http404("Kategoriya topilmadi")
+            raise Http404(_("Category not found"))
     
     # Kategoriyaga tegishli xizmatlardan birinchisini olish
     services_in_category = OurService.objects.filter(category=category, is_active=True)
@@ -229,7 +228,7 @@ def category_services(request, slug):
             # Agar slug bo'sh bo'lsa, ID orqali redirect qilish (eski usul)
             return redirect('service_details', slug=str(first_service.id))
     else:
-        messages.error(request, "Bu kategoriyada xizmat topilmadi!")
+        messages.error(request, _("No services found in this category!"))
         return redirect('services')
 
 def projects(request):
@@ -242,8 +241,8 @@ def project_details(request, id):
     allprojects = OurProject.objects.filter(is_active=True,is_top=True).exclude(id=ourprojects.id)
 
     if not ourprojects:
-        messages.error(request, "Requested project not found!")
-    
+        messages.error(request, _("Requested project not found!"))
+
     context = {
         'allprojects': allprojects,
         'ourprojects': ourprojects,
@@ -319,8 +318,8 @@ def product_details(request, id):
         print(image.image.url)
     print("-----------------------------")
     if not products:
-        messages.error(request, "Requested product not found!")
-    
+        messages.error(request, _("Requested product not found!"))
+
     context = {
         'products': products,
         'allproducts': allproducts,
@@ -355,30 +354,30 @@ def team_details(request, id):
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                 return JsonResponse({
                     'success': True,
-                    'message': 'Your job application has been submitted successfully!'
+                    'message': _('Your job application has been submitted successfully!')
                 })
-            
+
             # Oddiy HTTP so'rov uchun
-            messages.success(request, "Your job application has been submitted successfully!")
+            messages.success(request, _("Your job application has been submitted successfully!"))
             return redirect('team_details', id=id)
-            
+
         except Exception as e:
             # Xatolik yuz bergan holat
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                 return JsonResponse({
                     'success': False,
-                    'message': 'An error occurred while submitting your application. Please try again.'
+                    'message': _('An error occurred while submitting your application. Please try again.')
                 })
-            
-            messages.error(request, "An error occurred while submitting your application. Please try again.")
+
+            messages.error(request, _("An error occurred while submitting your application. Please try again."))
             return redirect('team_details', id=id)
 
     ourexperts = get_object_or_404(OurExpert, id=id, is_active=True)
     allteam = OurExpert.objects.filter(is_active=True).exclude(id=ourexperts.id)
 
     if not ourexperts:
-        messages.error(request, "Requested team member not found!")
-    
+        messages.error(request, _("Requested team member not found!"))
+
     context = {
         'allteam': allteam,
         'ourexperts': ourexperts,
@@ -425,8 +424,8 @@ def blog_details(request, id):
     allblogs = OurBlog.objects.filter(is_active=True).exclude(id=ourblogs.id)
     categories = Category.objects.all()
     if not ourblogs:
-        messages.error(request, "Requested blog not found!")
-    
+        messages.error(request, _("Requested blog not found!"))
+
     context = {
         'allblogs': allblogs,
         'ourblogs': ourblogs,
@@ -659,7 +658,7 @@ def login_view(request):
             user_obj = User.objects.get(email=email)
             username = user_obj.username
         except User.DoesNotExist:
-            messages.error(request, "Invalid email or password.")
+            messages.error(request, _("Invalid email or password."))
             return redirect('login')
 
         # Username va password bilan authenticate qilish
@@ -714,10 +713,10 @@ def login_view(request):
                 request.session['cart'] = {}
                 request.session.modified = True
             
-            messages.success(request, f"Welcome back, {user.username}!")
+            messages.success(request, _("Welcome back!"))
             return redirect('home')  # tizimga kirgandan so'ng bosh sahifaga yo'naltirish
         else:
-            messages.error(request, "Invalid email or password.")
+            messages.error(request, _("Invalid email or password."))
             return redirect('login')
 
     return render(request, 'login.html')
@@ -733,7 +732,7 @@ def register_view(request):
 
         # Parollar bir xil ekanligini tekshirish
         if password != confirm_password:
-            messages.error(request, "Passwords do not match!")
+            messages.error(request, _("Passwords do not match!"))
             return redirect('register')
 
         # Username sifatida emailni ishlatamiz
@@ -741,7 +740,7 @@ def register_view(request):
 
         # Email allaqachon ro'yxatdan o'tganligini tekshirish
         if User.objects.filter(email=email).exists():
-            messages.error(request, "This email is already registered!")
+            messages.error(request, _("This email is already registered!"))
             return redirect('register')
 
         if User.objects.filter(username=username).exists():
@@ -776,13 +775,13 @@ def register_view(request):
         )
         
         # Email yuborish
-        subject = 'Email Verification Code - GreenGardens'
-        message = f"""
+        subject = _('Email Verification Code - GreenGardens')
+        message = _("""
         Hi there!
 
         Welcome to GreenGardens! Please verify your email address to complete your registration.
 
-        Your verification code is: {verification_code}
+        Your verification code is: %(code)s
 
         This code will expire in 15 minutes.
 
@@ -790,8 +789,8 @@ def register_view(request):
 
         Best regards,
         GreenGardens Team
-        """
-        
+        """) % {'code': verification_code}
+
         try:
             send_mail(
                 subject,
@@ -800,10 +799,10 @@ def register_view(request):
                 [email],
                 fail_silently=False,
             )
-            messages.success(request, f"Verification code has been sent to {email}. Please check your email and enter the code to complete registration.")
+            messages.success(request, _("Verification code has been sent. Please check your email and enter the code to complete registration."))
             return redirect('email_verification')
         except Exception as e:
-            messages.error(request, f"Error sending email: {str(e)}")
+            messages.error(request, _("Error sending email. Please try again."))
             # Development rejimida kodni ko'rsatish
             messages.info(request, f"Development mode - Your verification code is: {verification_code}")
             return redirect('email_verification')
@@ -830,7 +829,7 @@ def email_verification_view(request):
                 
                 # Token muddati tugaganligini tekshirish
                 if token.is_expired():
-                    messages.error(request, "Verification code has expired. Please register again.")
+                    messages.error(request, _("Verification code has expired. Please register again."))
                     return redirect('register')
                 
                 # Foydalanuvchi ma'lumotlarini olish
@@ -848,13 +847,13 @@ def email_verification_view(request):
                 token.is_used = True
                 token.save()
                 
-                messages.success(request, "Email verification successful! Your account has been created. You can now log in.")
+                messages.success(request, _("Email verification successful! Your account has been created. You can now log in."))
                 return redirect('login')
-                
+
             except EmailVerificationToken.DoesNotExist:
-                messages.error(request, "Invalid verification code or email address.")
+                messages.error(request, _("Invalid verification code or email address."))
         else:
-            messages.error(request, "Please provide both email and verification code.")
+            messages.error(request, _("Please provide both email and verification code."))
     
     return render(request, 'email-verification.html')
 
@@ -862,7 +861,7 @@ def email_verification_view(request):
 # --- LOGOUT VIEW ---
 def logout_view(request):
     logout(request)
-    messages.success(request, "You have been logged out successfully.")
+    messages.success(request, _("You have been logged out successfully."))
     return redirect('login')
 
 def checkout(request):
@@ -898,13 +897,13 @@ def password_reset_request(request):
                 )
                 
                 # Send email with verification code
-                subject = 'Password Reset Verification Code - GreenGardens'
-                message = f"""
-                Hi {user.username},
+                subject = _('Password Reset Verification Code - GreenGardens')
+                message = _("""
+                Hi,
 
                 You have requested to reset your password for GreenGardens.
 
-                Your verification code is: {verification_code}
+                Your verification code is: %(code)s
 
                 This code will expire in 15 minutes.
 
@@ -912,8 +911,8 @@ def password_reset_request(request):
 
                 Best regards,
                 GreenGardens Team
-                """
-                
+                """) % {'code': verification_code}
+
                 try:
                     send_mail(
                         subject,
@@ -922,18 +921,18 @@ def password_reset_request(request):
                         [email],
                         fail_silently=False,
                     )
-                    messages.success(request, f"Verification code has been sent to {email}. Please check your email and enter the code.")
+                    messages.success(request, _("Verification code has been sent. Please check your email and enter the code."))
                     return redirect('password_reset_verify')
                 except Exception as e:
-                    messages.error(request, f"Error sending email: {str(e)}")
+                    messages.error(request, _("Error sending email. Please try again."))
                     # For development, show the code in message
                     messages.info(request, f"Development mode - Your verification code is: {verification_code}")
                     return redirect('password_reset_verify')
-                
+
             except User.DoesNotExist:
-                messages.error(request, "No user found with this email address.")
+                messages.error(request, _("No user found with this email address."))
         else:
-            messages.error(request, "Please provide a valid email address.")
+            messages.error(request, _("Please provide a valid email address."))
     
     return render(request, 'password-reset.html')
 
@@ -955,7 +954,7 @@ def password_reset_verify(request):
                 
                 # Check if token is expired
                 if reset_token.is_expired():
-                    messages.error(request, "Verification code has expired. Please request a new one.")
+                    messages.error(request, _("Verification code has expired. Please request a new one."))
                     return redirect('password_reset')
                 
                 # Mark token as used and redirect to password reset form
@@ -968,11 +967,11 @@ def password_reset_verify(request):
                 uid = urlsafe_base64_encode(force_bytes(user.pk))
                 
                 return redirect('password_reset_confirm', uidb64=uid, token=token)
-                
+
             except PasswordResetToken.DoesNotExist:
-                messages.error(request, "Invalid verification code or email address.")
+                messages.error(request, _("Invalid verification code or email address."))
         else:
-            messages.error(request, "Please provide both email and verification code.")
+            messages.error(request, _("Please provide both email and verification code."))
     
     return render(request, 'password-reset-verify.html')
 
@@ -992,14 +991,14 @@ def password_reset_confirm(request, uidb64, token):
             if new_password and new_password == confirm_password:
                 user.set_password(new_password)
                 user.save()
-                messages.success(request, "Your password has been reset successfully! You can now log in.")
+                messages.success(request, _("Your password has been reset successfully! You can now log in."))
                 return redirect('login')
             else:
-                messages.error(request, "Passwords do not match.")
-        
+                messages.error(request, _("Passwords do not match."))
+
         return render(request, 'password-reset-confirm.html', {'user': user})
     else:
-        messages.error(request, "The password reset link is invalid or has expired.")
+        messages.error(request, _("The password reset link is invalid or has expired."))
         return redirect('password_reset')
 
 
@@ -1057,7 +1056,7 @@ def chat_send_message(request):
         if not session_token or not message_text:
             return JsonResponse({
                 'status': 'error',
-                'message': 'Session token va xabar talab qilinadi'
+                'message': _('Session token and message are required')
             }, status=400)
 
         # Chat sessiyasini topish
@@ -1066,7 +1065,7 @@ def chat_send_message(request):
         except ChatSession.DoesNotExist:
             return JsonResponse({
                 'status': 'error',
-                'message': 'Chat sessiyasi topilmadi'
+                'message': _('Chat session not found')
             }, status=404)
 
         # Xabarni saqlash
@@ -1081,7 +1080,7 @@ def chat_send_message(request):
         user_message_count = chat_session.messages.filter(sender='user').count()
 
         if user_message_count == 1:  # Faqat birinchi xabar
-            auto_response = "Xabaringiz qabul qilindi! Tez orada admin javob beradi."
+            auto_response = _("Your message has been received! Admin will respond soon.")
             ChatMessage.objects.create(
                 session=chat_session,
                 sender='bot',
@@ -1133,7 +1132,7 @@ def chat_get_messages(request, session_token):
     except ChatSession.DoesNotExist:
         return JsonResponse({
             'status': 'error',
-            'message': 'Chat sessiyasi topilmadi'
+            'message': _('Chat session not found')
         }, status=404)
     except Exception as e:
         return JsonResponse({
@@ -1149,7 +1148,7 @@ def chat_admin_reply(request):
     if not request.user.is_staff:
         return JsonResponse({
             'status': 'error',
-            'message': 'Ruxsat yo\'q'
+            'message': _('Permission denied')
         }, status=403)
 
     try:
@@ -1160,7 +1159,7 @@ def chat_admin_reply(request):
         if not session_id or not message_text:
             return JsonResponse({
                 'status': 'error',
-                'message': 'Session ID va xabar talab qilinadi'
+                'message': _('Session ID and message are required')
             }, status=400)
 
         # Chat sessiyasini topish
@@ -1169,7 +1168,7 @@ def chat_admin_reply(request):
         except ChatSession.DoesNotExist:
             return JsonResponse({
                 'status': 'error',
-                'message': 'Chat sessiyasi topilmadi'
+                'message': _('Chat session not found')
             }, status=404)
 
         # Admin javobini saqlash
