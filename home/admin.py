@@ -1,24 +1,27 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from modeltranslation.admin import TabbedTranslationAdmin
 from .models import FAQ
 from home.models import *
 
 # Register your models here.
+# Tarjima qilinadigan modellar uchun TabbedTranslationAdmin ishlatiladi
+# Bu admin panelda har bir til uchun alohida tab ko'rsatadi (UZ | RU | EN)
+
 @admin.register(MainInfo)
-class MainInfoAdmin(admin.ModelAdmin):
+class MainInfoAdmin(TabbedTranslationAdmin):
     list_display = ('site_name', 'contact_email', 'phone_number', 'address', 'opening_hours', 'footer_text')
 
 @admin.register(SocialLink)
-class SocialLinkAdmin(admin.ModelAdmin):
+class SocialLinkAdmin(TabbedTranslationAdmin):
     list_display = ('platform', 'icon', 'url', 'total_followers', 'is_active')
 
 @admin.register(Mainslider)
-class MainsliderAdmin(admin.ModelAdmin):
+class MainsliderAdmin(TabbedTranslationAdmin):
     list_display = ('title', 'subtitle', 'description', 'is_active')
-    from django.contrib import admin
 
 @admin.register(IntroOurCompany)
-class IntroOurCompanyAdmin(admin.ModelAdmin):
+class IntroOurCompanyAdmin(TabbedTranslationAdmin):
     list_display = ('title', 'subtitle', 'experience_years', 'is_active')
     list_filter = ('is_active',)
     search_fields = ('title', 'subtitle', 'description')
@@ -26,7 +29,7 @@ class IntroOurCompanyAdmin(admin.ModelAdmin):
     ordering = ('-id',)
 
 @admin.register(MainFeature)
-class MainFeatureAdmin(admin.ModelAdmin):
+class MainFeatureAdmin(TabbedTranslationAdmin):
     list_display = ('title', 'icon', 'url', 'is_active')
     list_filter = ('is_active',)
     search_fields = ('title', 'description')
@@ -34,7 +37,7 @@ class MainFeatureAdmin(admin.ModelAdmin):
     ordering = ('-id',)
 
 @admin.register(OurService)
-class OurServiceAdmin(admin.ModelAdmin):
+class OurServiceAdmin(TabbedTranslationAdmin):
     list_display = ('title', 'slug', 'is_active', 'is_top')
     list_filter = ('is_active',)
     search_fields = ('title', 'slug')
@@ -43,13 +46,13 @@ class OurServiceAdmin(admin.ModelAdmin):
     ordering = ('-id',)
 
 @admin.register(ServiceCategory)
-class ServiceCategoryAdmin(admin.ModelAdmin):
+class ServiceCategoryAdmin(TabbedTranslationAdmin):
     list_display = ('name', 'slug', 'description')
     search_fields = ('name', 'slug')
     prepopulated_fields = {'slug': ('name',)}
 
 @admin.register(OurWorkProcess)
-class OurWorkProcessAdmin(admin.ModelAdmin):
+class OurWorkProcessAdmin(TabbedTranslationAdmin):
     list_display = ('title', 'step_number', 'pagename', 'is_active')
     list_filter = ('is_active',)
     search_fields = ('title', 'subtitle', 'description', 'pagename')
@@ -57,7 +60,7 @@ class OurWorkProcessAdmin(admin.ModelAdmin):
     ordering = ('step_number',)
 
 @admin.register(OurTestimonial)
-class OurTestimonialAdmin(admin.ModelAdmin):
+class OurTestimonialAdmin(TabbedTranslationAdmin):
     list_display = ('name', 'position', 'rate', 'is_active')
     list_filter = ('is_active', 'rate')
     search_fields = ('name', 'position', 'title')
@@ -65,7 +68,7 @@ class OurTestimonialAdmin(admin.ModelAdmin):
     ordering = ('-id',)
 
 @admin.register(OurProject)
-class OurProjectAdmin(admin.ModelAdmin):
+class OurProjectAdmin(TabbedTranslationAdmin):
     list_display = ('title', 'category', 'project_date', 'is_active','is_top')
     list_filter = ('category', 'is_active')
     search_fields = ('title', 'category', 'project_name')
@@ -74,7 +77,7 @@ class OurProjectAdmin(admin.ModelAdmin):
     ordering = ('-project_date',)
 
 @admin.register(OurFact)
-class OurFactAdmin(admin.ModelAdmin):
+class OurFactAdmin(TabbedTranslationAdmin):
     list_display = ('title', 'project_number', 'customer_number', 'is_active')
     list_filter = ('is_active',)
     search_fields = ('title', 'subtitle')
@@ -82,7 +85,7 @@ class OurFactAdmin(admin.ModelAdmin):
     ordering = ('-id',)
 
 @admin.register(OurBenefit)
-class OurBenefitAdmin(admin.ModelAdmin):
+class OurBenefitAdmin(TabbedTranslationAdmin):
     list_display = ('title', 'client_count', 'is_active')
     list_filter = ('is_active',)
     search_fields = ('title', 'benefit1', 'benefit2')
@@ -90,7 +93,7 @@ class OurBenefitAdmin(admin.ModelAdmin):
     ordering = ('-id',)
 
 @admin.register(OurBlog)
-class OurBlogAdmin(admin.ModelAdmin):
+class OurBlogAdmin(TabbedTranslationAdmin):
     list_display = ('minititle', 'author', 'category', 'publish_date', 'is_active')
     list_filter = ('category', 'is_active')
     search_fields = ('title', 'author', 'category')
@@ -98,12 +101,12 @@ class OurBlogAdmin(admin.ModelAdmin):
     date_hierarchy = 'publish_date'
 
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(TabbedTranslationAdmin):
     list_display = ('name', 'description')
     search_fields = ('name',)
 
 @admin.register(OurExpert)
-class OurExpertAdmin(admin.ModelAdmin):
+class OurExpertAdmin(TabbedTranslationAdmin):
     list_display = ('name', 'position', 'image_preview', 'is_active')
     list_filter = ('is_active',)
     search_fields = ('name', 'position')
@@ -132,15 +135,15 @@ class ContactMessageAdmin(admin.ModelAdmin):
     readonly_fields = ('name', 'email', 'phone', 'message', 'sent_at')
 
 @admin.register(FAQ)
-class FAQAdmin(admin.ModelAdmin):
-    list_display = ('question', 'is_active')  # Jadvalda ko‘rinadigan ustunlar
+class FAQAdmin(TabbedTranslationAdmin):
+    list_display = ('question', 'is_active')  # Jadvalda ko'rinadigan ustunlar
     list_filter = ('is_active',)              # Yon tomonda filter chiqadi
     search_fields = ('question', 'answer')    # Qidiruv funksiyasi
-    list_editable = ('is_active',)   
+    list_editable = ('is_active',)
 
 
 @admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(TabbedTranslationAdmin):
     list_display = ('name','id', 'price', 'quantity', 'status', 'is_active', 'is_top')
     list_filter = ('status', 'is_active', 'is_top')
     search_fields = ('name', 'mini_description', 'description')
@@ -151,8 +154,7 @@ class ProductAdmin(admin.ModelAdmin):
 class ProductImageAdmin(admin.ModelAdmin):
     list_display = ('id', 'image')
 
-from django.contrib import admin
-from .models import Like, Cart
+# Like va Cart modellari yuqorida import qilingan (home.models import *)
 
 @admin.register(Like)
 class LikeAdmin(admin.ModelAdmin):

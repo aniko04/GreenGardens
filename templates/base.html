@@ -229,11 +229,11 @@
 
                     <nav class="main-header__nav main-menu">
                         <ul class="main-menu__list">
-                            <li {% if request.resolver_match.url_name == 'services' or request.resolver_match.url_name == 'service_details' %}class="current" {% endif %}>
+                            <li class="dropdown {% if request.resolver_match.url_name == 'services' or request.resolver_match.url_name == 'service_details' %}current{% endif %}">
                                 <a href="#">{% trans "Services" %}</a>
                                 <ul>
                                     {% for service in ourservices %}
-                                    <li><a href="{% url 'service_details' service.slug %}">{{ service.title }}</a>
+                                    <li {% if service.category.all %}class="dropdown"{% endif %}><a href="{% url 'service_details' service.slug %}">{{ service.title }}</a>
                                     {% if service.category.all %}
                                     <ul>
                                         {% for category in service.category.all %}
@@ -256,21 +256,17 @@
                             </li>
                             <li
                                 class="dropdown {% if request.resolver_match.url_name == 'team' or request.resolver_match.url_name == 'team_details' or request.resolver_match.url_name == 'faq' %}current{% endif %}">
-                                <a href="#" style="pointer-events: none;">{% trans "Pages" %}</a>
+                                <a href="#">{% trans "Pages" %}</a>
                                 <ul>
                                     <li><a href="{% url 'team' %}">{% trans "Team" %}</a></li>
                                     <li><a href="{% url 'faq' %}">FAQs</a></li>
                                 </ul>
                             </li>
                             {% if user.is_staff %}
-                            <li 
-                            
-                                class="dropdown {% if request.resolver_match.url_name == 'products' or request.resolver_match.url_name == 'product_details' or request.resolver_match.url_name == 'cart' or request.resolver_match.url_name == 'my_likes' or request.resolver_match.url_name == 'checkout' %}current{% endif %}">
-                                <a href="#" style="pointer-events: none;">{% trans "Shop" %}</a>
-                                <ul class="sub-menu">
-                                    <li class="dropdown">
-                                        <a href="{% url 'products' %}">{% trans "Products" %}</a>
-                                    </li>
+                            <li class="dropdown {% if request.resolver_match.url_name == 'products' or request.resolver_match.url_name == 'product_details' or request.resolver_match.url_name == 'cart' or request.resolver_match.url_name == 'my_likes' or request.resolver_match.url_name == 'checkout' %}current{% endif %}">
+                                <a href="#">{% trans "Shop" %}</a>
+                                <ul>
+                                    <li><a href="{% url 'products' %}">{% trans "Products" %}</a></li>
                                     <li><a href="{% url 'cart' %}">{% trans "Cart" %}</a></li>
                                     <li><a href="{% url 'my_likes' %}">{% trans "My Likes" %}</a></li>
                                     <li><a href="{% url 'checkout' %}">{% trans "Checkout" %}</a></li>

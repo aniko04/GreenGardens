@@ -48,6 +48,8 @@ CSRF_TRUSTED_ORIGINS = [
 
 INSTALLED_APPS = [
     'modeltranslation',  # Model tarjimalari uchun - birinchi bo'lishi kerak!
+    'admin_interface',   # Admin interfeys - django.contrib.admin dan OLDIN
+    'colorfield',        # admin_interface uchun kerak
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -258,3 +260,10 @@ DEFAULT_FROM_EMAIL = 'GreenGardens <pulatovaniko@gmail.com>'
 # Telegram Bot Settings
 TELEGRAM_BOT_TOKEN = config('TELEGRAM_BOT_TOKEN', default='')
 TELEGRAM_ADMIN_CHAT_ID = config('TELEGRAM_ADMIN_CHAT_ID', default='')
+
+# Django Admin Interface sozlamalari
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+# Model translation sozlamalari
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
+MODELTRANSLATION_LANGUAGES = ('uz', 'ru', 'en')
