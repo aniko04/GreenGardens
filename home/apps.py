@@ -40,12 +40,13 @@ class HomeConfig(AppConfig):
     def _run_telegram_bot(self):
         """Telegram bot kodini ishga tushirish"""
         try:
+            import asyncio
             from django.conf import settings
             from telegram import Update
             from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
             from home.models import ChatMessage, ChatSession
             from asgiref.sync import sync_to_async
-            
+
             # Bot logic (run_telegram_bot.py dan ko'chirilgan)
             class TelegramBotRunner:
                 def __init__(self):
@@ -203,34 +204,43 @@ class HomeConfig(AppConfig):
                 async def error_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
                     logger.error(f"Telegram bot xatolik: {context.error}")
 
-                def start_bot(self):
-                    """Botni ishga tushirish"""
+                async def run_bot(self):
+                    """Botni async rejimda ishga tushirish"""
                     application = Application.builder().token(self.bot_token).build()
 
                     # Handlerlarni qo'shish
                     application.add_handler(CommandHandler("start", self.start_command))
                     application.add_handler(CommandHandler("help", self.help_command))
                     application.add_handler(CommandHandler("stats", self.stats_command))
-                    
+
                     application.add_handler(MessageHandler(
                         filters.TEXT & filters.REPLY & ~filters.COMMAND,
                         self.handle_reply
                     ))
-                    
+
                     application.add_handler(MessageHandler(
                         filters.TEXT & ~filters.COMMAND & ~filters.REPLY,
                         self.handle_message
                     ))
-                    
+
                     application.add_error_handler(self.error_handler)
 
-                    # Botni polling rejimida ishga tushirish
+                    # Botni polling rejimida ishga tushirish (signal handler'siz)
                     logger.info("🤖 Telegram bot polling rejimida ishga tushmoqda...")
-                    application.run_polling(allowed_updates=Update.ALL_TYPES)
-            
+                    async with application:
+                        await application.initialize()
+                        await application.start()
+                        await application.updater.start_polling(allowed_updates=Update.ALL_TYPES)
+                        # Bot to'xtatilmaguncha ishlaydi
+                        while True:
+                            await asyncio.sleep(1)
+
             # Bot instanceni yaratish va ishga tushirish
             bot_runner = TelegramBotRunner()
-            bot_runner.start_bot()
+            # Yangi event loop yaratib, async botni ishga tushirish
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            loop.run_until_complete(bot_runner.run_bot())
             
         except Exception as e:
             logger.error(f"Telegram bot ishga tushishda xatolik: {e}")
