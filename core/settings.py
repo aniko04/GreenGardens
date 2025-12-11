@@ -44,6 +44,18 @@ CSRF_TRUSTED_ORIGINS = [
     'http://aniko.uz',
 ]
 
+# CSRF Cookie Settings
+CSRF_COOKIE_SECURE = False  # Set to True if using HTTPS only
+CSRF_COOKIE_HTTPONLY = False  # Must be False for JavaScript to access
+CSRF_COOKIE_SAMESITE = 'Lax'  # Can be 'Lax', 'Strict', or None
+CSRF_USE_SESSIONS = False  # Store CSRF token in session instead of cookie
+
+# Session Cookie Settings
+SESSION_COOKIE_SECURE = False  # Set to True if using HTTPS only
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_AGE = 1209600  # 2 weeks in seconds
+
 # Application definition
 
 INSTALLED_APPS = [
