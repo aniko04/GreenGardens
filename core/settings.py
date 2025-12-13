@@ -279,3 +279,34 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 # Model translation sozlamalari
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
 MODELTRANSLATION_LANGUAGES = ('uz', 'ru', 'en')
+
+# ============================================================================
+# WebP Image Conversion Settings
+# ============================================================================
+# Automatic WebP conversion for better performance and reduced bandwidth
+
+# Enable/disable WebP conversion (master switch)
+WEBP_ENABLED = True
+
+# WebP quality settings (1-100)
+WEBP_QUALITY = 85  # Default quality for JPEG images
+WEBP_QUALITY_PNG = 95  # Higher quality for PNG images with transparency
+
+# Preserve original images as backup (stored in /media/originals/)
+WEBP_PRESERVE_ORIGINALS = False
+
+# Convert existing images when accessed (for gradual migration)
+WEBP_CONVERT_EXISTING = True
+
+# Maximum image dimensions (images larger than this will be resized)
+WEBP_MAX_WIDTH = 4096
+WEBP_MAX_HEIGHT = 4096
+
+# File upload size limit (5MB)
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024
+
+# Custom storage backend for automatic WebP conversion
+DEFAULT_FILE_STORAGE = 'home.storage.WebPStorage'
+
+# Use WebP storage for CKEditor uploads as well
+CKEDITOR_STORAGE_BACKEND = 'home.ckeditor_storage.CKEditorWebPStorage'

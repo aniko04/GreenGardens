@@ -1,4 +1,4 @@
-   {% extends "base.html" %} {% load static %}
+   {% extends "base.html" %} {% load static %} {% load i18n %}
    {% block content %}
 
    <!-- main-slider-start -->
@@ -42,8 +42,8 @@
                                         <h2 class="main-slider-three__title">{{ slide.subtitle }}</h2><!-- slider-title -->
                                         <h6 class="main-slider-three__subtext">{{ slide.description }}</h6>
                                         <div class="main-slider-three__btn">
-                                            <a href="{% url 'services' %}" class="grdeen-btn grdeen-btn--base"><span>{{ slide.button_1_name }}</span></a><!-- slider-btn -->
-                                            <a href="{% url 'contact' %}" class="grdeen-btn grdeen-btn--base"><span>{{ slide.button_2_name }}</span></a><!-- slider-btn -->
+                                            <a href="{% url 'services' %}" class="grdeen-btn grdeen-btn--base"><span>XIZMATLARIMIZ</span></a><!-- slider-btn -->
+                                            <a href="{% url 'contact' %}" class="grdeen-btn grdeen-btn--base"><span>BEPUL KONSLUTATSIYA</span></a><!-- slider-btn -->
                                         </div>
                                     </div>
                                 </div>
@@ -109,7 +109,7 @@
                                         <i class="icon-pot"></i>
                                     </div>
                                     <strong class="about-one__content__qualitwrap__price">{{ intro.experience_years }}+</strong>
-                                    <span class="about-one__content__qualitwrap__text">YILLIK TAJRIBA</span>
+                                    <span class="about-one__content__qualitwrap__text">{% trans "YILLIK TAJRIBA" %}</span>
                                 </div>
                             </div>
                             <ul class="list-unstyled about-one__content__list">
